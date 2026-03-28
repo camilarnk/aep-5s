@@ -7,6 +7,8 @@ mvnw.cmd
 !**/src/test/**/target/
 .kotlin
 
+src/main/resources/data/*.dat
+
 ### IntelliJ IDEA ###
 .idea/
 *.iws
