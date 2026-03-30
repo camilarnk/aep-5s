@@ -8,7 +8,7 @@ import java.util.List;
 
 public class SolicitacaoRepository {
 
-    private static final String ARQUIVO = "src/main/resources/data/solicitacoes.dat";
+    private static final String ARQUIVO = "data/solicitacoes.dat";
 
     private List<Solicitacao> solicitacoes;
 
@@ -34,9 +34,15 @@ public class SolicitacaoRepository {
         return null;
     }
 
-    private void salvarArquivo() {
-        try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ARQUIVO))) {
-            oos.writeObject(solicitacoes);
+    public void salvarArquivo() {
+        try {
+            File file = new File(ARQUIVO);
+            file.getParentFile().mkdirs();
+
+            try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
+                oos.writeObject(solicitacoes);
+            }
+
         } catch(IOException exception) {
             exception.printStackTrace();
         }
