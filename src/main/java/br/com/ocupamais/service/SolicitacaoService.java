@@ -40,6 +40,14 @@ public class SolicitacaoService {
     public void atualizarStatus(String protocolo, Status novoStatus,
                                 String responsavel, String comentario) {
 
+        if (responsavel == null || responsavel.isBlank()) {
+            throw new IllegalArgumentException("Responsável obrigatório");
+        }
+
+        if (comentario == null || comentario.isBlank()) {
+            throw new IllegalArgumentException("Comentário obrigatório");
+        }
+
         Solicitacao solicitacao = repository.buscarPorProtocolo(protocolo);
 
         if(solicitacao == null) {
@@ -51,7 +59,7 @@ public class SolicitacaoService {
         HistoricoStatus historico = new HistoricoStatus(novoStatus, responsavel, comentario);
         solicitacao.adicionarHistorico(historico);
 
-        repository.salvarSolicitacao(solicitacao);
+        repository.salvarArquivo();
     }
 
 }
