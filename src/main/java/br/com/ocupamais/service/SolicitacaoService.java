@@ -14,7 +14,8 @@ public class SolicitacaoService {
     }
 
     public Solicitacao criarSolicitacao(String descricao, String localizacao,
-                                        Categoria categoria, Prioridade prioridade) {
+                                        Categoria categoria, Prioridade prioridade,
+                                        boolean anonimo, String nomeSolicitante) {
 
         if(descricao == null || descricao.isBlank()) {
             throw new IllegalArgumentException("Descrição obrigatória");
@@ -24,7 +25,14 @@ public class SolicitacaoService {
             throw new IllegalArgumentException("Localização obrigatória");
         }
 
-        Solicitacao novaSolicitacao = new Solicitacao(descricao, localizacao, categoria, prioridade);
+        if (anonimo == false && (nomeSolicitante == null || nomeSolicitante.isBlank())) {
+            throw new IllegalArgumentException("Nome obrigatório para solicitações identificadas");
+        }
+
+        Solicitacao novaSolicitacao = new Solicitacao(
+                descricao, localizacao, categoria, prioridade, anonimo, nomeSolicitante
+        );
+
         repository.salvarSolicitacao(novaSolicitacao);
         return novaSolicitacao;
     }

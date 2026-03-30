@@ -21,7 +21,12 @@ public class Solicitacao implements Serializable {
     private Status status;
     private List<HistoricoStatus> historico;
 
-    public Solicitacao(String descricao, String localizacao, Categoria categoria, Prioridade prioridade) {
+    private boolean anonimo;
+    private String nomeSolicitante;
+
+    public Solicitacao(String descricao, String localizacao,
+                       Categoria categoria, Prioridade prioridade,
+                        boolean anonimo, String nomeSolicitante) {
         this.protocolo = UUID.randomUUID().toString(); // cria id unico como o codigo do protocolo
         this.descricao = descricao;
         this.localizacao = localizacao;
@@ -30,6 +35,8 @@ public class Solicitacao implements Serializable {
         this.prioridade = prioridade;
         this.status = Status.ABERTO;
         this.historico = new ArrayList<>();
+        this.anonimo = anonimo;
+        this.nomeSolicitante = anonimo ? "Anonimo" : nomeSolicitante;
     }
 
     public String getProtocolo() {

@@ -17,9 +17,10 @@ public class SolicitacaoController {
     }
 
     public void criarSolicitacao(String descricao, String localizacao,
-                                 Categoria categoria, Prioridade prioridade) {
+                                 Categoria categoria, Prioridade prioridade,
+                                 boolean anonimo, String nomeSolicitante) {
 
-        service.criarSolicitacao(descricao, localizacao, categoria, prioridade);
+        service.criarSolicitacao(descricao, localizacao, categoria, prioridade, anonimo, nomeSolicitante);
     }
 
     public List<Solicitacao> listarSolicitacoes() {
