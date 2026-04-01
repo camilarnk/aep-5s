@@ -16,11 +16,12 @@ public class SolicitacaoController {
         this.service = service;
     }
 
-    public void criarSolicitacao(String descricao, String localizacao,
+    public Solicitacao criarSolicitacao(String descricao, String localizacao,
                                  Categoria categoria, Prioridade prioridade,
                                  boolean anonimo, String nomeSolicitante) {
 
-        service.criarSolicitacao(descricao, localizacao, categoria, prioridade, anonimo, nomeSolicitante);
+        return service.criarSolicitacao(descricao, localizacao, categoria, prioridade,
+                anonimo, nomeSolicitante);
     }
 
     public List<Solicitacao> listarSolicitacoes() {
