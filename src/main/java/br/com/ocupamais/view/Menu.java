@@ -3,6 +3,8 @@ package br.com.ocupamais.view;
 import br.com.ocupamais.controller.SolicitacaoController;
 import br.com.ocupamais.model.Categoria;
 import br.com.ocupamais.model.Prioridade;
+import br.com.ocupamais.model.Solicitacao;
+import br.com.ocupamais.model.Status;
 
 import java.util.Scanner;
 
@@ -124,20 +126,63 @@ public class Menu {
         }
 
         try {
-            controller.criarSolicitacao(descricao, localizacao, categoria, prioridade, anonimo, nome);
+            Solicitacao s = controller.criarSolicitacao(descricao, localizacao, categoria, prioridade, anonimo, nome);
+            System.out.println("Sua solicitação foi criada com sucesso!");
+            System.out.println("Protocolo: %s" + s.getProtocolo());
         } catch (Exception e) {
             System.out.println("Erro: " + e.getMessage());
         }
-
-
     }
 
     private void buscarSolicitacao() {
+        System.out.println("Digite o protocolo: ");
+        String protocolo = scanner.nextLine();
 
+        Solicitacao solicitacao = controller.buscarPorProtocolo(protocolo);
+
+        if(solicitacao == null) {
+            System.out.println("Solicitação não encontrada.");
+        } else {
+            System.out.println(solicitacao.detalharSolicitacao());
+        }
     }
 
     private void atualizarStatus() {
+        System.out.println("Digite o protocolo: ");
+        String protocolo = scanner.nextLine();
 
+        Status status = null;
+
+        while(status == null) {
+            System.out.println("Digite o número do novo status da solicitação: ");
+            System.out.println("1 - ABERTO");
+            System.out.println("2 - TRIAGEM");
+            System.out.println("3 - EM_EXECUCAO");
+            System.out.println("4 - RESOLVIDO");
+            System.out.println("5 - ENCERRADO");
+
+            try {
+                int opcao = scanner.nextInt();
+                scanner.nextLine();
+                status = Status.buscarPeloId(opcao);
+            } catch (Exception e) {
+                System.out.println("Opção inválida, tente novamente.");
+                scanner.nextLine();
+            }
+        }
+
+        System.out.println("Responsável pela mudança:");
+        String responsavel = scanner.nextLine();
+
+        System.out.println("Comentário:");
+        String comentario = scanner.nextLine();
+
+        try {
+            controller.atualizarStatus(protocolo, status, responsavel, comentario);
+            System.out.println("Status atualizado com sucesso!");
+        } catch (Exception e) {
+            System.out.println("Erro: " + e.getMessage());
+        }
     }
 
 }
