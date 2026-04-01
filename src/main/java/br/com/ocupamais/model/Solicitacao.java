@@ -2,6 +2,7 @@ package br.com.ocupamais.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -27,6 +28,7 @@ public class Solicitacao implements Serializable {
     public Solicitacao(String descricao, String localizacao,
                        Categoria categoria, Prioridade prioridade,
                         boolean anonimo, String nomeSolicitante) {
+
         this.protocolo = UUID.randomUUID().toString(); // cria id unico como o codigo do protocolo
         this.descricao = descricao;
         this.localizacao = localizacao;
@@ -80,15 +82,37 @@ public class Solicitacao implements Serializable {
         this.historico.add(historicoStatus);
     }
 
-    @Override
-    public String toString() {
-        return "Protocolo: " + protocolo +
-                "\nDescrição: " + descricao +
-                "\nLocalização: " + localizacao +
-                "\nCategoria: " + categoria +
-                "\nPrioridade: " + prioridade +
-                "\nStatus: " + status +
-                "\nData: " + dataCriacao +
-                "\n---------------------------";
+    // mensagem impressa ao buscar solicitacao por protocolo
+    public String detalharSolicitacao() {
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("\n---- SOLICITAÇÃO ").append(protocolo).append(" - ").append(dataCriacao).append(" ----\n");
+
+        sb.append("Descrição/Problema: ").append(descricao).append("\n");
+        sb.append("Localização: ").append(localizacao).append("\n");
+        sb.append("Categoria: ").append(categoria).append("\n");
+        sb.append("Prioridade: ").append(prioridade).append("\n");
+        sb.append("Status atual: ").append(status).append("\n");
+        sb.append("Solicitante: ").append(nomeSolicitante).append("\n");
+
+        sb.append("\n---- HISTÓRICO DE ATUALIZAÇÕES ----\n");
+
+        if(historico.isEmpty()) {
+            sb.append("Sem atualizações\n");
+        } else {
+            int i = 1;
+            DateTimeFormatter dataFormatada = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+
+            for(HistoricoStatus h : historico) {
+                sb.append("\nAtualização ").append(i++);
+                sb.append(" - ").append(h.getData().format(dataFormatada)).append("\n");
+                sb.append("Responsável: ").append(h.getResponsavel()).append("\n");
+                sb.append("Comentário: ").append(h.getComentario()).append("\n");
+                sb.append("-----------------------------------\n");
+            }
+        }
+        return sb.toString();
     }
+
 }
