@@ -8,6 +8,7 @@ mvnw.cmd
 .kotlin
 
 src/main/resources/data/*.dat
+data/*.dat
 
 ### IntelliJ IDEA ###
 .idea/
