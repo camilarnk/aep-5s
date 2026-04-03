@@ -128,7 +128,7 @@ public class Menu {
         try {
             Solicitacao s = controller.criarSolicitacao(descricao, localizacao, categoria, prioridade, anonimo, nome);
             System.out.println("Sua solicitação foi criada com sucesso!");
-            System.out.println("Protocolo: %s" + s.getProtocolo());
+            System.out.println("Protocolo: " + s.getProtocolo());
         } catch (Exception e) {
             System.out.println("Erro: " + e.getMessage());
         }
@@ -151,25 +151,39 @@ public class Menu {
         System.out.println("Digite o protocolo: ");
         String protocolo = scanner.nextLine();
 
-        Status status = null;
+        Solicitacao solicitacao = controller.buscarPorProtocolo(protocolo);
 
-        while(status == null) {
-            System.out.println("Digite o número do novo status da solicitação: ");
-            System.out.println("1 - ABERTO");
-            System.out.println("2 - TRIAGEM");
-            System.out.println("3 - EM_EXECUCAO");
-            System.out.println("4 - RESOLVIDO");
-            System.out.println("5 - ENCERRADO");
-
-            try {
-                int opcao = scanner.nextInt();
-                scanner.nextLine();
-                status = Status.buscarPeloId(opcao);
-            } catch (Exception e) {
-                System.out.println("Opção inválida, tente novamente.");
-                scanner.nextLine();
-            }
+        if(solicitacao == null) {
+            System.out.println("Solicitação não encontrada.");
+            return;
         }
+
+        Status atual = solicitacao.getStatus();
+        Status proximo = null;
+
+        if(atual == Status.ENCERRADO) {
+            System.out.println("A solicitação já foi encerrada.");
+            return;
+        } else {
+            proximo = switch(atual) {
+                case ABERTO -> Status.TRIAGEM;
+                case TRIAGEM -> Status.EM_EXECUCAO;
+                case EM_EXECUCAO -> Status.RESOLVIDO;
+                case RESOLVIDO -> Status.ENCERRADO;
+                default -> atual;
+            };
+        }
+
+        System.out.println("Status atual: " + atual);
+        System.out.println("Deseja avançar para: " + proximo + "? (S/N)");
+        String resposta = scanner.nextLine();
+
+        if(resposta.equalsIgnoreCase("N")) {
+            System.out.println("Operação cancelada.");
+            return;
+        }
+
+        Status status = proximo;
 
         System.out.println("Responsável pela mudança:");
         String responsavel = scanner.nextLine();
