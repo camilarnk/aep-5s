@@ -62,12 +62,27 @@ public class SolicitacaoService {
             throw new IllegalArgumentException("Solicitação não encontrada");
         }
 
+        if(!fluxoValido(solicitacao.getStatus(), novoStatus)) {
+            throw new IllegalArgumentException("Fluxo de status inválido. " +
+                    "Siga: ABERTO - TRIAGEM - EM_EXECUCAO - RESOLVIDO - ENCERRADO");
+        }
+
         solicitacao.setStatus(novoStatus);
 
         HistoricoStatus historico = new HistoricoStatus(novoStatus, responsavel, comentario);
         solicitacao.adicionarHistorico(historico);
 
         repository.salvarArquivo();
+    }
+
+    private boolean fluxoValido(Status atual, Status novo) {
+        return switch(atual) {
+            case ABERTO -> novo == Status.TRIAGEM;
+            case TRIAGEM -> novo == Status.EM_EXECUCAO;
+            case EM_EXECUCAO -> novo == Status.RESOLVIDO;
+            case RESOLVIDO -> novo == Status.ENCERRADO;
+            case ENCERRADO -> false;
+        };
     }
 
 }
