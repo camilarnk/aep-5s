@@ -77,12 +77,18 @@ public class Solicitacao implements Serializable {
         this.status = status;
     }
 
-    // adicionar registro de mudança
     public void adicionarHistorico(HistoricoStatus historicoStatus) {
         this.historico.add(historicoStatus);
     }
 
-    // mensagem impressa ao buscar solicitacao por protocolo
+    @Override
+    public String toString() {
+        return "Protocolo: " + protocolo +
+                " | Status: " + status +
+                " | Categoria: " + categoria +
+                " | Prioridade: " + prioridade;
+    }
+
     public String detalharSolicitacao() {
 
         StringBuilder sb = new StringBuilder();
