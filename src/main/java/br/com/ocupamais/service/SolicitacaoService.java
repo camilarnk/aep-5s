@@ -25,7 +25,7 @@ public class SolicitacaoService {
             throw new IllegalArgumentException("Localização obrigatória");
         }
 
-        if (anonimo == false && (nomeSolicitante == null || nomeSolicitante.isBlank())) {
+        if (!anonimo && (nomeSolicitante == null || nomeSolicitante.isBlank())) {
             throw new IllegalArgumentException("Nome obrigatório para solicitações identificadas");
         }
 
