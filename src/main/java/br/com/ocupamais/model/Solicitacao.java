@@ -16,6 +16,7 @@ public class Solicitacao implements Serializable {
     private String descricao;
     private String localizacao;
     private LocalDateTime dataCriacao;
+    private LocalDateTime prazo;
 
     private Categoria categoria;
     private Prioridade prioridade;
@@ -39,6 +40,12 @@ public class Solicitacao implements Serializable {
         this.historico = new ArrayList<>();
         this.anonimo = anonimo;
         this.nomeSolicitante = anonimo ? "Anonimo" : nomeSolicitante;
+
+        switch (prioridade) {
+            case BAIXA -> prazo = dataCriacao.plusDays(14);
+            case MEDIA -> prazo = dataCriacao.plusDays(7);
+            case ALTA -> prazo = dataCriacao.plusDays(3);
+        }
     }
 
     public String getProtocolo() {
@@ -93,7 +100,7 @@ public class Solicitacao implements Serializable {
 
         StringBuilder sb = new StringBuilder();
 
-        sb.append("\n---- SOLICITAÇÃO ").append(protocolo).append(" - ").append(dataCriacao).append(" ----\n");
+        sb.append("\n\n---- SOLICITAÇÃO ").append(protocolo).append(" - ").append(dataCriacao).append(" ----\n");
 
         sb.append("Descrição/Problema: ").append(descricao).append("\n");
         sb.append("Localização: ").append(localizacao).append("\n");
@@ -101,6 +108,11 @@ public class Solicitacao implements Serializable {
         sb.append("Prioridade: ").append(prioridade).append("\n");
         sb.append("Status atual: ").append(status).append("\n");
         sb.append("Solicitante: ").append(nomeSolicitante).append("\n");
+        sb.append("Prazo: ").append(prazo).append("\n");
+
+        if (LocalDateTime.now().isAfter(prazo)) {
+            sb.append("PRAZO ATRASADO!!\n");
+        }
 
         sb.append("\n---- HISTÓRICO DE ATUALIZAÇÕES ----\n");
 
