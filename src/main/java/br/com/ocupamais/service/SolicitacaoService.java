@@ -41,6 +41,16 @@ public class SolicitacaoService {
         return repository.listarSolicitacoes();
     }
 
+    public List<Solicitacao> filtrarPorCategoria(Categoria categoria) {
+        return repository.listarSolicitacoes().stream()
+                .filter(s -> s.getCategoria() == categoria).toList();
+    }
+
+    public List<Solicitacao> filtrarPorPrioridade(Prioridade prioridade) {
+        return repository.listarSolicitacoes().stream()
+                .filter(s -> s.getPrioridade() == prioridade).toList();
+    }
+
     public Solicitacao buscarPorProtocolo(String protocolo) {
         return repository.buscarPorProtocolo(protocolo);
     }
