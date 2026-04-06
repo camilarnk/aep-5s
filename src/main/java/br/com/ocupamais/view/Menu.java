@@ -6,6 +6,7 @@ import br.com.ocupamais.model.Prioridade;
 import br.com.ocupamais.model.Solicitacao;
 import br.com.ocupamais.model.Status;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class Menu {
@@ -60,16 +61,18 @@ public class Menu {
     private void menuGestor() {
         System.out.println("O que deseja realizar?");
         System.out.println("1- Listar Solicitações da População");
-        System.out.println("2- Atualizar Status de uma Demanda");
-        System.out.println("3- Voltar");
+        System.out.println("2- Filtrar Solicitações da População");
+        System.out.println("3- Atualizar Status de uma Demanda");
+        System.out.println("4- Voltar");
 
         int op = scanner.nextInt();
         scanner.nextLine();
 
         switch(op) {
             case 1 -> controller.listarSolicitacoes().forEach(System.out::println);
-            case 2 -> atualizarStatus();
-            case 3 -> { return; }
+            case 2 -> filtrarSolicitacoes();
+            case 3 -> atualizarStatus();
+            case 4 -> { return; }
             default -> System.out.println("Opção Inválida!");
         }
     }
@@ -144,6 +147,61 @@ public class Menu {
             System.out.println("Solicitação não encontrada.");
         } else {
             System.out.println(solicitacao.detalharSolicitacao());
+        }
+    }
+
+    private void filtrarSolicitacoes() {
+        System.out.println("Selecione o tipo de filtro: ");
+        System.out.println("1- Por Categoria");
+        System.out.println("2- Por Prioridade");
+
+        int tipoFiltro = scanner.nextInt();
+        scanner.nextLine();
+
+        switch(tipoFiltro) {
+            case 1 -> {
+                Categoria categoria = null;
+
+                while(categoria == null) {
+                    System.out.println("Selecione a categoria\n" +
+                            "(ILUMINAÇÃO, BURACO, LIMPEZA, SAÚDE, SEGURANÇA, EDUCAÇÃO, OUTROS): ");
+                    try {
+                        categoria = Categoria.valueOf(scanner.nextLine().trim().toUpperCase());
+                    } catch (Exception e) {
+                        System.out.println("Categoria Inválida!");
+                    }
+                }
+
+                List<Solicitacao> resultado = controller.filtrarPorCategoria(categoria);
+                if(resultado.isEmpty()) {
+                    System.out.println("Nenhuma solicitação com o filtro " + categoria + "encontrado!");
+                } else {
+                    resultado.forEach(System.out::println);
+                }
+            }
+
+            case 2 -> {
+                Prioridade prioridade = null;
+
+                while(prioridade == null) {
+                    System.out.println("Selecione a prioridade\n" +
+                            "(BAIXA, MEDIA, ALTA): ");
+                    try {
+                        prioridade = Prioridade.valueOf(scanner.nextLine().trim().toUpperCase());
+                    } catch (Exception e) {
+                        System.out.println("Prioridade Inválida!");
+                    }
+                }
+
+                List<Solicitacao> resultado = controller.filtrarPorPrioridade(prioridade);
+                if(resultado.isEmpty()) {
+                    System.out.println("Nenhuma solicitação com o filtro " + prioridade + "encontrado!");
+                } else {
+                    resultado.forEach(System.out::println);
+                }
+            }
+
+            default -> System.out.println("Opção Inválida!");
         }
     }
 
