@@ -28,6 +28,14 @@ public class SolicitacaoController {
         return service.listarSolicitacoes();
     }
 
+    public List<Solicitacao> filtrarPorCategoria(Categoria categoria) {
+        return service.filtrarPorCategoria(categoria);
+    }
+
+    public List<Solicitacao> filtrarPorPrioridade(Prioridade prioridade) {
+        return service.filtrarPorPrioridade(prioridade);
+    }
+
     public Solicitacao buscarPorProtocolo(String protocolo) {
         return service.buscarPorProtocolo(protocolo);
     }
