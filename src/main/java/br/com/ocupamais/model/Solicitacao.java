@@ -64,6 +64,10 @@ public class Solicitacao implements Serializable {
         return dataCriacao;
     }
 
+    public LocalDateTime getPrazo() {
+        return prazo;
+    }
+
     public Categoria getCategoria() {
         return categoria;
     }
