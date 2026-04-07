@@ -41,6 +41,11 @@ public class SolicitacaoService {
         return repository.listarSolicitacoes();
     }
 
+    public List<Solicitacao> listarSolicitacoesAbertas() {
+        return repository.listarSolicitacoes().stream().
+                filter(s -> s.getStatus() != Status.ENCERRADO).toList();
+    }
+
     public List<Solicitacao> filtrarPorCategoria(Categoria categoria) {
         return repository.listarSolicitacoes().stream()
                 .filter(s -> s.getCategoria() == categoria).toList();
