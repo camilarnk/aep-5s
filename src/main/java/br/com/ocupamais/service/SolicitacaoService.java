@@ -3,6 +3,8 @@ package br.com.ocupamais.service;
 import br.com.ocupamais.model.*;
 import br.com.ocupamais.repository.SolicitacaoRepository;
 
+import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 
 public class SolicitacaoService {
@@ -38,7 +40,8 @@ public class SolicitacaoService {
     }
 
     public List<Solicitacao> listarSolicitacoes() {
-        return repository.listarSolicitacoes();
+        return repository.listarSolicitacoes().stream()
+                .sorted(Comparator.comparing(Solicitacao::getPrioridade)).toList();
     }
 
     public List<Solicitacao> listarSolicitacoesAbertas() {
@@ -75,6 +78,10 @@ public class SolicitacaoService {
 
         if(solicitacao == null) {
             throw new IllegalArgumentException("Solicitação não encontrada");
+        }
+
+        if (LocalDateTime.now().isAfter(solicitacao.getPrazo()) && comentario.isBlank()) {
+            throw new IllegalArgumentException("Solicitação atrasada exige justificativa!");
         }
 
         if(!fluxoValido(solicitacao.getStatus(), novoStatus)) {
