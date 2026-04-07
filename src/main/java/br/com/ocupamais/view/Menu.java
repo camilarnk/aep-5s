@@ -145,8 +145,16 @@ public class Menu {
 
         if(solicitacao == null) {
             System.out.println("Solicitação não encontrada.");
+            return;
         } else {
-            System.out.println(solicitacao.detalharSolicitacao());
+            System.out.println(solicitacao.resumoSolicitacao());
+        }
+
+        System.out.println("Deseja ver também o histórico de atualizações?\n Digite S/N");
+        String opcao = scanner.nextLine();
+
+        if(opcao.equalsIgnoreCase("S")) {
+            System.out.println(solicitacao.historicoSolicitacao());
         }
     }
 
@@ -249,9 +257,9 @@ public class Menu {
 
         System.out.println("Status atual: " + atual);
         System.out.println("Deseja avançar para: " + proximo + "? (S/N)");
-        String resposta = scanner.nextLine();
+        String opcao = scanner.nextLine();
 
-        if(resposta.equalsIgnoreCase("N")) {
+        if(opcao.equalsIgnoreCase("N")) {
             System.out.println("Operação cancelada.");
             return;
         }
