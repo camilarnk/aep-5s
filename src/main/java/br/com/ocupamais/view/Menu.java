@@ -42,39 +42,55 @@ public class Menu {
     }
 
     private void menuCidadao() {
-        System.out.println("O que deseja realizar?");
-        System.out.println("1- Criar Solicitação");
-        System.out.println("2- Buscar por Protocolo");
-        System.out.println("3- Voltar");
+        int opcao;
 
-        int op = scanner.nextInt();
-        scanner.nextLine();
+        do {
+            System.out.println("\n----------------------");
+            System.out.println("    MENU DO CIDADÃO   ");
+            System.out.println("----------------------");
 
-        switch(op) {
-            case 1 -> criarSolicitacao();
-            case 2 -> buscarSolicitacao();
-            case 3 -> { return; }
-            default -> System.out.println("Opção Inválida!");
-        }
+            System.out.println("O que deseja realizar?");
+            System.out.println("1- Criar Solicitação");
+            System.out.println("2- Buscar por Protocolo");
+            System.out.println("3- Voltar");
+
+            opcao = scanner.nextInt();
+            scanner.nextLine();
+
+            switch(opcao) {
+                case 1 -> criarSolicitacao();
+                case 2 -> buscarPorProtocolo();
+                case 3 -> System.out.println("Voltando ao Menu Inicial...");
+                default -> System.out.println("Opção Inválida!");
+            }
+        } while(opcao != 3);
     }
 
     private void menuGestor() {
-        System.out.println("O que deseja realizar?");
-        System.out.println("1- Listar Solicitações da População");
-        System.out.println("2- Filtrar Solicitações da População");
-        System.out.println("3- Atualizar Status de uma Demanda");
-        System.out.println("4- Voltar");
+        int opcao;
 
-        int op = scanner.nextInt();
-        scanner.nextLine();
+        do {
+            System.out.println("\n---------------------");
+            System.out.println("    MENU DO GESTOR   ");
+            System.out.println("---------------------");
 
-        switch(op) {
-            case 1 -> listarSolicitacoes();
-            case 2 -> filtrarSolicitacoes();
-            case 3 -> atualizarStatus();
-            case 4 -> { return; }
-            default -> System.out.println("Opção Inválida!");
-        }
+            System.out.println("O que deseja realizar?");
+            System.out.println("1- Listar Solicitações da População");
+            System.out.println("2- Filtrar Solicitações da População");
+            System.out.println("3- Atualizar Status de uma Demanda");
+            System.out.println("4- Voltar");
+
+            opcao = scanner.nextInt();
+            scanner.nextLine();
+
+            switch(opcao) {
+                case 1 -> listarSolicitacoes();
+                case 2 -> filtrarSolicitacoes();
+                case 3 -> atualizarStatus();
+                case 4 -> System.out.println("Voltando ao Menu Inicial...");
+                default -> System.out.println("Opção Inválida!");
+            }
+        } while(opcao != 4);
     }
 
     private void criarSolicitacao() {
@@ -107,24 +123,26 @@ public class Menu {
         Categoria categoria = null;
 
         while(categoria == null) {
-            System.out.println("\nCategoria (ILUMINAÇÃO, BURACO, LIMPEZA, SAÚDE, SEGURANÇA, EDUCAÇÃO, OUTROS): ");
+            System.out.println("\nSelecione a Categoria:");
+            Categoria.exibirOpcoes();
 
             try {
-                categoria = Categoria.valueOf(scanner.nextLine().trim().toUpperCase());
+                categoria = lerCategoria();
             } catch (IllegalArgumentException e) {
-                System.out.println("\nCategoria inválida. Tente novamente.");
+                System.out.println("Categoria inválida.");
             }
         }
 
         Prioridade prioridade = null;
 
         while(prioridade == null) {
-            System.out.println("\nPrioridade (BAIXA, MEDIA, ALTA): ");
+            System.out.println("\nSelecione a Prioridade:");
+            Prioridade.exibirOpcoes();
 
             try {
-                prioridade = Prioridade.valueOf(scanner.nextLine().trim().toUpperCase());
+                prioridade = lerPrioridade();
             } catch (IllegalArgumentException e) {
-                System.out.println("\nNível de prioridade inválido. Tente novamente.");
+                System.out.println("\nNível de prioridade inválido.");
             }
         }
 
@@ -137,7 +155,7 @@ public class Menu {
         }
     }
 
-    private void buscarSolicitacao() {
+    private void buscarPorProtocolo() {
         System.out.println("Digite o protocolo: ");
         String protocolo = scanner.nextLine();
 
@@ -186,18 +204,19 @@ public class Menu {
                 Categoria categoria = null;
 
                 while(categoria == null) {
-                    System.out.println("Selecione a categoria\n" +
-                            "(ILUMINAÇÃO, BURACO, LIMPEZA, SAÚDE, SEGURANÇA, EDUCAÇÃO, OUTROS): ");
+                    System.out.println("\nSelecione a Categoria:");
+                    Categoria.exibirOpcoes();
+
                     try {
-                        categoria = Categoria.valueOf(scanner.nextLine().trim().toUpperCase());
-                    } catch (Exception e) {
-                        System.out.println("Categoria Inválida!");
+                        categoria = lerCategoria();
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Categoria inválida.");
                     }
                 }
 
                 List<Solicitacao> resultado = controller.filtrarPorCategoria(categoria);
                 if(resultado.isEmpty()) {
-                    System.out.println("Nenhuma solicitação com o filtro " + categoria + "encontrada!");
+                    System.out.println("Nenhuma solicitação com o filtro " + categoria + " encontrada!");
                 } else {
                     resultado.forEach(System.out::println);
                 }
@@ -207,18 +226,19 @@ public class Menu {
                 Prioridade prioridade = null;
 
                 while(prioridade == null) {
-                    System.out.println("Selecione a prioridade\n" +
-                            "(BAIXA, MEDIA, ALTA): ");
+                    System.out.println("Selecione a prioridade:");
+                    Prioridade.exibirOpcoes();
+
                     try {
-                        prioridade = Prioridade.valueOf(scanner.nextLine().trim().toUpperCase());
-                    } catch (Exception e) {
-                        System.out.println("Prioridade Inválida!");
+                        prioridade = lerPrioridade();
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Prioridade inválida.");
                     }
                 }
 
                 List<Solicitacao> resultado = controller.filtrarPorPrioridade(prioridade);
                 if(resultado.isEmpty()) {
-                    System.out.println("Nenhuma solicitação com o filtro " + prioridade + "encontrada!");
+                    System.out.println("Nenhuma solicitação com o filtro " + prioridade + " encontrada!");
                 } else {
                     resultado.forEach(System.out::println);
                 }
@@ -274,10 +294,21 @@ public class Menu {
 
         try {
             controller.atualizarStatus(protocolo, status, responsavel, comentario);
-            System.out.println("Status atualizado com sucesso!");
+            System.out.println("Status alterado de " + atual + " para " + status + " com sucesso!");
         } catch (Exception e) {
             System.out.println("Erro: " + e.getMessage());
         }
     }
 
+    private Categoria lerCategoria() {
+        int opcao = scanner.nextInt();
+        scanner.nextLine();
+        return Categoria.buscarPeloId(opcao);
+    }
+
+    private Prioridade lerPrioridade() {
+        int opcao = scanner.nextInt();
+        scanner.nextLine();
+        return Prioridade.buscarPeloId(opcao);
+    }
 }
