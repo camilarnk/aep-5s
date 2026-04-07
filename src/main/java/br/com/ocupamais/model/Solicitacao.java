@@ -96,7 +96,7 @@ public class Solicitacao implements Serializable {
                 " | Prioridade: " + prioridade;
     }
 
-    public String detalharSolicitacao() {
+    public String resumoSolicitacao() {
 
         StringBuilder sb = new StringBuilder();
 
@@ -118,15 +118,24 @@ public class Solicitacao implements Serializable {
                 HistoricoStatus ultimo = historico.getLast();
                 sb.append("Última atualização: ").append(ultimo.getComentario()).append("\n");
             } else {
-                sb.append("Não houveram atualizações sobre o atraso.\n");
+                sb.append("Não houve justificativa sobre o atraso.\n");
             }
         }
+        return sb.toString();
+    }
+
+    public String historicoSolicitacao() {
+
+        StringBuilder sb = new StringBuilder();
 
         sb.append("\n---- HISTÓRICO DE ATUALIZAÇÕES ----\n");
+
         if(historico.isEmpty()) {
             sb.append("Sem atualizações\n");
         } else {
             int i = 1;
+            DateTimeFormatter dataFormatada = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+
             for(HistoricoStatus h : historico) {
                 sb.append("\nAtualização ").append(i++);
                 sb.append(" - ").append(h.getData().format(dataFormatada)).append("\n");
