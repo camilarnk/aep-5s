@@ -69,7 +69,7 @@ public class Menu {
         scanner.nextLine();
 
         switch(op) {
-            case 1 -> controller.listarSolicitacoes().forEach(System.out::println);
+            case 1 -> listarSolicitacoes();
             case 2 -> filtrarSolicitacoes();
             case 3 -> atualizarStatus();
             case 4 -> { return; }
@@ -150,6 +150,21 @@ public class Menu {
         }
     }
 
+    private void listarSolicitacoes() {
+        System.out.println("Como deseja listar?");
+        System.out.println("1- Ver todas (incluindo encerradas)");
+        System.out.println("2- Ver apenas não encerradas");
+
+        int opcao = scanner.nextInt();
+        scanner.nextLine();
+
+        switch(opcao) {
+            case 1 -> controller.listarSolicitacoes().forEach(System.out::println);
+            case 2 -> controller.listarSolicitacoesAbertas().forEach(System.out::println);
+            default -> System.out.println("Opção Inválida.");
+        }
+    }
+
     private void filtrarSolicitacoes() {
         System.out.println("Selecione o tipo de filtro: ");
         System.out.println("1- Por Categoria");
@@ -174,7 +189,7 @@ public class Menu {
 
                 List<Solicitacao> resultado = controller.filtrarPorCategoria(categoria);
                 if(resultado.isEmpty()) {
-                    System.out.println("Nenhuma solicitação com o filtro " + categoria + "encontrado!");
+                    System.out.println("Nenhuma solicitação com o filtro " + categoria + "encontrada!");
                 } else {
                     resultado.forEach(System.out::println);
                 }
@@ -195,7 +210,7 @@ public class Menu {
 
                 List<Solicitacao> resultado = controller.filtrarPorPrioridade(prioridade);
                 if(resultado.isEmpty()) {
-                    System.out.println("Nenhuma solicitação com o filtro " + prioridade + "encontrado!");
+                    System.out.println("Nenhuma solicitação com o filtro " + prioridade + "encontrada!");
                 } else {
                     resultado.forEach(System.out::println);
                 }
