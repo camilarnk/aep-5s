@@ -28,6 +28,10 @@ public class SolicitacaoController {
         return service.listarSolicitacoes();
     }
 
+    public List<Solicitacao> listarSolicitacoesAbertas() {
+        return service.listarSolicitacoesAbertas();
+    }
+
     public List<Solicitacao> filtrarPorCategoria(Categoria categoria) {
         return service.filtrarPorCategoria(categoria);
     }
