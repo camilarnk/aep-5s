@@ -49,9 +49,10 @@ public class SolicitacaoController {
     }
 
     public void atualizarStatus(String protocolo, Status status,
-                                String responsavel, String comentario) {
+                                String responsavel, String comentario,
+                                String justificativa) {
 
-        service.atualizarStatus(protocolo, status, responsavel, comentario);
+        service.atualizarStatus(protocolo, status, responsavel, comentario, justificativa);
     }
 
 }
