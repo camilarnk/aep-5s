@@ -61,7 +61,9 @@ public class SolicitacaoService {
 
     public List<Solicitacao> filtrarPorLocalizacao(String localizacao) {
         return repository.listarSolicitacoes().stream()
-                .filter(s -> s.getLocalizacao().equalsIgnoreCase(localizacao)).toList();
+                .filter(s -> s.getLocalizacao().toLowerCase()
+                        .contains(localizacao.toLowerCase()))
+                .toList();
     }
 
     public Solicitacao buscarPorProtocolo(String protocolo) {
@@ -69,7 +71,8 @@ public class SolicitacaoService {
     }
 
     public void atualizarStatus(String protocolo, Status novoStatus,
-                                String responsavel, String comentario) {
+                                String responsavel, String comentario,
+                                String justificativa) {
 
         if (responsavel == null || responsavel.isBlank()) {
             throw new IllegalArgumentException("Responsável obrigatório");
@@ -85,8 +88,10 @@ public class SolicitacaoService {
             throw new IllegalArgumentException("Solicitação não encontrada");
         }
 
-        if (LocalDateTime.now().isAfter(solicitacao.getPrazo()) && comentario.isBlank()) {
-            throw new IllegalArgumentException("Solicitação atrasada exige justificativa!");
+        if (LocalDateTime.now().isAfter(solicitacao.getPrazo())) {
+            if (justificativa == null || justificativa.isBlank()) {
+                throw new IllegalArgumentException("Solicitação atrasada exige justificativa!");
+            }
         }
 
         if(!fluxoValido(solicitacao.getStatus(), novoStatus)) {
@@ -96,7 +101,7 @@ public class SolicitacaoService {
 
         solicitacao.setStatus(novoStatus);
 
-        HistoricoStatus historico = new HistoricoStatus(novoStatus, responsavel, comentario);
+        HistoricoStatus historico = new HistoricoStatus(novoStatus, responsavel, comentario, justificativa);
         solicitacao.adicionarHistorico(historico);
 
         repository.salvarArquivo();
