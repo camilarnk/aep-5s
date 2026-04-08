@@ -104,15 +104,16 @@ public class Solicitacao implements Serializable {
 
         StringBuilder sb = new StringBuilder();
 
-        sb.append("\n\n---- SOLICITAÇÃO ").append(protocolo).append(" - ").append(dataCriacao).append(" ----\n");
+        DateTimeFormatter dataFormatada = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+
+        sb.append("\n==== RESUMO DA SOLICITAÇÃO ====\n\n");
+        sb.append("Data: ").append(dataCriacao.format(dataFormatada)).append("\n");
         sb.append("Descrição/Problema: ").append(descricao).append("\n");
         sb.append("Localização: ").append(localizacao).append("\n");
         sb.append("Categoria: ").append(categoria).append("\n");
         sb.append("Prioridade: ").append(prioridade).append("\n");
         sb.append("Status atual: ").append(status).append("\n");
         sb.append("Solicitante: ").append(nomeSolicitante).append("\n");
-
-        DateTimeFormatter dataFormatada = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
         sb.append("Prazo: ").append(prazo.format(dataFormatada)).append("\n");
 
         if (LocalDateTime.now().isAfter(prazo)) {
@@ -120,9 +121,14 @@ public class Solicitacao implements Serializable {
 
             if(!historico.isEmpty()) {
                 HistoricoStatus ultimo = historico.getLast();
-                sb.append("Última atualização: ").append(ultimo.getComentario()).append("\n");
+
+                if(ultimo.getJustificativa() != null &&!ultimo.getJustificativa().isBlank()) {
+                    sb.append("Justificativa do atraso: ").append(ultimo.getJustificativa());
+                } else {
+                    sb.append("Não houve justificativa sobre o atraso.\n");
+                }
             } else {
-                sb.append("Não houve justificativa sobre o atraso.\n");
+                sb.append("Nenhuma atualização registrada.\n");
             }
         }
         return sb.toString();
@@ -132,7 +138,7 @@ public class Solicitacao implements Serializable {
 
         StringBuilder sb = new StringBuilder();
 
-        sb.append("\n---- HISTÓRICO DE ATUALIZAÇÕES ----\n");
+        sb.append("\n==== HISTÓRICO DE ATUALIZAÇÕES ====\n\n");
 
         if(historico.isEmpty()) {
             sb.append("Sem atualizações\n");
@@ -141,11 +147,10 @@ public class Solicitacao implements Serializable {
             DateTimeFormatter dataFormatada = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
             for(HistoricoStatus h : historico) {
-                sb.append("\nAtualização ").append(i++);
+                sb.append("Atualização ").append(i++);
                 sb.append(" - ").append(h.getData().format(dataFormatada)).append("\n");
                 sb.append("Responsável: ").append(h.getResponsavel()).append("\n");
-                sb.append("Comentário: ").append(h.getComentario()).append("\n");
-                sb.append("-----------------------------------\n");
+                sb.append("Comentário: ").append(h.getComentario()).append("\n\n");
             }
         }
         return sb.toString();
