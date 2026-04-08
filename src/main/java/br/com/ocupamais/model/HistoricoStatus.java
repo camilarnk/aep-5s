@@ -9,12 +9,14 @@ public class HistoricoStatus implements Serializable {
     private LocalDateTime data;
     private String responsavel;
     private String comentario;
+    private String justificativa;
 
-    public HistoricoStatus(Status status, String responsavel, String comentario) {
+    public HistoricoStatus(Status status, String responsavel, String comentario, String justificativa) {
         this.status = status;
         this.data = LocalDateTime.now();
         this.responsavel = responsavel;
         this.comentario = comentario;
+        this.justificativa = justificativa;
     }
 
     public Status getStatus() {
@@ -31,5 +33,9 @@ public class HistoricoStatus implements Serializable {
 
     public String getComentario() {
         return comentario;
+    }
+
+    public String getJustificativa() {
+        return justificativa;
     }
 }
