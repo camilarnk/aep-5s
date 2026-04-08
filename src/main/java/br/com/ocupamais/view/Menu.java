@@ -6,6 +6,7 @@ import br.com.ocupamais.model.Prioridade;
 import br.com.ocupamais.model.Solicitacao;
 import br.com.ocupamais.model.Status;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Scanner;
 
@@ -23,20 +24,22 @@ public class Menu {
         int perfil;
 
         do {
-            System.out.println("---- BEM-VINDO AO OCUPAMAIS ----");
-            System.out.println("Como qual tipo de usuário deseja entrar?");
-            System.out.println("1- Cidadão");
-            System.out.println("2- Gestor");
-            System.out.println("0- Sair");
+            System.out.println("\n========================================");
+            System.out.println("         BEM-VINDO AO OCUPAMAIS         ");
+            System.out.println("========================================");
 
-            perfil = scanner.nextInt();
-            scanner.nextLine();
+            System.out.println("Como qual tipo de usuário deseja entrar?");
+            System.out.println("\n1- Cidadão");
+            System.out.println("2- Gestor");
+            System.out.println("0- Sair\n");
+
+            perfil = lerInteiro();
 
             switch(perfil) {
                 case 1 -> menuCidadao();
                 case 2 -> menuGestor();
-                case 0 -> System.out.println("---- OBRIGADO POR UTILIZAR O OCUPAMAIS ----");
-                default -> System.out.println("Opção Inválida!");
+                case 0 -> System.out.println("==== OBRIGADO POR UTILIZAR O OCUPAMAIS ====");
+                default -> System.out.println("\nOpção Inválida!\n");
             }
         } while(perfil != 0);
     }
@@ -45,23 +48,27 @@ public class Menu {
         int opcao;
 
         do {
-            System.out.println("\n----------------------");
+            System.out.println("\n======================");
             System.out.println("    MENU DO CIDADÃO   ");
-            System.out.println("----------------------");
+            System.out.println("======================");
 
-            System.out.println("O que deseja realizar?");
-            System.out.println("1- Criar Solicitação");
+            System.out.println("\n1- Criar Solicitação");
             System.out.println("2- Buscar por Protocolo");
-            System.out.println("3- Voltar");
+            System.out.println("3- Voltar\n");
 
-            opcao = scanner.nextInt();
-            scanner.nextLine();
+            opcao = lerInteiro();
 
             switch(opcao) {
-                case 1 -> criarSolicitacao();
-                case 2 -> buscarPorProtocolo();
+                case 1 -> {
+                    criarSolicitacao();
+                    continuar();
+                }
+                case 2 -> {
+                    buscarPorProtocolo();
+                    continuar();
+                }
                 case 3 -> System.out.println("Voltando ao Menu Inicial...");
-                default -> System.out.println("Opção Inválida!");
+                default -> System.out.println("\nOpção Inválida!\n");
             }
         } while(opcao != 3);
     }
@@ -70,54 +77,67 @@ public class Menu {
         int opcao;
 
         do {
-            System.out.println("\n---------------------");
+            System.out.println("\n=====================");
             System.out.println("    MENU DO GESTOR   ");
-            System.out.println("---------------------");
+            System.out.println("=====================");
 
-            System.out.println("O que deseja realizar?");
-            System.out.println("1- Listar Solicitações da População");
+            System.out.println("\n1- Listar Solicitações da População");
             System.out.println("2- Filtrar Solicitações da População");
             System.out.println("3- Atualizar Status de uma Demanda");
-            System.out.println("4- Voltar");
+            System.out.println("4- Voltar\n");
 
-            opcao = scanner.nextInt();
-            scanner.nextLine();
+            opcao = lerInteiro();
 
             switch(opcao) {
-                case 1 -> listarSolicitacoes();
-                case 2 -> filtrarSolicitacoes();
-                case 3 -> atualizarStatus();
+                case 1 -> {
+                    listarSolicitacoes();
+                    continuar();
+                }
+                case 2 -> {
+                    filtrarSolicitacoes();
+                    continuar();
+                }
+                case 3 -> {
+                    atualizarStatus();
+                    continuar();
+                }
                 case 4 -> System.out.println("Voltando ao Menu Inicial...");
-                default -> System.out.println("Opção Inválida!");
+                default -> System.out.println("\nOpção Inválida!\n");
             }
         } while(opcao != 4);
     }
 
     private void criarSolicitacao() {
-        System.out.println("\n--- CRIANDO UMA SOLICITAÇÃO ----\n");
+        int anonimoTemp;
 
-        System.out.println("Deseja publicar identificado ou anonimamente?\n");
-        System.out.println("0- Publicar Identificado");
-        System.out.println("1- Publicar Anonimamente");
-        System.out.println("\nDigite o número correspondente a opção: ");
+        do {
+            System.out.println("\n===========================");
+            System.out.println("  CRIANDO UMA SOLICITAÇÃO  ");
+            System.out.println("===========================");
 
-        int anonimoTemp = scanner.nextInt();
-        scanner.nextLine();
+            System.out.println("Deseja publicar identificado ou anonimamente?\n");
+            System.out.println("0- Publicar Identificado");
+            System.out.println("1- Publicar Anonimamente");
+
+            System.out.print("\nDigite o número correspondente a opção: ");
+            anonimoTemp = lerInteiro();
+
+        } while (anonimoTemp != 0 && anonimoTemp != 1);
 
         boolean anonimo = anonimoTemp != 0;
 
         String nome = "";
         if(!anonimo) {
             while(nome.isBlank()) {
-                System.out.println("Digite seu nome: ");
+                System.out.print("\nDigite seu nome: ");
                 nome = scanner.nextLine();
             }
         }
 
-        System.out.println("\nDescreva o problema: ");
+        System.out.print("\nDescreva o problema: ");
         String descricao = scanner.nextLine();
 
-        System.out.println("\nLocalização do problema: ");
+        System.out.print("\nLocalização do problema: ");
         String localizacao = scanner.nextLine();
 
         Categoria categoria = null;
@@ -148,15 +168,15 @@ public class Menu {
 
         try {
             Solicitacao s = controller.criarSolicitacao(descricao, localizacao, categoria, prioridade, anonimo, nome);
-            System.out.println("Sua solicitação foi criada com sucesso!");
+            System.out.println("\nSua solicitação foi criada com sucesso!");
             System.out.println("Protocolo: " + s.getProtocolo());
         } catch (Exception e) {
-            System.out.println("Erro: " + e.getMessage());
+            System.out.println("\nErro: " + e.getMessage());
         }
     }
 
     private void buscarPorProtocolo() {
-        System.out.println("Digite o protocolo: ");
+        System.out.print("\nDigite o protocolo: ");
         String protocolo = scanner.nextLine();
 
         Solicitacao solicitacao = controller.buscarPorProtocolo(protocolo);
@@ -166,38 +186,65 @@ public class Menu {
             return;
         } else {
             System.out.println(solicitacao.resumoSolicitacao());
+            System.out.println("========================================");
         }
 
-        System.out.println("Deseja ver também o histórico de atualizações?\n Digite S/N");
-        String opcao = scanner.nextLine();
+        String opcao;
+
+        do {
+            System.out.println("Deseja ver também o histórico de atualizações? (S/N)");
+            opcao = scanner.nextLine();
+
+            if (!opcao.equalsIgnoreCase("S") && !opcao.equalsIgnoreCase("N")) {
+                System.out.println("Digite apenas S ou N.");
+            }
+
+        } while (!opcao.equalsIgnoreCase("S") && !opcao.equalsIgnoreCase("N"));
 
         if(opcao.equalsIgnoreCase("S")) {
             System.out.println(solicitacao.historicoSolicitacao());
+            System.out.print("========================================");
         }
     }
 
     private void listarSolicitacoes() {
-        System.out.println("Como deseja listar?");
-        System.out.println("1- Ver todas (incluindo encerradas)");
-        System.out.println("2- Ver apenas não encerradas");
+        int opcao;
 
-        int opcao = scanner.nextInt();
-        scanner.nextLine();
+        do {
+            System.out.println("\nComo deseja listar?");
+            System.out.println("\n1- Todas (incluindo encerradas)");
+            System.out.println("2- Apenas abertas\n");
 
-        switch(opcao) {
-            case 1 -> controller.listarSolicitacoes().forEach(System.out::println);
-            case 2 -> controller.listarSolicitacoesAbertas().forEach(System.out::println);
-            default -> System.out.println("Opção Inválida.");
-        }
+            opcao = lerInteiro();
+
+            System.out.println("\n================================================\n");
+
+            switch(opcao) {
+                case 1 -> controller.listarSolicitacoes().forEach(System.out::println);
+                case 2 -> controller.listarSolicitacoesAbertas().forEach(System.out::println);
+                default -> System.out.println("\nOpção Inválida.\n");
+            }
+        } while(opcao != 1 && opcao != 2);
+
+        System.out.println("\n================================================");
     }
 
     private void filtrarSolicitacoes() {
-        System.out.println("Selecione o tipo de filtro: ");
-        System.out.println("1- Por Categoria");
-        System.out.println("2- Por Prioridade");
+        int tipoFiltro;
 
-        int tipoFiltro = scanner.nextInt();
-        scanner.nextLine();
+        while(true) {
+            System.out.println("\nSelecione o tipo de filtro: ");
+            System.out.println("\n1- Por Categoria");
+            System.out.println("2- Por Prioridade");
+            System.out.println("3- Por Localização\n");
+
+            tipoFiltro = lerInteiro();
+
+            if (tipoFiltro >= 1 && tipoFiltro <= 3) {
+                break;
+            }
+            System.out.println("\nOpção inválida!\n");
+        }
 
         switch(tipoFiltro) {
             case 1 -> {
@@ -206,19 +253,19 @@ public class Menu {
                 while(categoria == null) {
                     System.out.println("\nSelecione a Categoria:");
                     Categoria.exibirOpcoes();
-
                     try {
                         categoria = lerCategoria();
                     } catch (IllegalArgumentException e) {
                         System.out.println("Categoria inválida.");
                     }
                 }
-
                 List<Solicitacao> resultado = controller.filtrarPorCategoria(categoria);
                 if(resultado.isEmpty()) {
-                    System.out.println("Nenhuma solicitação com o filtro " + categoria + " encontrada!");
+                    System.out.println("\nNenhuma solicitação com a categoria " + categoria + " encontrada!");
                 } else {
+                    System.out.println("\n================================================\n");
                     resultado.forEach(System.out::println);
+                    System.out.println("\n================================================");
                 }
             }
 
@@ -228,42 +275,56 @@ public class Menu {
                 while(prioridade == null) {
                     System.out.println("Selecione a prioridade:");
                     Prioridade.exibirOpcoes();
-
                     try {
                         prioridade = lerPrioridade();
                     } catch (IllegalArgumentException e) {
                         System.out.println("Prioridade inválida.");
                     }
                 }
-
                 List<Solicitacao> resultado = controller.filtrarPorPrioridade(prioridade);
                 if(resultado.isEmpty()) {
-                    System.out.println("Nenhuma solicitação com o filtro " + prioridade + " encontrada!");
+                    System.out.println("\nNenhuma solicitação com a prioridade " + prioridade + " encontrada!");
                 } else {
+                    System.out.println("\n================================================\n");
                     resultado.forEach(System.out::println);
+                    System.out.println("\n================================================");
                 }
             }
 
-            default -> System.out.println("Opção Inválida!");
+            case 3 -> {
+                System.out.print("Digite a localização desejada: ");
+                String localizacao = scanner.nextLine();
+
+                List<Solicitacao> resultado = controller.filtrarPorLocalizacao(localizacao);
+                if(resultado.isEmpty()) {
+                    System.out.println("\nNenhuma solicitação no local " + localizacao + " encontrada!");
+                } else {
+                    System.out.println("\n================================================\n");
+                    resultado.forEach(System.out::println);
+                    System.out.println("\n================================================");
+                }
+            }
+
+            default -> System.out.println("\nOpção Inválida!\n");
         }
     }
 
     private void atualizarStatus() {
-        System.out.println("Digite o protocolo: ");
+        System.out.print("\nDigite o protocolo: ");
         String protocolo = scanner.nextLine();
 
         Solicitacao solicitacao = controller.buscarPorProtocolo(protocolo);
 
         if(solicitacao == null) {
-            System.out.println("Solicitação não encontrada.");
+            System.out.println("\nSolicitação não encontrada.");
             return;
         }
 
         Status atual = solicitacao.getStatus();
-        Status proximo = null;
+        Status proximo;
 
         if(atual == Status.ENCERRADO) {
-            System.out.println("A solicitação já foi encerrada.");
+            System.out.println("\nA solicitação já foi encerrada.");
             return;
         } else {
             proximo = switch(atual) {
@@ -275,9 +336,34 @@ public class Menu {
             };
         }
 
-        System.out.println("Status atual: " + atual);
-        System.out.println("Deseja avançar para: " + proximo + "? (S/N)");
-        String opcao = scanner.nextLine();
+        String justificativa = null;
+
+        if(LocalDateTime.now().isAfter(solicitacao.getPrazo())) {
+            System.out.println("\nAtenção! Esta solicitação está atrasada!");
+
+            do {
+                System.out.println("\nInforme a justificativa do atraso:");
+                justificativa = scanner.nextLine();
+
+                if(justificativa.isBlank()) {
+                    System.out.println("\nJustificativa é obrigatória!");
+                }
+
+            } while(justificativa.isBlank());
+        }
+
+        System.out.println("\nStatus atual: " + atual);
+        String opcao;
+
+        do {
+            System.out.print("Deseja avançar para: " + proximo + "? (S/N): ");
+            opcao = scanner.nextLine();
+
+            if (!opcao.equalsIgnoreCase("S") && !opcao.equalsIgnoreCase("N")) {
+                System.out.println("Entrada inválida. Digite apenas S ou N.");
+            }
+
+        } while (!opcao.equalsIgnoreCase("N") && !opcao.equalsIgnoreCase("S"));
 
         if(opcao.equalsIgnoreCase("N")) {
             System.out.println("Operação cancelada.");
@@ -286,29 +372,44 @@ public class Menu {
 
         Status status = proximo;
 
-        System.out.println("Responsável pela mudança:");
+        System.out.print("\nResponsável pela mudança: ");
         String responsavel = scanner.nextLine();
 
-        System.out.println("Comentário:");
+        System.out.print("\nComentário: ");
         String comentario = scanner.nextLine();
 
         try {
-            controller.atualizarStatus(protocolo, status, responsavel, comentario);
-            System.out.println("Status alterado de " + atual + " para " + status + " com sucesso!");
+            controller.atualizarStatus(protocolo, status, responsavel, comentario, justificativa);
+            System.out.println("Solicitacao " + protocolo +
+                    " teve status alterado de " + atual + " para " + status + " com sucesso!");
         } catch (Exception e) {
             System.out.println("Erro: " + e.getMessage());
         }
     }
 
+    private int lerInteiro() {
+        while(true) {
+            try {
+                return Integer.parseInt(scanner.nextLine());
+            } catch (Exception e) {
+                System.out.print("Entrada inválida. Digite um número: ");
+            }
+        }
+    }
+
     private Categoria lerCategoria() {
-        int opcao = scanner.nextInt();
-        scanner.nextLine();
+        int opcao = lerInteiro();
         return Categoria.buscarPeloId(opcao);
     }
 
     private Prioridade lerPrioridade() {
-        int opcao = scanner.nextInt();
-        scanner.nextLine();
+        int opcao = lerInteiro();
         return Prioridade.buscarPeloId(opcao);
     }
+
+    private void continuar() {
+        System.out.println("\nPressione ENTER para continuar...");
+        scanner.nextLine();
+    }
+
 }
