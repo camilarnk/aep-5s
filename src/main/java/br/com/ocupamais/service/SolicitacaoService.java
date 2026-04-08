@@ -59,6 +59,11 @@ public class SolicitacaoService {
                 .filter(s -> s.getPrioridade() == prioridade).toList();
     }
 
+    public List<Solicitacao> filtrarPorLocalizacao(String localizacao) {
+        return repository.listarSolicitacoes().stream()
+                .filter(s -> s.getLocalizacao().equalsIgnoreCase(localizacao)).toList();
+    }
+
     public Solicitacao buscarPorProtocolo(String protocolo) {
         return repository.buscarPorProtocolo(protocolo);
     }

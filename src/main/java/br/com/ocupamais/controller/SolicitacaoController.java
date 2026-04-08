@@ -40,6 +40,10 @@ public class SolicitacaoController {
         return service.filtrarPorPrioridade(prioridade);
     }
 
+    public List<Solicitacao> filtrarPorLocalizacao(String localizacao) {
+        return service.filtrarPorLocalizacao(localizacao);
+    }
+
     public Solicitacao buscarPorProtocolo(String protocolo) {
         return service.buscarPorProtocolo(protocolo);
     }
