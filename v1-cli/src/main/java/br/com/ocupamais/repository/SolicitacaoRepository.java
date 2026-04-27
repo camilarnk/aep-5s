@@ -8,7 +8,7 @@ import java.util.List;
 
 public class SolicitacaoRepository {
 
-    private static final String ARQUIVO = "data/solicitacoes.dat";
+    private static final String ARQUIVO = "v1-cli/data/solicitacoes.dat";
 
     private List<Solicitacao> solicitacoes;
 

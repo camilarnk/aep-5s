@@ -9,6 +9,7 @@ mvnw.cmd
 
 src/main/resources/data/*.dat
 data/*.dat
+v1-cli/data
 
 ### IntelliJ IDEA ###
 .idea/
