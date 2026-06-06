@@ -196,3 +196,76 @@ hr {
     color: black;
 }
 
+.card-home {
+    width: 800px;
+
+    background: white;
+
+    border: 1px solid #ccc;
+    border-radius: 8px;
+
+    padding: 40px;
+}
+
+.card-home h1 {
+    font-size: 3rem;
+    margin-bottom: 16px;
+}
+
+.subtitulo-home {
+    font-size: 1.1rem;
+    color: #555;
+}
+
+.acoes-home {
+    display: flex;
+
+    gap: 16px;
+
+    margin-top: 24px;
+    margin-bottom: 24px;
+}
+
+.botao-home {
+
+    flex: 1;
+
+    padding: 12px 20px;
+
+    border: 1px solid #999;
+    border-radius: 6px;
+
+    text-decoration: none;
+    color: #222;
+
+    background: white;
+}
+
+.botao-home:hover {
+    background: #f7f7f7;
+}
+
+.passos-home {
+    margin-top: 24px;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 24px;
+}
+
+.passo-home {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.icone-home {
+    width: 40px;
+
+    font-size: 1.8rem;
+
+    display: flex;
+    justify-content: center;
+}
+

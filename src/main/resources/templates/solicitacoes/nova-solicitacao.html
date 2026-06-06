@@ -9,18 +9,7 @@
 </head>
 <body>
 
-<header class="navbar">
-    <div class="logo">
-        🌲 <span>OcupaMais</span>
-    </div>
-
-    <nav>
-        <a th:href="@{/}">Início</a>
-        <a th:href="@{/solicitacoes/nova}">Nova Solicitação</a>
-        <a th:href="@{/solicitacoes/acompanhar}">Acompanhar</a>
-        <a th:href="@{/gestor/login}">Área do Gestor</a>
-    </nav>
-</header>
+<header th:replace="~{fragments/navbar :: navbar}"></header>
 
 <main class="container">
 
