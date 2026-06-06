@@ -1,0 +1,169 @@
+package br.com.ocupamais.model;
+
+import jakarta.persistence.*;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+@Table(name = "tb_solicitacao")
+public class Solicitacao {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String protocolo;
+
+    private String descricao;
+    private String localizacao;
+    private LocalDateTime dataCriacao;
+    private LocalDateTime prazo;
+
+    @Enumerated(EnumType.STRING)
+    private Categoria categoria;
+
+    @Enumerated(EnumType.STRING)
+    private Prioridade prioridade;
+
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "solicitacao_protocolo")
+    private List<HistoricoStatus> historico = new ArrayList<>();
+
+    private boolean anonimo;
+    private String nomeSolicitante;
+
+    public Solicitacao() {}
+
+    public Solicitacao(String descricao, String localizacao,
+                       Categoria categoria, Prioridade prioridade,
+                       boolean anonimo, String nomeSolicitante) {
+
+        this.descricao = descricao;
+        this.localizacao = localizacao;
+        this.dataCriacao = LocalDateTime.now();
+        this.categoria = categoria;
+        this.prioridade = prioridade;
+        this.status = Status.ABERTO;
+        this.anonimo = anonimo;
+        this.nomeSolicitante = anonimo ? "Anonimo" : nomeSolicitante;
+
+        switch (prioridade) {
+            case BAIXA -> prazo = dataCriacao.plusDays(14);
+            case MEDIA -> prazo = dataCriacao.plusDays(7);
+            case ALTA -> prazo = dataCriacao.plusDays(3);
+        }
+    }
+
+    public String getProtocolo() {
+        return protocolo;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public String getLocalizacao() {
+        return localizacao;
+    }
+
+    public LocalDateTime getDataCriacao() {
+        return dataCriacao;
+    }
+
+    public LocalDateTime getPrazo() {
+        return prazo;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public Prioridade getPrioridade() {
+        return prioridade;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public List<HistoricoStatus> getHistorico() {
+        return historico;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public void adicionarHistorico(HistoricoStatus historicoStatus) {
+        this.historico.add(historicoStatus);
+    }
+
+    @Override
+    public String toString() {
+        return "Protocolo: " + protocolo +
+                " | Status: " + status +
+                " | Categoria: " + categoria +
+                " | Prioridade: " + prioridade;
+    }
+
+    public String resumoSolicitacao() {
+
+        StringBuilder sb = new StringBuilder();
+
+        DateTimeFormatter dataFormatada = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+
+        sb.append("\n==== RESUMO DA SOLICITAÇÃO ====\n\n");
+        sb.append("Data: ").append(dataCriacao.format(dataFormatada)).append("\n");
+        sb.append("Descrição/Problema: ").append(descricao).append("\n");
+        sb.append("Localização: ").append(localizacao).append("\n");
+        sb.append("Categoria: ").append(categoria).append("\n");
+        sb.append("Prioridade: ").append(prioridade).append("\n");
+        sb.append("Status atual: ").append(status).append("\n");
+        sb.append("Solicitante: ").append(nomeSolicitante).append("\n");
+        sb.append("Prazo: ").append(prazo.format(dataFormatada)).append("\n");
+
+        if (LocalDateTime.now().isAfter(prazo)) {
+            sb.append("PRAZO ATRASADO!!\n");
+
+            if(!historico.isEmpty()) {
+                HistoricoStatus ultimo = historico.getLast();
+
+                if(ultimo.getJustificativa() != null &&!ultimo.getJustificativa().isBlank()) {
+                    sb.append("Justificativa do atraso: ").append(ultimo.getJustificativa());
+                } else {
+                    sb.append("Não houve justificativa sobre o atraso.\n");
+                }
+            } else {
+                sb.append("Nenhuma atualização registrada.\n");
+            }
+        }
+        return sb.toString();
+    }
+
+    public String historicoSolicitacao() {
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("\n==== HISTÓRICO DE ATUALIZAÇÕES ====\n\n");
+
+        if(historico.isEmpty()) {
+            sb.append("Sem atualizações\n");
+        } else {
+            int i = 1;
+            DateTimeFormatter dataFormatada = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+
+            for(HistoricoStatus h : historico) {
+                sb.append("Atualização ").append(i++);
+                sb.append(" - ").append(h.getData().format(dataFormatada)).append("\n");
+                sb.append("Responsável: ").append(h.getResponsavel()).append("\n");
+                sb.append("Comentário: ").append(h.getComentario()).append("\n\n");
+            }
+        }
+        return sb.toString();
+    }
+
+}
