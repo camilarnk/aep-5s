@@ -204,7 +204,63 @@
 
             <!-- PASSO 3 -->
             <div id="passo3" class="passo oculto">
-                Passo 3
+
+                <span class="etapa">
+                    Passo 3 de 4 — Localização
+                </span>
+
+                <h2>Informe onde o problema foi encontrado</h2>
+
+                <div class="linha-localizacao">
+
+                    <div class="coluna-localizacao">
+
+                        <div class="campo-bloco">
+                            <label for="endereco">Endereço</label>
+                            <input type="text" id="endereco" name="endereco"
+                                   placeholder="Exemplo: Rua Brasil, 123">
+                        </div>
+
+                        <div class="campo-bloco">
+                            <label for="bairro">Bairro</label>
+                            <input type="text" id="bairro" name="bairro"
+                                   placeholder="Exemplo: Centro">
+                        </div>
+
+                        <div class="campo-bloco">
+                            <label for="referencia">Ponto de referência (opcional)</label>
+                            <input type="text" id="referencia" name="referencia"
+                                   placeholder="Exemplo: próximo ao parque">
+                        </div>
+
+                    </div>
+
+                    <div class="coluna-mapa">
+
+                        <div class="mapa-placeholder">
+                            🗺️ Mapa interativo (futuro)
+                        </div>
+
+                        <button type="button" class="btn-mapa">
+                            Selecionar no mapa
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <div class="acoes-duplas">
+
+                    <button type="button" id="btnVoltarPasso3">
+                        ← Voltar
+                    </button>
+
+                    <button type="button" id="btnPasso3">
+                        Avançar →
+                    </button>
+
+                </div>
+
             </div>
 
             <!-- PASSO 4 -->
@@ -249,99 +305,75 @@
 </main>
 
 <script>
+    const passos = [
+        document.getElementById("passo1"),
+        document.getElementById("passo2"),
+        document.getElementById("passo3"),
+        document.getElementById("passo4")
+    ];
+
+    const steps = [
+        document.getElementById("step1"),
+        document.getElementById("step2"),
+        document.getElementById("step3"),
+        document.getElementById("step4")
+    ];
+
+    const progressFill = document.getElementById("progressFill");
+
+    let passoAtual = 1;
+
+    function mostrarPasso(numero) {
+        passos.forEach((p, i) => {
+            p.classList.toggle("oculto", i !== numero - 1);
+        });
+
+        steps.forEach((s, i) => {
+            s.classList.toggle("ativo", i < numero);
+        });
+
+        const porcentagem = ((numero - 1) / (passos.length - 1)) * 100;
+        progressFill.style.width = porcentagem + "%";
+    }
+
+    document.getElementById("btnPasso1").addEventListener("click", () => {
+        mostrarPasso(2);
+    });
+
+    document.getElementById("btnVoltarPasso2").addEventListener("click", () => {
+        mostrarPasso(1);
+    });
+
+    document.getElementById("btnPasso2").addEventListener("click", () => {
+        mostrarPasso(3);
+    });
+
+    document.getElementById("btnVoltarPasso3").addEventListener("click", () => {
+        mostrarPasso(2);
+    });
+
+    document.getElementById("btnPasso3").addEventListener("click", () => {
+        mostrarPasso(4);
+    });
 
     function alternarNome() {
-
         const identificado =
-            document.querySelector(
-                'input[name="anonimo"][value="false"]'
-            );
+            document.querySelector('input[name="anonimo"][value="false"]');
 
-        const campoNome =
-            document.getElementById("campoNome");
-
-        const inputNome =
-            document.getElementById("nomeSolicitante");
+        const campoNome = document.getElementById("campoNome");
+        const inputNome = document.getElementById("nomeSolicitante");
 
         if (identificado.checked) {
-
             campoNome.classList.remove("oculto");
             inputNome.disabled = false;
-
         } else {
-
             campoNome.classList.add("oculto");
             inputNome.value = "";
             inputNome.disabled = true;
-
         }
     }
 
     alternarNome();
-
-    const passo1 =
-        document.getElementById("passo1");
-
-    const passo2 =
-        document.getElementById("passo2");
-
-    document
-        .getElementById("btnPasso1")
-        .addEventListener("click", () => {
-
-            passo1.classList.add("oculto");
-            passo2.classList.remove("oculto");
-
-        });
-
-    document
-        .getElementById("btnVoltarPasso2")
-        .addEventListener("click", () => {
-
-            passo2.classList.add("oculto");
-            passo1.classList.remove("oculto");
-
-        });
-
-    document
-    .getElementById("btnPasso1")
-    .addEventListener("click", () => {
-
-        passo1.classList.add("oculto");
-        passo2.classList.remove("oculto");
-
-        document
-            .getElementById("step1")
-            .classList.remove("ativo");
-
-        document
-            .getElementById("step2")
-            .classList.add("ativo");
-
-        document
-            .getElementById("progressFill")
-            .style.width = "50%";
-    });
-
-    document
-    .getElementById("btnVoltarPasso2")
-    .addEventListener("click", () => {
-
-        passo2.classList.add("oculto");
-        passo1.classList.remove("oculto");
-
-        document
-            .getElementById("step2")
-            .classList.remove("ativo");
-
-        document
-            .getElementById("step1")
-            .classList.add("ativo");
-
-        document
-            .getElementById("progressFill")
-            .style.width = "25%";
-    });
 
 </script>
 
