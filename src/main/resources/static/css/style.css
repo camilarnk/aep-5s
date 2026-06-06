@@ -80,7 +80,7 @@ hr {
     margin-bottom: 16px;
 }
 
-#passo1 h2 {
+.passo h2 {
     font-size: 1.4rem;
     margin-bottom: 20px;
 }
@@ -267,5 +267,90 @@ hr {
 
     display: flex;
     justify-content: center;
+}
+
+
+/* PASSO 2 - NOVA SOLICITAÇÃO */
+
+#passo2 label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+#descricao {
+    width: 100%;
+
+    resize: vertical;
+
+    padding: 12px;
+
+    border: 1px solid #ccc;
+    border-radius: 6px;
+
+    font-family: inherit;
+}
+
+.texto-ajuda {
+    display: block;
+
+    margin-top: 8px;
+
+    color: #666;
+}
+
+.linha-campos {
+    display: flex;
+    gap: 24px;
+
+    margin-top: 16px;
+}
+
+.campo {
+    flex: 1;
+}
+
+.campo select {
+    width: 100%;
+
+    padding: 10px;
+
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+.grupo-prioridade {
+    display: flex;
+    flex-direction: column;
+
+    gap: 4px;
+
+    margin-top: 8px;
+}
+
+.grupo-prioridade label {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+}
+
+.acoes-duplas {
+    margin-top: 16px;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+.acoes-duplas button {
+    padding: 10px 18px;
+
+    min-width: 120px;
+
+    border: 1px solid #999;
+    border-radius: 6px;
+
+    background: white;
+
+    cursor: pointer;
 }
 
