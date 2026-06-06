@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Nova Solicitação - OcupaMais</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<header class="navbar">
+    <div class="logo">
+        🌲 <span>OcupaMais</span>
+    </div>
+
+    <nav>
+        <a th:href="@{/}">Início</a>
+        <a th:href="@{/solicitacoes/nova}">Nova Solicitação</a>
+        <a th:href="@{/solicitacoes/acompanhar}">Acompanhar</a>
+        <a th:href="@{/gestor/login}">Área do Gestor</a>
+    </nav>
+</header>
+
+<main class="container">
+
+    <section class="card-formulario">
+
+        <h1>Nova Solicitação</h1>
+
+        <p class="subtitulo">
+            Relate problemas encontrados em espaços públicos da cidade.
+        </p>
+
+        <hr>
+
+        <!-- PASSO 1 -->
+        <div id="passo1">
+
+            <span class="etapa">
+                Passo 1 de 4 — Identificação
+            </span>
+
+            <h2>Como deseja realizar sua solicitação?</h2>
+
+            <div class="grupo-radio">
+
+                <label>
+                    <input
+                            type="radio"
+                            name="modoEnvio"
+                            value="identificado"
+                            onclick="alternarNome()">
+                    Quero me identificar
+                </label>
+
+                <div id="campoNome" class="campo-nome oculto">
+
+                    <label for="nome">
+                        Digite seu nome:
+                    </label>
+
+                    <input
+                            type="text"
+                            id="nome"
+                            name="nome"
+                            placeholder="Ex.: Maria Silva">
+
+                </div>
+
+                <label>
+                    <input
+                            type="radio"
+                            name="modoEnvio"
+                            value="anonimo"
+                            checked
+                            onclick="alternarNome()">
+                    Desejo enviar anonimamente
+                </label>
+
+            </div>
+
+            <div class="info-box">
+                <span class="icone-info">ⓘ</span>
+                Denúncias anônimas também serão analisadas.
+            </div>
+
+            <div class="acoes">
+                <button type="button">
+                    Avançar →
+                </button>
+            </div>
+
+        </div>
+
+        <!-- PASSO 2 -->
+        <div id="passo2" class="oculto">
+            Passo 2
+        </div>
+
+        <!-- PASSO 3 -->
+        <div id="passo3" class="oculto">
+            Passo 3
+        </div>
+
+        <!-- PASSO 4 -->
+        <div id="passo4" class="oculto">
+            Passo 4
+        </div>
+
+        <hr>
+
+        <div class="progress-wrapper">
+
+            <div class="progress-line">
+                <div class="progress-fill"></div>
+            </div>
+
+            <div class="progress-container">
+
+                <div class="progress-step ativo">
+                    Identificação
+                </div>
+
+                <div class="progress-step">
+                    Detalhes
+                </div>
+
+                <div class="progress-step">
+                    Localização
+                </div>
+
+                <div class="progress-step">
+                    Confirmação
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+<script>
+
+    function alternarNome() {
+
+        const identificado =
+            document.querySelector(
+                'input[name="modoEnvio"][value="identificado"]'
+            );
+
+        const campoNome =
+            document.getElementById("campoNome");
+
+        const inputNome =
+            document.getElementById("nome");
+
+        if (identificado.checked) {
+
+            campoNome.classList.remove("oculto");
+            inputNome.disabled = false;
+
+        } else {
+
+            campoNome.classList.add("oculto");
+            inputNome.value = "";
+            inputNome.disabled = true;
+
+        }
+    }
+
+    alternarNome();
+
+</script>
+
+</body>
+</html>

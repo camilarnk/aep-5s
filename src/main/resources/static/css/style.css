@@ -1,0 +1,198 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #cfdbca;
+    color: #222;
+}
+
+.navbar {
+    background: white;
+    border-bottom: 1px solid #ccc;
+
+    padding: 16px 32px;
+
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.navbar nav {
+    display: flex;
+    gap: 20px;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: #222;
+}
+
+.logo {
+    font-size: 1.4rem;
+    font-weight: bold;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+
+    padding: 40px 20px;
+}
+
+.card-formulario {
+    width: 800px;
+
+    background: white;
+
+    border: 1px solid #ccc;
+    border-radius: 8px;
+
+    padding: 32px;
+}
+
+.card-formulario h1 {
+    font-size: 2rem;
+    margin-bottom: 8px;
+}
+
+.subtitulo {
+    color: #555;
+    margin-bottom: 24px;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #ddd;
+    margin: 20px 0;
+}
+
+.etapa {
+    display: block;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+#passo1 h2 {
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+}
+
+.grupo-radio {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.info-box {
+    margin-top: 24px;
+
+    padding: 12px;
+
+    border: 1px solid #ddd;
+    border-radius: 6px;
+
+    background: #fafafa;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.icone-info {
+    font-size: 14px;
+}
+
+.acoes {
+    margin-top: 30px;
+
+    display: flex;
+    justify-content: flex-end;
+}
+
+.acoes button {
+    padding: 10px 18px;
+
+    border: 1px solid #999;
+    border-radius: 6px;
+
+    background: white;
+
+    min-width: 120px;
+
+    cursor: pointer;
+}
+
+.campo-nome {
+    margin-left: 38px;
+    margin-top: 8px;
+    margin-bottom: 14px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.campo-nome input {
+    width: 300px;
+
+    padding: 10px;
+
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+.oculto {
+    display: none;
+}
+
+.progress-wrapper {
+    width: 70%;
+    margin: 30px auto 0 auto;
+}
+
+.progress-line {
+    width: 100%;
+    height: 6px;
+
+    background: #d9d9d9;
+
+    margin: 0 auto 10px auto;
+
+    border-radius: 999px;
+}
+
+.progress-fill {
+    width: 25%;
+    height: 100%;
+
+    background: #555;
+
+    border-radius: 999px;
+}
+
+.progress-container {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+
+    margin-top: 8px;
+}
+
+.progress-step {
+    font-size: 0.9rem;
+    color: #777;
+}
+
+.progress-step.ativo {
+    font-weight: bold;
+    color: black;
+}
+
