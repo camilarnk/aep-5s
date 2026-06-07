@@ -2,11 +2,13 @@ package br.com.ocupamais.service;
 
 import br.com.ocupamais.model.*;
 import br.com.ocupamais.repository.SolicitacaoRepository;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 
+@Service
 public class SolicitacaoService {
 
     private final SolicitacaoRepository repository;
@@ -35,39 +37,43 @@ public class SolicitacaoService {
                 descricao, localizacao, categoria, prioridade, anonimo, nomeSolicitante
         );
 
-        repository.salvarSolicitacao(novaSolicitacao);
+        repository.save(novaSolicitacao);
         return novaSolicitacao;
     }
 
     public List<Solicitacao> listarSolicitacoes() {
-        return repository.listarSolicitacoes().stream()
-                .sorted(Comparator.comparing(Solicitacao::getPrioridade)).toList();
+        return repository.findAll().stream()
+                .sorted(Comparator.comparing(Solicitacao::getPrioridade))
+                .toList();
     }
 
     public List<Solicitacao> listarSolicitacoesAbertas() {
-        return repository.listarSolicitacoes().stream().
-                filter(s -> s.getStatus() != Status.ENCERRADO).toList();
+        return repository.findAll().stream().
+                filter(s -> s.getStatus() != Status.ENCERRADO)
+                .toList();
     }
 
     public List<Solicitacao> filtrarPorCategoria(Categoria categoria) {
-        return repository.listarSolicitacoes().stream()
-                .filter(s -> s.getCategoria() == categoria).toList();
+        return repository.findAll().stream()
+                .filter(s -> s.getCategoria() == categoria)
+                .toList();
     }
 
     public List<Solicitacao> filtrarPorPrioridade(Prioridade prioridade) {
-        return repository.listarSolicitacoes().stream()
-                .filter(s -> s.getPrioridade() == prioridade).toList();
+        return repository.findAll().stream()
+                .filter(s -> s.getPrioridade() == prioridade)
+                .toList();
     }
 
     public List<Solicitacao> filtrarPorLocalizacao(String localizacao) {
-        return repository.listarSolicitacoes().stream()
+        return repository.findAll().stream()
                 .filter(s -> s.getLocalizacao().toLowerCase()
                         .contains(localizacao.toLowerCase()))
                 .toList();
     }
 
     public Solicitacao buscarPorProtocolo(String protocolo) {
-        return repository.buscarPorProtocolo(protocolo);
+        return repository.findById(protocolo).orElse(null);
     }
 
     public void atualizarStatus(String protocolo, Status novoStatus,
@@ -82,7 +88,7 @@ public class SolicitacaoService {
             throw new IllegalArgumentException("Comentário obrigatório");
         }
 
-        Solicitacao solicitacao = repository.buscarPorProtocolo(protocolo);
+        Solicitacao solicitacao = repository.findById(protocolo).orElse(null);
 
         if(solicitacao == null) {
             throw new IllegalArgumentException("Solicitação não encontrada");
@@ -104,7 +110,7 @@ public class SolicitacaoService {
         HistoricoStatus historico = new HistoricoStatus(novoStatus, responsavel, comentario, justificativa);
         solicitacao.adicionarHistorico(historico);
 
-        repository.salvarArquivo();
+        repository.save(solicitacao);
     }
 
     private boolean fluxoValido(Status atual, Status novo) {

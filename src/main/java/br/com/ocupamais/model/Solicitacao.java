@@ -1,43 +1,53 @@
 package br.com.ocupamais.model;
 
-import java.io.Serializable;
+import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
-public class Solicitacao implements Serializable {
+@Entity
+@Table(name = "tb_solicitacao")
+public class Solicitacao {
 
-    // controle de versao da serializaçao de arquivo
-    private static final long serialVersionUID = 1L;
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String protocolo;
+
     private String descricao;
     private String localizacao;
     private LocalDateTime dataCriacao;
     private LocalDateTime prazo;
 
+    @Enumerated(EnumType.STRING)
     private Categoria categoria;
+
+    @Enumerated(EnumType.STRING)
     private Prioridade prioridade;
+
+    @Enumerated(EnumType.STRING)
     private Status status;
-    private List<HistoricoStatus> historico;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "solicitacao_protocolo")
+    private List<HistoricoStatus> historico = new ArrayList<>();
 
     private boolean anonimo;
     private String nomeSolicitante;
 
+    public Solicitacao() {}
+
     public Solicitacao(String descricao, String localizacao,
                        Categoria categoria, Prioridade prioridade,
-                        boolean anonimo, String nomeSolicitante) {
+                       boolean anonimo, String nomeSolicitante) {
 
-        this.protocolo = UUID.randomUUID().toString(); // cria id unico como o codigo do protocolo
         this.descricao = descricao;
         this.localizacao = localizacao;
         this.dataCriacao = LocalDateTime.now();
         this.categoria = categoria;
         this.prioridade = prioridade;
         this.status = Status.ABERTO;
-        this.historico = new ArrayList<>();
         this.anonimo = anonimo;
         this.nomeSolicitante = anonimo ? "Anonimo" : nomeSolicitante;
 

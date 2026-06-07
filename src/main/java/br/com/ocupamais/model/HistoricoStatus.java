@@ -1,15 +1,26 @@
 package br.com.ocupamais.model;
 
-import java.io.Serializable;
+import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 
-public class HistoricoStatus implements Serializable {
+@Entity
+@Table(name = "tb_historico_status")
+public class HistoricoStatus {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Enumerated(EnumType.STRING)
     private Status status;
+
     private LocalDateTime data;
     private String responsavel;
     private String comentario;
     private String justificativa;
+
+    public HistoricoStatus() {}
 
     public HistoricoStatus(Status status, String responsavel, String comentario, String justificativa) {
         this.status = status;

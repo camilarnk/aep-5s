@@ -1,0 +1,515 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #cfdbca;
+    color: #222;
+}
+
+.navbar {
+    background: white;
+    border-bottom: 1px solid #ccc;
+
+    padding: 16px 32px;
+
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.navbar nav {
+    display: flex;
+    gap: 20px;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: #222;
+}
+
+.logo {
+    font-size: 1.4rem;
+    font-weight: bold;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+
+    padding: 40px 20px;
+}
+
+.card-formulario {
+    width: 800px;
+
+    background: white;
+
+    border: 1px solid #ccc;
+    border-radius: 8px;
+
+    padding: 32px;
+}
+
+.card-formulario h1 {
+    font-size: 2rem;
+    margin-bottom: 8px;
+}
+
+.subtitulo {
+    color: #555;
+    margin-bottom: 24px;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #ddd;
+    margin: 20px 0;
+}
+
+.etapa {
+    display: block;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+.passo h2 {
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+}
+
+.grupo-radio {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.info-box {
+    margin-top: 24px;
+
+    padding: 12px;
+
+    border: 1px solid #ddd;
+    border-radius: 6px;
+
+    background: #fafafa;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.icone-info {
+    font-size: 14px;
+}
+
+.acoes {
+    margin-top: 30px;
+
+    display: flex;
+    justify-content: flex-end;
+}
+
+.acoes button {
+    padding: 10px 18px;
+
+    border: 1px solid #999;
+    border-radius: 6px;
+
+    background: white;
+
+    min-width: 120px;
+
+    cursor: pointer;
+}
+
+.campo-nome {
+    margin-left: 38px;
+    margin-top: 8px;
+    margin-bottom: 14px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.campo-nome input {
+    width: 300px;
+
+    padding: 10px;
+
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+.oculto {
+    display: none;
+}
+
+.progress-wrapper {
+    width: 70%;
+    margin: 30px auto 0 auto;
+}
+
+.progress-line {
+    height: 8px;
+    background: #e0e0e0;
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: #555;
+    border-radius: 999px;
+    width: 0%;
+    transition: width 0.3s ease;
+}
+
+.progress-container {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+
+    margin-top: 8px;
+}
+
+.progress-step {
+    font-size: 0.85rem;
+    color: #777;
+    transition: all 0.2s ease;
+}
+
+.progress-step.ativo {
+    font-weight: 600;
+    color: #222;
+}
+
+.progress-step.concluido {
+    color: #444;
+}
+
+.card-home {
+    width: 800px;
+
+    background: white;
+
+    border: 1px solid #ccc;
+    border-radius: 8px;
+
+    padding: 40px;
+}
+
+.card-home h1 {
+    font-size: 3rem;
+    margin-bottom: 16px;
+}
+
+.subtitulo-home {
+    font-size: 1.1rem;
+    color: #555;
+}
+
+.acoes-home {
+    display: flex;
+
+    gap: 16px;
+
+    margin-top: 24px;
+    margin-bottom: 24px;
+}
+
+.botao-home {
+
+    flex: 1;
+
+    padding: 12px 20px;
+
+    border: 1px solid #999;
+    border-radius: 6px;
+
+    text-decoration: none;
+    color: #222;
+
+    background: white;
+}
+
+.botao-home:hover {
+    background: #f7f7f7;
+}
+
+.passos-home {
+    margin-top: 24px;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 24px;
+}
+
+.passo-home {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.icone-home {
+    width: 40px;
+
+    font-size: 1.8rem;
+
+    display: flex;
+    justify-content: center;
+}
+
+
+/* PASSO 2 - NOVA SOLICITAÇÃO */
+
+#passo2 label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+#descricao {
+    width: 100%;
+
+    resize: vertical;
+
+    padding: 12px;
+
+    border: 1px solid #ccc;
+    border-radius: 6px;
+
+    font-family: inherit;
+}
+
+.texto-ajuda {
+    display: block;
+
+    margin-top: 8px;
+
+    color: #666;
+}
+
+.linha-campos {
+    display: flex;
+    gap: 24px;
+
+    margin-top: 16px;
+}
+
+.campo {
+    flex: 1;
+}
+
+.campo select {
+    width: 100%;
+
+    padding: 10px;
+
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+.grupo-prioridade {
+    display: flex;
+    flex-direction: column;
+
+    gap: 4px;
+
+    margin-top: 8px;
+}
+
+.grupo-prioridade label {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+}
+
+.acoes-duplas {
+    margin-top: 16px;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+.acoes-duplas button {
+    padding: 10px 18px;
+
+    min-width: 120px;
+
+    border: 1px solid #999;
+    border-radius: 6px;
+
+    background: white;
+
+    cursor: pointer;
+}
+
+/* PASSO 3 - NOVA SOLICITAÇÃO */
+
+.campo-bloco {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    margin-bottom: 10px;
+}
+
+.linha-localizacao {
+    display: flex;
+    gap: 24px;
+    margin-top: 16px;
+}
+
+.coluna-localizacao {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.coluna-localizacao input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+.coluna-mapa {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.mapa-placeholder {
+    height: 225px;
+    border: 1px dashed #aaa;
+    border-radius: 8px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #777;
+    background: #fafafa;
+}
+
+.btn-mapa {
+    padding: 8px;
+    border: 1px solid #999;
+    border-radius: 6px;
+    background: white;
+    cursor: pointer;
+}
+
+/* PASSO 4 - CRIAR SOLICITAÇÃO */
+
+.resumo-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 16px;
+}
+
+.resumo-card {
+    flex: 1;
+    min-width: 45%;
+
+    border: 1px solid #ccc;
+    border-radius: 8px;
+
+    padding: 16px;
+}
+
+.resumo-card h3 {
+    margin-bottom: 10px;
+    font-size: 1rem;
+}
+
+.resumo-full {
+    flex: 1 1 100%;
+}
+
+.termos-container {
+    margin-top: 16px;
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 4px;
+}
+
+.checkbox-termos {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    font-size: 0.9rem;
+    color: #444;
+
+    cursor: pointer;
+}
+
+.checkbox-termos input {
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+/* TELA DE SUCESSO */
+
+.card-sucesso {
+    width: 650px;
+
+    background: white;
+
+    border: 1px solid #999;
+    border-radius: 6px;
+
+    padding: 40px;
+
+    text-align: center;
+}
+
+.icone-sucesso {
+    font-size: 3rem;
+
+    margin-bottom: 10px;
+}
+
+.card-sucesso h1 {
+    margin-bottom: 28px;
+}
+
+.texto-sucesso {
+    margin: 16px 0;
+}
+
+.protocolo-box {
+    font-size: 1.8rem;
+    font-weight: bold;
+
+    margin: 20px 0 30px 0;
+}
+
+.acoes-sucesso {
+    margin-top: 24px;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    gap: 8px;
+}
+
+.acoes-sucesso .botao-home {
+    width: 220px;
+
+    text-align: center;
+}

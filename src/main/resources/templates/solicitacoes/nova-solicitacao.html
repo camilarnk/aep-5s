@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Nova Solicitação - OcupaMais</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<header th:replace="~{fragments/navbar :: navbar}"></header>
+
+<main class="container">
+
+    <section class="card-formulario">
+
+        <h1>Nova Solicitação</h1>
+
+        <p class="subtitulo">
+            Relate problemas encontrados em espaços públicos da cidade.
+        </p>
+
+        <hr>
+
+        <form id="formSolicitacao" th:action="@{/solicitacoes}" method="post">
+
+            <!-- PASSO 1 -->
+            <div id="passo1" class="passo">
+
+                <span class="etapa">
+                    Passo 1 de 4 — Identificação
+                </span>
+
+                <h2>Como deseja realizar sua solicitação?</h2>
+
+                <div class="grupo-radio">
+
+                    <label>
+                        <input
+                            type="radio"
+                            name="anonimo"
+                            value="false"
+                            onclick="alternarNome()">
+                        Quero me identificar
+                    </label>
+
+                    <div id="campoNome" class="campo-nome oculto">
+
+                        <label for="nomeSolicitante">
+                            Digite seu nome:
+                        </label>
+
+                        <input
+                            type="text"
+                            id="nomeSolicitante"
+                            name="nomeSolicitante"
+                            placeholder="Ex.: Maria Silva">
+
+                    </div>
+
+                    <label>
+                        <input
+                            type="radio"
+                            name="anonimo"
+                            value="true"
+                            checked
+                            onclick="alternarNome()">
+                        Desejo enviar anonimamente
+                    </label>
+
+                </div>
+
+                <div class="info-box">
+                    <span class="icone-info">ⓘ</span>
+                    Denúncias anônimas também serão analisadas.
+                </div>
+
+                <div class="acoes">
+                    <button type="button" id="btnPasso1">
+                        Avançar →
+                    </button>
+                </div>
+
+            </div>
+
+            <!-- PASSO 2 -->
+            <div id="passo2" class="passo oculto">
+
+                <span class="etapa">
+                    Passo 2 de 4 — Detalhes
+                </span>
+
+                <h2>Detalhes da solicitação</h2>
+
+                <label for="descricao">
+                    Descrição do problema
+                </label>
+
+                <textarea
+                    id="descricao"
+                    name="descricao"
+                    rows="5"
+                    placeholder="Exemplo: Poste sem iluminação próximo à praça."></textarea>
+
+                <hr>
+
+                <div class="linha-campos">
+
+                    <div class="campo">
+
+                        <label for="categoria">
+                            Categoria
+                        </label>
+
+                        <select id="categoria" name="categoria">
+                            <option value="">
+                                Selecione
+                            </option>
+
+                            <option value="ILUMINACAO">
+                                Iluminação
+                            </option>
+
+                            <option value="BURACO">
+                                Buraco
+                            </option>
+
+                            <option value="LIMPEZA">
+                                Limpeza
+                            </option>
+
+                            <option value="SAUDE">
+                                Saúde
+                            </option>
+
+                            <option value="SEGURANCA">
+                                Segurança
+                            </option>
+
+                            <option value="EDUCACAO">
+                                Educação
+                            </option>
+
+                            <option value="OUTROS">
+                                Outros
+                            </option>
+                        </select>
+
+                    </div>
+
+                    <div class="campo">
+
+                        <label>
+                            Prioridade
+                        </label>
+
+                        <div class="grupo-prioridade">
+
+                            <label>
+                                <input
+                                    type="radio"
+                                    name="prioridade"
+                                    value="BAIXA">
+                                Baixa
+                            </label>
+
+                            <label>
+                                <input
+                                    type="radio"
+                                    name="prioridade"
+                                    value="MEDIA"
+                                    checked>
+                                Média
+                            </label>
+
+                            <label>
+                                <input
+                                    type="radio"
+                                    name="prioridade"
+                                    value="ALTA">
+                                Alta
+                            </label>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="acoes-duplas">
+
+                    <button type="button" id="btnVoltarPasso2">
+                        ← Voltar
+                    </button>
+
+                    <button type="button" id="btnPasso2">
+                        Avançar →
+                    </button>
+
+                </div>
+
+            </div>
+
+            <!-- PASSO 3 -->
+            <div id="passo3" class="passo oculto">
+
+                <span class="etapa">
+                    Passo 3 de 4 — Localização
+                </span>
+
+                <h2>Informe onde o problema foi encontrado</h2>
+
+                <div class="linha-localizacao">
+
+                    <div class="coluna-localizacao">
+
+                        <div class="campo-bloco">
+                            <label for="endereco">Endereço</label>
+                            <input type="text" id="endereco" name="endereco"
+                                   placeholder="Exemplo: Rua Brasil, 123">
+                        </div>
+
+                        <div class="campo-bloco">
+                            <label for="bairro">Bairro</label>
+                            <input type="text" id="bairro" name="bairro"
+                                   placeholder="Exemplo: Centro">
+                        </div>
+
+                        <div class="campo-bloco">
+                            <label for="referencia">Ponto de referência (opcional)</label>
+                            <input type="text" id="referencia" name="referencia"
+                                   placeholder="Exemplo: Próximo ao parque">
+                        </div>
+
+                    </div>
+
+                    <div class="coluna-mapa">
+
+                        <div class="mapa-placeholder">
+                            🗺️ Mapa interativo (futuro)
+                        </div>
+
+                        <button type="button" class="btn-mapa">
+                            Selecionar no mapa
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <div class="acoes-duplas">
+
+                    <button type="button" id="btnVoltarPasso3">
+                        ← Voltar
+                    </button>
+
+                    <button type="button" id="btnPasso3">
+                        Avançar →
+                    </button>
+
+                </div>
+
+            </div>
+
+            <!-- PASSO 4 -->
+            <div id="passo4" class="passo oculto">
+
+                <span class="etapa">
+                    Passo 4 de 4 — Confirmação
+                </span>
+
+                <h2>Revise as informações antes de enviar</h2>
+
+                <div class="resumo-grid">
+
+                    <div class="resumo-card">
+                        <h3>Identificação</h3>
+                        <p id="resumoModo"></p>
+                        <p id="resumoNome"></p>
+                    </div>
+
+                    <div class="resumo-card">
+                        <h3>Localização</h3>
+                        <p id="resumoEndereco"></p>
+                    </div>
+
+                    <div class="resumo-card resumo-full">
+                        <h3>Detalhes</h3>
+                        <p id="resumoCategoria"></p>
+                        <p id="resumoPrioridade"></p>
+                        <p id="resumoDescricao"></p>
+                    </div>
+
+                </div>
+
+                <div class="termos-container">
+                    <label class="checkbox-termos">
+                        <input type="checkbox" id="termos" required>
+                        Declaro que as informações fornecidas são verdadeiras
+                    </label>
+                </div>
+
+                <div class="acoes-duplas">
+                    <button type="button" id="btnVoltarPasso4">
+                        ← Voltar
+                    </button>
+
+                    <button type="submit" id="btnEnviar">
+                        Enviar solicitação ➤
+                    </button>
+                </div>
+
+            </div>
+
+        </form>
+
+        <hr>
+
+        <div class="progress-wrapper">
+
+            <div class="progress-line">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+
+            <div class="progress-container">
+
+                <div class="progress-step ativo" id="step1">
+                    Identificação
+                </div>
+
+                <div class="progress-step" id="step2">
+                    Detalhes
+                </div>
+
+                <div class="progress-step" id="step3">
+                    Localização
+                </div>
+
+                <div class="progress-step" id="step4">
+                    Confirmação
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+<script>
+    const passos = [
+        document.getElementById("passo1"),
+        document.getElementById("passo2"),
+        document.getElementById("passo3"),
+        document.getElementById("passo4")
+    ];
+
+    const steps = [
+        document.getElementById("step1"),
+        document.getElementById("step2"),
+        document.getElementById("step3"),
+        document.getElementById("step4")
+    ];
+
+    const progressFill = document.getElementById("progressFill");
+
+    function mostrarPasso(numero) {
+        passos.forEach((p, i) => {
+            p.classList.toggle("oculto", i !== numero - 1);
+        });
+
+        steps.forEach((s, i) => {
+            s.classList.toggle("ativo", i === numero - 1);
+        });
+
+        const porcentagem = ((numero - 1) / (passos.length - 1)) * 100;
+        progressFill.style.width = porcentagem + "%";
+
+        if (numero === 4) {
+            preencherResumo();
+        }
+    }
+
+    document.getElementById("btnPasso1").onclick = () => mostrarPasso(2);
+    document.getElementById("btnVoltarPasso2").onclick = () => mostrarPasso(1);
+    document.getElementById("btnPasso2").onclick = () => mostrarPasso(3);
+    document.getElementById("btnVoltarPasso3").onclick = () => mostrarPasso(2);
+    document.getElementById("btnPasso3").onclick = () => mostrarPasso(4);
+    document.getElementById("btnVoltarPasso4").onclick = () => mostrarPasso(3);
+
+    function alternarNome() {
+        const identificado =
+            document.querySelector('input[name="anonimo"][value="false"]');
+
+        const campoNome = document.getElementById("campoNome");
+        const inputNome = document.getElementById("nomeSolicitante");
+
+        const ativo = identificado.checked;
+
+        campoNome.classList.toggle("oculto", !ativo);
+        inputNome.disabled = !ativo;
+
+        if (!ativo) {
+            inputNome.value = "";
+        }
+    }
+
+    alternarNome();
+
+    function obterDadosFormulario() {
+        return {
+            anonimo: document.querySelector('input[name="anonimo"]:checked').value,
+            nome: document.getElementById("nomeSolicitante").value,
+            categoria: document.getElementById("categoria").value,
+            prioridade: document.querySelector('input[name="prioridade"]:checked').value,
+            descricao: document.getElementById("descricao").value,
+            endereco: document.getElementById("endereco").value,
+            bairro: document.getElementById("bairro").value,
+            referencia: document.getElementById("referencia").value
+        };
+    }
+
+    function montarLocalizacao() {
+        const endereco = document.getElementById("endereco").value;
+        const bairro = document.getElementById("bairro").value;
+        const referencia = document.getElementById("referencia").value;
+
+        return [endereco, bairro, referencia]
+            .filter(v => v && v.trim() !== "").join(" - ");
+    }
+
+    function preencherResumo() {
+        const d = obterDadosFormulario();
+
+        document.getElementById("resumoModo").innerText =
+            d.anonimo === "true" ? "Modo: Anônimo" : "Modo: Identificado";
+
+        document.getElementById("resumoNome").innerText =
+            d.anonimo === "false" ? "Nome: " + d.nome : "";
+
+        document.getElementById("resumoCategoria").innerText =
+            "Categoria: " + d.categoria;
+
+        document.getElementById("resumoPrioridade").innerText =
+            "Prioridade: " + d.prioridade;
+
+        document.getElementById("resumoDescricao").innerText =
+            "Descrição: " + d.descricao;
+
+        document.getElementById("resumoEndereco").innerText =
+            montarLocalizacao();
+    }
+
+    document.getElementById("formSolicitacao").addEventListener("submit", (event) => {
+        const aceitou =
+            document.getElementById("termos").checked;
+        if (!aceitou) {
+            event.preventDefault();
+            alert(
+                "Você precisa confirmar que as informações são verdadeiras."
+            );
+        }
+    });
+
+</script>
+
+</body>
+</html>

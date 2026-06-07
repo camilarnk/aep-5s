@@ -1,13 +1,17 @@
 package br.com.ocupamais.controller;
-
 import br.com.ocupamais.model.Categoria;
 import br.com.ocupamais.model.Prioridade;
 import br.com.ocupamais.model.Solicitacao;
-import br.com.ocupamais.model.Status;
 import br.com.ocupamais.service.SolicitacaoService;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
-
+@Controller
+@RequestMapping("/solicitacoes")
 public class SolicitacaoController {
 
     private final SolicitacaoService service;
@@ -16,43 +20,38 @@ public class SolicitacaoController {
         this.service = service;
     }
 
-    public Solicitacao criarSolicitacao(String descricao, String localizacao,
-                                 Categoria categoria, Prioridade prioridade,
-                                 boolean anonimo, String nomeSolicitante) {
-
-        return service.criarSolicitacao(descricao, localizacao, categoria, prioridade,
-                anonimo, nomeSolicitante);
+    @GetMapping("/nova")
+    public String novaSolicitacao() {
+        return "solicitacoes/nova-solicitacao";
     }
 
-    public List<Solicitacao> listarSolicitacoes() {
-        return service.listarSolicitacoes();
-    }
+    @PostMapping
+    public String salvarSolicitacao(
+            @RequestParam String descricao,
+            @RequestParam String endereco,
+            @RequestParam String bairro,
+            @RequestParam(required = false) String referencia,
+            @RequestParam Categoria categoria,
+            @RequestParam Prioridade prioridade,
+            @RequestParam boolean anonimo,
+            @RequestParam(required = false) String nomeSolicitante,
+            Model model
+    ) {
 
-    public List<Solicitacao> listarSolicitacoesAbertas() {
-        return service.listarSolicitacoesAbertas();
-    }
+        String localizacao = endereco + " - " + bairro;
 
-    public List<Solicitacao> filtrarPorCategoria(Categoria categoria) {
-        return service.filtrarPorCategoria(categoria);
-    }
+        if (referencia != null && !referencia.isBlank()) {
+            localizacao += " - " + referencia;
+        }
 
-    public List<Solicitacao> filtrarPorPrioridade(Prioridade prioridade) {
-        return service.filtrarPorPrioridade(prioridade);
-    }
+        Solicitacao solicitacao = service.criarSolicitacao(
+                descricao, localizacao, categoria,
+                prioridade, anonimo, nomeSolicitante
+        );
 
-    public List<Solicitacao> filtrarPorLocalizacao(String localizacao) {
-        return service.filtrarPorLocalizacao(localizacao);
-    }
+        model.addAttribute("protocolo", solicitacao.getProtocolo());
 
-    public Solicitacao buscarPorProtocolo(String protocolo) {
-        return service.buscarPorProtocolo(protocolo);
-    }
-
-    public void atualizarStatus(String protocolo, Status status,
-                                String responsavel, String comentario,
-                                String justificativa) {
-
-        service.atualizarStatus(protocolo, status, responsavel, comentario, justificativa);
+        return "solicitacoes/sucesso";
     }
 
 }

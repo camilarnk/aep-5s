@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>OcupaMais</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<header th:replace="~{fragments/navbar :: navbar}"></header>
+
+<main class="container">
+
+    <section class="card-home">
+
+        <h1>🌲 OcupaMais</h1>
+
+        <p class="subtitulo-home">
+            Ajude a cidade informando problemas urbanos
+            de forma rápida e simples.
+        </p>
+
+        <hr>
+
+        <h2>Como podemos ajudar?</h2>
+
+        <div class="acoes-home">
+
+            <a
+                    class="botao-home"
+                    th:href="@{/solicitacoes/nova}">
+                ➕ Nova Solicitação
+            </a>
+
+            <a
+                    class="botao-home"
+                    th:href="@{/solicitacoes/acompanhar}">
+                🔎 Acompanhar Solicitação
+            </a>
+
+        </div>
+
+        <hr>
+
+        <h2>Como funciona?</h2>
+
+        <div class="passos-home">
+
+            <div class="passo-home">
+                <div class="icone-home">📨</div>
+
+                <div>
+                    <strong>Registrar</strong>
+
+                    <p>
+                        Informe um problema encontrado na cidade.
+                    </p>
+                </div>
+            </div>
+
+            <div class="passo-home">
+                <div class="icone-home">🕒</div>
+
+                <div>
+                    <strong>Acompanhar</strong>
+
+                    <p>
+                        Consulte sua solicitação pelo protocolo.
+                    </p>
+                </div>
+            </div>
+
+            <div class="passo-home">
+                <div class="icone-home">✔</div>
+
+                <div>
+                    <strong>Solução</strong>
+
+                    <p>
+                        Gestores analisam e atualizam o status.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+</body>
+</html>
