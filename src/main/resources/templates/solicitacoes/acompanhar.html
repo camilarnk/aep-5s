@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Acompanhar Solicitação - OcupaMais</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<header th:replace="~{fragments/navbar :: navbar}"></header>
+
+<main class="container">
+
+    <section class="card-formulario">
+
+        <h1>Acompanhar Solicitação</h1>
+
+        <p class="subtitulo">
+            Consulte o andamento utilizando o número do protocolo.
+        </p>
+
+        <div th:if="${solicitacao == null}">
+
+            <hr>
+
+            <form class="acompanhar-form" method="post" th:action="@{/solicitacoes/acompanhar}">
+
+                <h2>Protocolo</h2>
+
+                <div class="linha-busca">
+                    <input type="text"
+                           name="protocolo"
+                           placeholder="Informe o protocolo recebido após o envio da solicitação."
+                           required>
+
+                    <button type="submit">
+                        🔍 Buscar
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+
+        <div th:if="${erro}" class="mensagem-erro">
+
+            <h3>Protocolo não encontrado</h3>
+            <p th:text="${erro}"></p>
+
+        </div>
+
+        <div th:if="${solicitacao}" class="resultado-container">
+
+            <hr>
+
+            <div class="resultado-topo">
+                <p>
+                    <strong>Protocolo:</strong>
+                    <span th:text="${solicitacao.protocolo}"></span>
+                </p>
+                <p>
+                    <strong>Status Atual:</strong>
+                    <span th:text="${solicitacao.status}"></span>
+                </p>
+            </div>
+
+            <div class="status-container">
+                <div class="status-line">
+                    <div class="status-fill"
+                         th:style="
+                         ${solicitacao.status.name() == 'ABERTO'} ? 'width:20%' :
+                         (${solicitacao.status.name() == 'TRIAGEM'} ? 'width:40%' :
+                         (${solicitacao.status.name() == 'EM_EXECUCAO'} ? 'width:60%' :
+                         (${solicitacao.status.name() == 'RESOLVIDO'} ? 'width:80%' :
+                         'width:100%')))">
+                    </div>
+                </div>
+
+                <div class="status-steps">
+                    <span>Aberto</span>
+                    <span>Em Triagem</span>
+                    <span>Em Execução</span>
+                    <span>Resolvido</span>
+                    <span>Encerrado</span>
+                </div>
+
+            </div>
+
+            <hr>
+
+            <div class="resultado-grid">
+                <div class="resumo-card">
+                    <h3>Resumo da Solicitação</h3>
+
+                    <p>
+                        <strong>Categoria:</strong>
+                        <span
+                            th:text="${solicitacao.categoria}">
+                        </span>
+                    </p>
+
+                    <p>
+                        <strong>Prioridade:</strong>
+                        <span
+                            th:text="${solicitacao.prioridade}">
+                        </span>
+                    </p>
+
+                    <p>
+                        <strong>Data:</strong>
+                        <span
+                            th:text="${#temporals.format(solicitacao.dataCriacao,'dd/MM/yyyy')}">
+                        </span>
+                    </p>
+
+                    <p>
+                        <strong>Prazo:</strong>
+                        <span
+                            th:text="${#temporals.format(solicitacao.prazo,'dd/MM/yyyy')}">
+                        </span>
+                    </p>
+
+                    <p>
+                        <strong>Modo:</strong>
+                        <span
+                            th:text="${solicitacao.anonimo ? 'Anônimo' : 'Identificado'}">
+                        </span>
+                    </p>
+
+                    <p th:if="${!solicitacao.anonimo}">
+                        <strong>Solicitante:</strong>
+                        <span
+                            th:text="${solicitacao.nomeSolicitante}">
+                        </span>
+                    </p>
+
+                    <p>
+                        <strong>Localização:</strong>
+                        <span
+                            th:text="${solicitacao.localizacao}">
+                        </span>
+                    </p>
+
+                    <p>
+                        <strong>Descrição:</strong>
+                        <span
+                            th:text="${solicitacao.descricao}">
+                        </span>
+                    </p>
+
+                </div>
+
+                <div class="historico-card">
+
+                    <h3>Histórico de Atualizações</h3>
+
+                    <div th:each="item : ${solicitacao.historico}" class="historico-item">
+                        <strong
+                            th:text="${#temporals.format(item.data,'dd/MM/yyyy')}">
+                        </strong>
+                        <p
+                            th:text="${item.comentario}">
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div th:if="${erro == null and solicitacao == null}" class="como-funciona">
+
+            <hr>
+
+            <h2>Como funciona?</h2>
+
+            <div class="passos-acompanhar">
+
+                <div class="passo-acompanhar">
+                    <div class="numero-passo">1</div>
+                    <p>
+                        Digite o protocolo recebido ao criar a solicitação.
+                    </p>
+                </div>
+
+                <div class="passo-acompanhar">
+                    <div class="numero-passo">2</div>
+                    <p>
+                        Consulte o status atual da solicitação.
+                    </p>
+                </div>
+
+                <div class="passo-acompanhar">
+                    <div class="numero-passo">3</div>
+                    <p>
+                        Veja todo o histórico de atualizações realizadas.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+</body>
+</html>
