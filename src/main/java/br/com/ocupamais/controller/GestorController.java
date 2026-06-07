@@ -15,6 +15,21 @@ public class GestorController {
         return "gestor/login";
     }
 
+    @GetMapping("/painel")
+    public String painel() {
+        return "gestor/painel";
+    }
+
+    @GetMapping("/solicitacoes")
+    public String solicitacoes() {
+        return "gestor/solicitacoes";
+    }
+
+    @GetMapping("/atualizar")
+    public String atualizar() {
+        return "gestor/atualizar";
+    }
+
     @PostMapping("/login")
     public String autenticar(@RequestParam String usuario, @RequestParam String senha) {
 
@@ -23,11 +38,6 @@ public class GestorController {
         }
 
         return "redirect:/gestor/login";
-    }
-
-    @GetMapping("/painel")
-    public String painel() {
-        return "gestor/painel";
     }
 
 }
