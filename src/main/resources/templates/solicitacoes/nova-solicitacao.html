@@ -464,6 +464,38 @@
         }
     });
 
+    document.getElementById("btnPasso2").onclick = () => {
+        const descricao = document.getElementById("descricao").value.trim();
+        const categoria = document.getElementById("categoria").value;
+
+        if (!descricao) {
+            alert("Informe a descrição.");
+            return;
+        }
+        if (!categoria) {
+            alert("Selecione uma categoria.");
+            return;
+        }
+
+        mostrarPasso(3);
+    };
+
+    document.getElementById("btnPasso3").onclick = () => {
+        const endereco = document.getElementById("endereco").value.trim();
+        const bairro = document.getElementById("bairro").value.trim();
+
+        if (!endereco) {
+            alert("Informe o endereço.");
+            return;
+        }
+        if (!bairro) {
+            alert("Informe o bairro.");
+            return;
+        }
+
+        mostrarPasso(4);
+    };
+
 </script>
 
 </body>
