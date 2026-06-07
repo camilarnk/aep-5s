@@ -230,7 +230,7 @@
                         <div class="campo-bloco">
                             <label for="referencia">Ponto de referência (opcional)</label>
                             <input type="text" id="referencia" name="referencia"
-                                   placeholder="Exemplo: próximo ao parque">
+                                   placeholder="Exemplo: Próximo ao parque">
                         </div>
 
                     </div>
@@ -265,7 +265,52 @@
 
             <!-- PASSO 4 -->
             <div id="passo4" class="passo oculto">
-                Passo 4
+
+                <span class="etapa">
+                    Passo 4 de 4 — Confirmação
+                </span>
+
+                <h2>Revise as informações antes de enviar</h2>
+
+                <div class="resumo-grid">
+
+                    <div class="resumo-card">
+                        <h3>Identificação</h3>
+                        <p id="resumoModo"></p>
+                        <p id="resumoNome"></p>
+                    </div>
+
+                    <div class="resumo-card">
+                        <h3>Localização</h3>
+                        <p id="resumoEndereco"></p>
+                    </div>
+
+                    <div class="resumo-card resumo-full">
+                        <h3>Detalhes</h3>
+                        <p id="resumoCategoria"></p>
+                        <p id="resumoPrioridade"></p>
+                        <p id="resumoDescricao"></p>
+                    </div>
+
+                </div>
+
+                <div class="termos-container">
+                    <label class="checkbox-termos">
+                        <input type="checkbox" id="termos" required>
+                        Declaro que as informações fornecidas são verdadeiras
+                    </label>
+                </div>
+
+                <div class="acoes-duplas">
+                    <button type="button" id="btnVoltarPasso4">
+                        ← Voltar
+                    </button>
+
+                    <button type="button" id="btnEnviar">
+                        Enviar solicitação ➤
+                    </button>
+                </div>
+
             </div>
 
         </form>
@@ -321,40 +366,29 @@
 
     const progressFill = document.getElementById("progressFill");
 
-    let passoAtual = 1;
-
     function mostrarPasso(numero) {
         passos.forEach((p, i) => {
             p.classList.toggle("oculto", i !== numero - 1);
         });
 
         steps.forEach((s, i) => {
-            s.classList.toggle("ativo", i < numero);
+            s.classList.toggle("ativo", i === numero - 1);
         });
 
         const porcentagem = ((numero - 1) / (passos.length - 1)) * 100;
         progressFill.style.width = porcentagem + "%";
+
+        if (numero === 4) {
+            preencherResumo();
+        }
     }
 
-    document.getElementById("btnPasso1").addEventListener("click", () => {
-        mostrarPasso(2);
-    });
-
-    document.getElementById("btnVoltarPasso2").addEventListener("click", () => {
-        mostrarPasso(1);
-    });
-
-    document.getElementById("btnPasso2").addEventListener("click", () => {
-        mostrarPasso(3);
-    });
-
-    document.getElementById("btnVoltarPasso3").addEventListener("click", () => {
-        mostrarPasso(2);
-    });
-
-    document.getElementById("btnPasso3").addEventListener("click", () => {
-        mostrarPasso(4);
-    });
+    document.getElementById("btnPasso1").onclick = () => mostrarPasso(2);
+    document.getElementById("btnVoltarPasso2").onclick = () => mostrarPasso(1);
+    document.getElementById("btnPasso2").onclick = () => mostrarPasso(3);
+    document.getElementById("btnVoltarPasso3").onclick = () => mostrarPasso(2);
+    document.getElementById("btnPasso3").onclick = () => mostrarPasso(4);
+    document.getElementById("btnVoltarPasso4").onclick = () => mostrarPasso(3);
 
     function alternarNome() {
         const identificado =
@@ -363,17 +397,72 @@
         const campoNome = document.getElementById("campoNome");
         const inputNome = document.getElementById("nomeSolicitante");
 
-        if (identificado.checked) {
-            campoNome.classList.remove("oculto");
-            inputNome.disabled = false;
-        } else {
-            campoNome.classList.add("oculto");
+        const ativo = identificado.checked;
+
+        campoNome.classList.toggle("oculto", !ativo);
+        inputNome.disabled = !ativo;
+
+        if (!ativo) {
             inputNome.value = "";
-            inputNome.disabled = true;
         }
     }
 
     alternarNome();
+
+    function obterDadosFormulario() {
+        return {
+            anonimo: document.querySelector('input[name="anonimo"]:checked').value,
+            nome: document.getElementById("nomeSolicitante").value,
+            categoria: document.getElementById("categoria").value,
+            prioridade: document.querySelector('input[name="prioridade"]:checked').value,
+            descricao: document.getElementById("descricao").value,
+            endereco: document.getElementById("endereco").value,
+            bairro: document.getElementById("bairro").value,
+            referencia: document.getElementById("referencia").value
+        };
+    }
+
+    function montarLocalizacao() {
+        const endereco = document.getElementById("endereco").value;
+        const bairro = document.getElementById("bairro").value;
+        const referencia = document.getElementById("referencia").value;
+
+        return [endereco, bairro, referencia]
+            .filter(v => v && v.trim() !== "").join(" - ");
+    }
+
+    function preencherResumo() {
+        const d = obterDadosFormulario();
+
+        document.getElementById("resumoModo").innerText =
+            d.anonimo === "true" ? "Modo: Anônimo" : "Modo: Identificado";
+
+        document.getElementById("resumoNome").innerText =
+            d.anonimo === "false" ? "Nome: " + d.nome : "";
+
+        document.getElementById("resumoCategoria").innerText =
+            "Categoria: " + d.categoria;
+
+        document.getElementById("resumoPrioridade").innerText =
+            "Prioridade: " + d.prioridade;
+
+        document.getElementById("resumoDescricao").innerText =
+            "Descrição: " + d.descricao;
+
+        document.getElementById("resumoEndereco").innerText =
+            montarLocalizacao();
+    }
+
+    document.getElementById("btnEnviar").onclick = () => {
+        const aceitou = document.getElementById("termos").checked;
+
+        if (!aceitou) {
+            alert("Você precisa confirmar que as informações são verdadeiras.");
+            return;
+        }
+
+        alert("Solicitação enviada (backend ainda não conectado)");
+    };
 
 </script>
 

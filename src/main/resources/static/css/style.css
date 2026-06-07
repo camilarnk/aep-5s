@@ -159,11 +159,9 @@ hr {
 }
 
 .progress-line {
-    width: 100%;
-    height: 6px;
-    background: #d9d9d9;
+    height: 8px;
+    background: #e0e0e0;
     border-radius: 999px;
-    position: relative;
     overflow: hidden;
 }
 
@@ -184,13 +182,18 @@ hr {
 }
 
 .progress-step {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     color: #777;
+    transition: all 0.2s ease;
 }
 
 .progress-step.ativo {
-    font-weight: bold;
-    color: black;
+    font-weight: 600;
+    color: #222;
+}
+
+.progress-step.concluido {
+    color: #444;
 }
 
 .card-home {
@@ -405,5 +408,56 @@ hr {
     border: 1px solid #999;
     border-radius: 6px;
     background: white;
+    cursor: pointer;
+}
+
+/* PASSO 4 - CRIAR SOLICITAÇÃO */
+
+.resumo-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 16px;
+}
+
+.resumo-card {
+    flex: 1;
+    min-width: 45%;
+
+    border: 1px solid #ccc;
+    border-radius: 8px;
+
+    padding: 16px;
+}
+
+.resumo-card h3 {
+    margin-bottom: 10px;
+    font-size: 1rem;
+}
+
+.resumo-full {
+    flex: 1 1 100%;
+}
+
+.termos-container {
+    margin-top: 16px;
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 4px;
+}
+
+.checkbox-termos {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    font-size: 0.9rem;
+    color: #444;
+
+    cursor: pointer;
+}
+
+.checkbox-termos input {
+    transform: scale(1.1);
     cursor: pointer;
 }
