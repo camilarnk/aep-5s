@@ -56,6 +56,15 @@ public class Solicitacao {
             case MEDIA -> prazo = dataCriacao.plusDays(7);
             case ALTA -> prazo = dataCriacao.plusDays(3);
         }
+
+        historico.add(
+            new HistoricoStatus(
+                    Status.ABERTO,
+                    "Sistema",
+                    "Solicitação criada",
+                    null
+            )
+        );
     }
 
     public String getProtocolo() {
@@ -88,6 +97,14 @@ public class Solicitacao {
 
     public Status getStatus() {
         return status;
+    }
+
+    public boolean isAnonimo() {
+        return anonimo;
+    }
+
+    public String getNomeSolicitante() {
+        return nomeSolicitante;
     }
 
     public List<HistoricoStatus> getHistorico() {
