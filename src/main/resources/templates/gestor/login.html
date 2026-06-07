@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Área do Gestor - OcupaMais</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<header th:replace="~{fragments/navbar-cidadao :: navbar}"></header>
+
+<main class="container">
+
+    <section class="card-login">
+
+        <div class="login-esquerda">
+
+            <h1>Área do Gestor</h1>
+
+            <hr>
+
+            <h2>Olá, Gestor!</h2>
+
+            <p>
+                Entre para verificar as solicitações
+                pendentes e atualizar seus status.
+            </p>
+
+            <form th:action="@{/gestor/login}" method="post">
+
+                <label for="usuario">
+                    Usuário
+                </label>
+
+                <input type="text" id="usuario" name="usuario" placeholder="Digite o usuário">
+
+                <label for="senha">
+                    Senha
+                </label>
+
+                <input type="password" id="senha" name="senha" placeholder="Digite a senha">
+
+                <button type="submit">
+                    Entrar →
+                </button>
+
+            </form>
+
+            <div class="credencial-demo">
+                Usuário: <strong>gestor@email.com</strong><br>
+                Senha: <strong>123</strong>
+            </div>
+
+        </div>
+
+        <div class="login-direita">
+
+            <div class="logo-gestor">
+                🌲
+                <span>OcupaMais</span>
+            </div>
+
+            <p>
+                Sistema de gerenciamento
+                de solicitações urbanas.
+            </p>
+
+        </div>
+
+    </section>
+
+</main>
+
+</body>
+</html>
