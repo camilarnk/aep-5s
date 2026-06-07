@@ -461,3 +461,55 @@ hr {
     transform: scale(1.1);
     cursor: pointer;
 }
+
+/* TELA DE SUCESSO */
+
+.card-sucesso {
+    width: 650px;
+
+    background: white;
+
+    border: 1px solid #999;
+    border-radius: 6px;
+
+    padding: 40px;
+
+    text-align: center;
+}
+
+.icone-sucesso {
+    font-size: 3rem;
+
+    margin-bottom: 10px;
+}
+
+.card-sucesso h1 {
+    margin-bottom: 28px;
+}
+
+.texto-sucesso {
+    margin: 16px 0;
+}
+
+.protocolo-box {
+    font-size: 1.8rem;
+    font-weight: bold;
+
+    margin: 20px 0 30px 0;
+}
+
+.acoes-sucesso {
+    margin-top: 24px;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    gap: 8px;
+}
+
+.acoes-sucesso .botao-home {
+    width: 220px;
+
+    text-align: center;
+}

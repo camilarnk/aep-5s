@@ -23,7 +23,7 @@
 
         <hr>
 
-        <form id="formSolicitacao">
+        <form id="formSolicitacao" th:action="@{/solicitacoes}" method="post">
 
             <!-- PASSO 1 -->
             <div id="passo1" class="passo">
@@ -306,7 +306,7 @@
                         ← Voltar
                     </button>
 
-                    <button type="button" id="btnEnviar">
+                    <button type="submit" id="btnEnviar">
                         Enviar solicitação ➤
                     </button>
                 </div>
@@ -453,16 +453,16 @@
             montarLocalizacao();
     }
 
-    document.getElementById("btnEnviar").onclick = () => {
-        const aceitou = document.getElementById("termos").checked;
-
+    document.getElementById("formSolicitacao").addEventListener("submit", (event) => {
+        const aceitou =
+            document.getElementById("termos").checked;
         if (!aceitou) {
-            alert("Você precisa confirmar que as informações são verdadeiras.");
-            return;
+            event.preventDefault();
+            alert(
+                "Você precisa confirmar que as informações são verdadeiras."
+            );
         }
-
-        alert("Solicitação enviada (backend ainda não conectado)");
-    };
+    });
 
 </script>
 
