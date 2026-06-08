@@ -25,4 +25,24 @@ public enum Status {
         }
         throw new IllegalArgumentException("ID de Status inválido: " + id);
     }
+
+    public Status proximo() {
+        return switch (this) {
+            case ABERTO -> TRIAGEM;
+            case TRIAGEM -> EM_EXECUCAO;
+            case EM_EXECUCAO -> RESOLVIDO;
+            case RESOLVIDO -> ENCERRADO;
+            case ENCERRADO -> null;
+        };
+    }
+
+    public String getDescricao() {
+        return switch (this) {
+            case ABERTO -> "Aberto";
+            case TRIAGEM -> "Triagem";
+            case EM_EXECUCAO -> "Em Execução";
+            case RESOLVIDO -> "Resolvido";
+            case ENCERRADO -> "Encerrado";
+        };
+    }
 }
