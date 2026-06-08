@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Visualizar Solicitações - OcupaMais</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<header th:replace="~{fragments/navbar-gestor :: navbarGestor}"></header>
+
+<main class="container">
+
+    <section class="card-painel">
+
+        <h1>Visualizar Solicitações</h1>
+
+        <p class="subtitulo">
+            Visualize e acompanhe as demandas registradas.
+        </p>
+
+        <hr>
+
+        <h3>Filtros</h3>
+
+        <form th:action="@{/gestor/solicitacoes}" method="get">
+
+            <div class="filtros-grid">
+
+                <div class="campo-filtro categoria">
+
+                    <label>Categoria</label>
+
+                    <select name="categoria">
+                        <option value="TODAS">Todas</option>
+                        <option value="ILUMINACAO">Iluminação</option>
+                        <option value="BURACO">Buraco</option>
+                        <option value="LIMPEZA">Limpeza</option>
+                        <option value="SAUDE">Saúde</option>
+                        <option value="SEGURANCA">Segurança</option>
+                        <option value="EDUCACAO">Educação</option>
+                    </select>
+
+                </div>
+
+                <div class="campo-filtro prioridade">
+                    <label>Prioridade</label>
+
+                    <select name="prioridade">
+                        <option value="TODAS">Todas</option>
+                        <option value="ALTA">Alta</option>
+                        <option value="MEDIA">Média</option>
+                        <option value="BAIXA">Baixa</option>
+                    </select>
+                </div>
+
+                <div class="campo-filtro localizacao">
+                    <label>Localização</label>
+                    <input type="text" name="localizacao"
+                           placeholder="Digite uma localização, se desejar">
+                </div>
+
+            </div>
+
+            <div class="acoes-filtro">
+                <button type="submit">
+                    Aplicar Filtros
+                </button>
+            </div>
+        </form>
+
+        <hr>
+
+        <div class="resultado-filtro">
+
+            <h3>Solicitações</h3>
+
+            <div th:if="${solicitacoes.isEmpty()}" class="cards-solicitacoes">
+
+                <div class="card-solicitacao">
+                    <strong>#2026-002711</strong>
+
+                    <p>Buraco em Via</p>
+                    <p>Alta • Em Triagem</p>
+                    <p>Rua das Flores</p>
+
+                    <a th:href="@{/gestor/solicitacoes/2026-002711}">
+                        Ver detalhes
+                    </a>
+                </div>
+
+                <div class="card-solicitacao">
+                    <strong>#2026-006544</strong>
+
+                    <p>Buraco em Via</p>
+                    <p>Média • Aberto</p>
+                    <p>Jardim Verde</p>
+                    <a href="#">Ver detalhes</a>
+                </div>
+
+                <div class="card-solicitacao">
+                    <strong>#2026-041332</strong>
+
+                    <p>Buraco em Via</p>
+                    <p>Alta • Em Execução</p>
+                    <p>Avenida Brasil</p>
+                    <a href="#">Ver detalhes</a>
+                </div>
+            </div>
+
+            <div th:if="${!solicitacoes.isEmpty()}" class="cards-solicitacoes">
+
+                <div th:each="solicitacao : ${solicitacoes}" class="card-solicitacao">
+
+                    <strong th:text="${solicitacao.protocolo}"></strong>
+
+                    <p th:text="${solicitacao.categoria}"></p>
+
+                    <p>
+                        <span th:text="${solicitacao.prioridade}"></span>
+                        •
+                        <span th:text="${solicitacao.status}"></span>
+                    </p>
+
+                    <p th:text="${solicitacao.localizacao}"></p>
+
+                    <a href="#">
+                        Ver detalhes
+                    </a>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="acoes-centro">
+            <a th:href="@{/gestor/atualizar}"
+               class="botao-painel">
+                Atualizar Solicitação por Protocolo
+            </a>
+        </div>
+
+    </section>
+
+</main>
+
+</body>
+</html>
