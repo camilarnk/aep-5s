@@ -115,13 +115,7 @@ public class SolicitacaoService {
     }
 
     private boolean fluxoValido(Status atual, Status novo) {
-        return switch(atual) {
-            case ABERTO -> novo == Status.TRIAGEM;
-            case TRIAGEM -> novo == Status.EM_EXECUCAO;
-            case EM_EXECUCAO -> novo == Status.RESOLVIDO;
-            case RESOLVIDO -> novo == Status.ENCERRADO;
-            case ENCERRADO -> false;
-        };
+        return atual.proximo() == novo;
     }
 
 }
