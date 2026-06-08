@@ -47,28 +47,29 @@ public class SolicitacaoService {
                 .toList();
     }
 
-    public List<Solicitacao> listarSolicitacoesAbertas() {
-        return repository.findAll().stream().
-                filter(s -> s.getStatus() != Status.ENCERRADO)
-                .toList();
-    }
-
-    public List<Solicitacao> filtrarPorCategoria(Categoria categoria) {
+    public List<Solicitacao> buscarComFiltros(String categoria,
+                                              String prioridade,
+                                              String localizacao) {
         return repository.findAll().stream()
-                .filter(s -> s.getCategoria() == categoria)
-                .toList();
-    }
+                .filter(s ->
+                        categoria == null
+                                || categoria.isBlank()
+                                || categoria.equals("TODAS")
+                                || s.getCategoria().name().equals(categoria))
 
-    public List<Solicitacao> filtrarPorPrioridade(Prioridade prioridade) {
-        return repository.findAll().stream()
-                .filter(s -> s.getPrioridade() == prioridade)
-                .toList();
-    }
+                .filter(s ->
+                        prioridade == null
+                                || prioridade.isBlank()
+                                || prioridade.equals("TODAS")
+                                || s.getPrioridade().name().equals(prioridade))
 
-    public List<Solicitacao> filtrarPorLocalizacao(String localizacao) {
-        return repository.findAll().stream()
-                .filter(s -> s.getLocalizacao().toLowerCase()
-                        .contains(localizacao.toLowerCase()))
+                .filter(s ->
+                        localizacao == null
+                                || localizacao.isBlank()
+                                || s.getLocalizacao()
+                                .toLowerCase()
+                                .contains(localizacao.toLowerCase()))
+                .sorted(Comparator.comparing(Solicitacao::getPrioridade).reversed())
                 .toList();
     }
 
