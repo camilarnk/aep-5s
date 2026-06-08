@@ -1201,29 +1201,116 @@ hr {
     justify-content: space-between;
 }
 
-.botao-link {
-    text-decoration: none;
-
-    color: #222;
-
-    padding: 10px 18px;
-
-    border: 1px solid #999;
-    border-radius: 6px;
-
-    background: white;
-}
-
 .botao-link:hover {
     background: #f5f5f5;
 }
 
-.botao-salvar {
+.botao-link {
+    text-decoration: none;
+
     padding: 10px 18px;
 
     border: 1px solid #999;
     border-radius: 6px;
 
+    color: #222;
     background: white;
+}
+
+.botao-salvar {
+    display: inline-block;
+
+    padding: 10px 18px;
+
+    border: 1px solid #2e7d32;
+    border-radius: 6px;
+
+    background: #679454;
+    color: white;
+
+    text-decoration: none;
+
+    font-weight: bold;
+    font-size: 1rem;
+    font-family: inherit;
+
     cursor: pointer;
+
+    transition: 0.2s;
+}
+
+a.botao-salvar,
+button.botao-salvar {
+    display: inline-block;
+
+    padding: 10px 18px;
+
+    border: 1px solid #679454;
+    border-radius: 6px;
+
+    background: #679454;
+    color: white;
+
+    text-decoration: none;
+
+    font-weight: bold;
+    font-size: 1rem;
+    font-family: inherit;
+
+    cursor: pointer;
+}
+
+.botao-salvar:hover {
+    background: #4d703f;
+}
+
+/* ========================= */
+/*    DETALHES SOLICITAÇÃO   */
+/* ========================= */
+
+.area-detalhes {
+    margin-top: 32px;
+}
+
+.area-detalhes h2 {
+    margin-bottom: 16px;
+}
+
+.historico-container {
+    margin-top: 32px;
+}
+
+.historico-container h2 {
+    margin-bottom: 16px;
+}
+
+.historico-lista {
+    max-height: 220px;
+
+    overflow-y: auto;
+
+    border: 1px solid #ccc;
+    border-radius: 6px;
+
+    background: #fafafa;
+
+    padding: 12px;
+}
+
+.historico-item {
+    padding-bottom: 12px;
+    margin-bottom: 12px;
+
+    border-bottom: 1px solid #ddd;
+}
+
+.historico-item:last-child {
+    margin-bottom: 0;
+    border-bottom: none;
+}
+
+.historico-item strong {
+    display: block;
+
+    margin-bottom: 4px;
 }
