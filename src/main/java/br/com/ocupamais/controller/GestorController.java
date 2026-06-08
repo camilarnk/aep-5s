@@ -78,6 +78,29 @@ public class GestorController {
         return "gestor/atualizar";
     }
 
+    @GetMapping("/detalhes")
+    public String detalhes(@RequestParam String protocolo, Model model) {
+
+        Solicitacao solicitacao = service.buscarPorProtocolo(protocolo);
+
+        if (solicitacao == null) {
+            return "redirect:/gestor/solicitacoes";
+        }
+
+        int progresso = switch (solicitacao.getStatus()) {
+            case ABERTO -> 20;
+            case TRIAGEM -> 40;
+            case EM_EXECUCAO -> 60;
+            case RESOLVIDO -> 80;
+            case ENCERRADO -> 100;
+        };
+
+        model.addAttribute("solicitacao", solicitacao);
+        model.addAttribute("progresso", progresso);
+
+        return "gestor/detalhes";
+    }
+
     @PostMapping("/login")
     public String autenticar(@RequestParam String usuario, @RequestParam String senha) {
 
