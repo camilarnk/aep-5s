@@ -31,11 +31,6 @@ public class GestorController {
         return "gestor/painel";
     }
 
-    @GetMapping("/atualizar")
-    public String atualizar() {
-        return "gestor/atualizar";
-    }
-
     @GetMapping("/solicitacoes")
     public String listarSolicitacoes(
             @RequestParam(required = false) String categoria,
@@ -48,6 +43,39 @@ public class GestorController {
         model.addAttribute("solicitacoes", solicitacoes);
 
         return "gestor/solicitacoes";
+    }
+
+    @GetMapping("/atualizar")
+    public String atualizar(@RequestParam(required = false) String protocolo, Model model) {
+
+        if (protocolo != null && !protocolo.isBlank()) {
+            Solicitacao solicitacao = service.buscarPorProtocolo(protocolo);
+
+            if (solicitacao != null) {
+                int progresso = switch (solicitacao.getStatus()) {
+                    case ABERTO -> 20;
+                    case TRIAGEM -> 40;
+                    case EM_EXECUCAO -> 60;
+                    case RESOLVIDO -> 80;
+                    case ENCERRADO -> 100;
+                };
+
+                model.addAttribute("solicitacao", solicitacao);
+                model.addAttribute("progresso", progresso);
+
+                model.addAttribute("proximoStatus",
+                        solicitacao.getStatus().proximo());
+
+                model.addAttribute("proximoStatusDescricao",
+                        solicitacao.getStatus().proximo().getDescricao());
+
+            } else {
+                model.addAttribute("erro",
+                        "Nenhuma solicitação encontrada para o protocolo informado.");
+            }
+        }
+
+        return "gestor/atualizar";
     }
 
     @PostMapping("/login")
