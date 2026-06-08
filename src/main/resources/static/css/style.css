@@ -1245,15 +1245,14 @@ button.botao-salvar {
 
     padding: 10px 18px;
 
-    border: 1px solid #679454;
+    border: 1px solid #4d703f;
     border-radius: 6px;
 
-    background: #679454;
+    background: #4d703f;
     color: white;
 
     text-decoration: none;
 
-    font-weight: bold;
     font-size: 1rem;
     font-family: inherit;
 
@@ -1261,7 +1260,7 @@ button.botao-salvar {
 }
 
 .botao-salvar:hover {
-    background: #4d703f;
+    background: #3d5733;
 }
 
 /* ========================= */
