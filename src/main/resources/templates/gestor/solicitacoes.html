@@ -126,7 +126,7 @@
 
                     <p th:text="${solicitacao.localizacao}"></p>
 
-                    <a href="#">
+                    <a th:href="@{/gestor/detalhes(protocolo=${solicitacao.protocolo})}">
                         Ver detalhes
                     </a>
 
