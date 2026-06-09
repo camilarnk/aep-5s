@@ -24,6 +24,11 @@
             </span>
         </h1>
 
+        <div th:if="${sucesso}" class="mensagem-sucesso">
+            <h3>✓ Atualização realizada</h3>
+            <p th:text="${sucesso}"></p>
+        </div>
+
         <hr>
 
         <div class="atualizacao-grid">
@@ -34,14 +39,14 @@
 
                 <p>
                     <strong>Status Atual:</strong>
-                    <span th:text="${solicitacao.status}">
+                    <span th:text="${solicitacao.status.getDescricao}">
                         EM_TRIAGEM
                     </span>
                 </p>
 
                 <p>
                     <strong>Prioridade:</strong>
-                    <span th:text="${solicitacao.prioridade}">
+                    <span th:text="${solicitacao.prioridade.getDescricao}">
                         ALTA
                     </span>
                 </p>
@@ -121,26 +126,22 @@
 
             <div class="historico-lista">
 
-                <div class="historico-item">
-                    <strong>27/05/2026</strong>
+                <div class="historico-item" th:each="historico : ${solicitacao.historico}">
 
-                    <p>Solicitação criada.</p>
-                </div>
-
-                <div class="historico-item">
-                    <strong>28/05/2026</strong>
+                    <strong th:text="${#temporals.format(historico.data,'dd/MM/yyyy')}"></strong>
 
                     <p>
-                        Encaminhada para triagem.
+                        <strong>Status:</strong>
+                        <span th:text="${historico.status.descricao}"></span>
                     </p>
-                </div>
 
-                <div class="historico-item">
-                    <strong>30/05/2026</strong>
+                    <p th:text="${historico.comentario}"></p>
 
-                    <p>
-                        Equipe responsável notificada.
+                    <p th:if="${historico.justificativa != null and !historico.justificativa.isBlank()}">
+                        <strong>Justificativa:</strong>
+                        <span th:text="${historico.justificativa}"></span>
                     </p>
+
                 </div>
 
             </div>
@@ -154,11 +155,18 @@
                 Voltar para Solicitações
             </a>
 
-            <a th:href="@{/gestor/atualizar(protocolo=${solicitacao.protocolo})}"
+            <a th:if="${solicitacao.status.name() != 'ENCERRADO'}"
+               th:href="@{/gestor/atualizar(protocolo=${solicitacao.protocolo})}"
                class="botao-salvar">
 
                 Atualizar Status desta Solicitação
             </a>
+
+            <div th:if="${solicitacao.status.name() == 'ENCERRADO'}"
+                 class="mensagem-sucesso">
+
+                ✓ Esta solicitação já foi encerrada.
+            </div>
         </div>
 
     </section>

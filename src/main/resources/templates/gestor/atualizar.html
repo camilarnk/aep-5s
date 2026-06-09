@@ -59,13 +59,24 @@
 
             <div class="fluxo-ajuda">
                 <h3>Como funciona?</h3>
-                <ol>
-                    <li>Informe o protocolo.</li>
-                    <li>Localize a solicitação.</li>
-                    <li>Escolha o novo status.</li>
-                    <li>Adicione um comentário.</li>
-                    <li>Salve a alteração.</li>
-                </ol>
+
+                <div class="fluxo-container">
+                    <div class="fluxo-coluna">
+                        <div class="fluxo-item" data-passo="1">Informe o protocolo.</div>
+                        <div class="fluxo-item" data-passo="2">Localize a solicitação.</div>
+                    </div>
+
+                    <div class="fluxo-coluna">
+                        <div class="fluxo-item" data-passo="3">Confira o andamento.</div>
+                        <div class="fluxo-item" data-passo="4">Escolha o novo status.</div>
+                    </div>
+
+                    <div class="fluxo-coluna">
+                        <div class="fluxo-item" data-passo="5">Adicione um comentário.</div>
+                        <div class="fluxo-item" data-passo="6">Salve a alteração.</div>
+                    </div>
+                </div>
+
             </div>
 
             <div class="acoes-duplas">
@@ -92,12 +103,12 @@
 
                     <p>
                         <strong>Status Atual:</strong>
-                        <span th:text="${solicitacao.status}"></span>
+                        <span th:text="${solicitacao.status.getDescricao}"></span>
                     </p>
 
                     <p>
                         <strong>Prioridade:</strong>
-                        <span th:text="${solicitacao.prioridade}"></span>
+                        <span th:text="${solicitacao.prioridade.getDescricao}"></span>
                     </p>
 
                     <p>
@@ -136,6 +147,11 @@
 
                 <h2>Atualizar Status da Solicitação</h2>
 
+                <div th:if="${erro}" class="mensagem-erro">
+                    <h3>Erro</h3>
+                    <p th:text="${erro}"></p>
+                </div>
+
                 <form th:action="@{/gestor/atualizar-status}" method="post">
 
                     <input type="hidden" name="protocolo" th:value="${solicitacao.protocolo}">
@@ -171,20 +187,32 @@
                         <span>Encerrado</span>
                     </div>
 
-                    <label>
-                        Comentário
-                    </label>
+                    <div th:if="${proximoStatus != null}">
 
-                    <textarea placeholder="Digite informações sobre a mudança de status..."></textarea>
+                        <label>
+                            Comentário
+                        </label>
 
-                    <div class="botoes-status">
+                        <textarea name="comentario"
+                                  required
+                                  placeholder="Digite informações sobre a mudança de status..."></textarea>
+
+                        <div class="botoes-status">
+                            <a th:href="@{/gestor/atualizar}" class="botao-link">
+                                Buscar Novamente
+                            </a>
+
+                            <button type="submit" class="botao-salvar">
+                                Salvar Alteração
+                            </button>
+                        </div>
+
+                    </div>
+
+                    <div th:if="${proximoStatus == null}" class="botoes-status">
                         <a th:href="@{/gestor/atualizar}" class="botao-link">
                             Buscar Novamente
                         </a>
-
-                        <button type="submit" class="botao-salvar">
-                            Salvar Alteração
-                        </button>
                     </div>
 
                 </form>
