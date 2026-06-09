@@ -1,6 +1,7 @@
 package br.com.ocupamais.controller;
 
 import br.com.ocupamais.model.Solicitacao;
+import br.com.ocupamais.model.Status;
 import br.com.ocupamais.service.SolicitacaoService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -52,23 +54,7 @@ public class GestorController {
             Solicitacao solicitacao = service.buscarPorProtocolo(protocolo);
 
             if (solicitacao != null) {
-                int progresso = switch (solicitacao.getStatus()) {
-                    case ABERTO -> 20;
-                    case TRIAGEM -> 40;
-                    case EM_EXECUCAO -> 60;
-                    case RESOLVIDO -> 80;
-                    case ENCERRADO -> 100;
-                };
-
-                model.addAttribute("solicitacao", solicitacao);
-                model.addAttribute("progresso", progresso);
-
-                model.addAttribute("proximoStatus",
-                        solicitacao.getStatus().proximo());
-
-                model.addAttribute("proximoStatusDescricao",
-                        solicitacao.getStatus().proximo().getDescricao());
-
+                carregarDadosSolicitacao(solicitacao, model);
             } else {
                 model.addAttribute("erro",
                         "Nenhuma solicitação encontrada para o protocolo informado.");
@@ -87,16 +73,7 @@ public class GestorController {
             return "redirect:/gestor/solicitacoes";
         }
 
-        int progresso = switch (solicitacao.getStatus()) {
-            case ABERTO -> 20;
-            case TRIAGEM -> 40;
-            case EM_EXECUCAO -> 60;
-            case RESOLVIDO -> 80;
-            case ENCERRADO -> 100;
-        };
-
-        model.addAttribute("solicitacao", solicitacao);
-        model.addAttribute("progresso", progresso);
+        carregarDadosSolicitacao(solicitacao, model);
 
         return "gestor/detalhes";
     }
@@ -109,6 +86,52 @@ public class GestorController {
         }
 
         return "redirect:/gestor/login";
+    }
+
+    @PostMapping("/atualizar-status")
+    public String atualizarStatus(
+            @RequestParam String protocolo, @RequestParam String novoStatus,
+            @RequestParam String comentario, RedirectAttributes redirectAttributes,
+            Model model) {
+
+        try {
+            Status status = Status.valueOf(novoStatus);
+
+            service.atualizarStatus(protocolo, status, "Gestor",
+                    comentario, null);
+
+            redirectAttributes.addFlashAttribute(
+                    "sucesso",
+                    "Status atualizado para " +
+                            status.getDescricao());
+
+            return "redirect:/gestor/detalhes?protocolo=" + protocolo;
+
+        } catch (IllegalArgumentException e) {
+
+            Solicitacao solicitacao = service.buscarPorProtocolo(protocolo);
+
+            carregarDadosSolicitacao(solicitacao, model);
+
+            model.addAttribute("erro", e.getMessage());
+
+            return "gestor/atualizar";
+        }
+    }
+
+    private void carregarDadosSolicitacao(Solicitacao solicitacao, Model model) {
+
+        model.addAttribute("solicitacao", solicitacao);
+        model.addAttribute("progresso", solicitacao.getStatus().getProgresso());
+
+        Status proximoStatus = solicitacao.getStatus().proximo();
+
+        model.addAttribute("proximoStatus", proximoStatus);
+
+        if (proximoStatus != null) {
+            model.addAttribute("proximoStatusDescricao",
+                    proximoStatus.getDescricao());
+        }
     }
 
 }
