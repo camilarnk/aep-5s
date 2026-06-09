@@ -350,22 +350,51 @@
 </main>
 
 <script>
+    const el = (id) => document.getElementById(id);
+    const qs = (s) => document.querySelector(s);
+
+    function validar(condicao, mensagem) {
+        if (!condicao) {
+            alert(mensagem);
+            return false;
+        }
+        return true;
+    }
+
     const passos = [
-        document.getElementById("passo1"),
-        document.getElementById("passo2"),
-        document.getElementById("passo3"),
-        document.getElementById("passo4")
+        el("passo1"),
+        el("passo2"),
+        el("passo3"),
+        el("passo4")
     ];
 
     const steps = [
-        document.getElementById("step1"),
-        document.getElementById("step2"),
-        document.getElementById("step3"),
-        document.getElementById("step4")
+        el("step1"),
+        el("step2"),
+        el("step3"),
+        el("step4")
     ];
 
-    const progressFill = document.getElementById("progressFill");
+    const progressFill = el("progressFill");
 
+    // ajustando exibicao
+    const categorias = {
+        ILUMINACAO: "Iluminação",
+        BURACO: "Buraco",
+        LIMPEZA: "Limpeza",
+        SAUDE: "Saúde",
+        SEGURANCA: "Segurança",
+        EDUCACAO: "Educação",
+        OUTROS: "Outros"
+    };
+
+    const prioridades = {
+        BAIXA: "Baixa",
+        MEDIA: "Média",
+        ALTA: "Alta"
+    };
+
+    // controle de passos
     function mostrarPasso(numero) {
         passos.forEach((p, i) => {
             p.classList.toggle("oculto", i !== numero - 1);
@@ -383,21 +412,52 @@
         }
     }
 
-    document.getElementById("btnPasso1").onclick = () => mostrarPasso(2);
-    document.getElementById("btnVoltarPasso2").onclick = () => mostrarPasso(1);
-    document.getElementById("btnPasso2").onclick = () => mostrarPasso(3);
-    document.getElementById("btnVoltarPasso3").onclick = () => mostrarPasso(2);
-    document.getElementById("btnPasso3").onclick = () => mostrarPasso(4);
-    document.getElementById("btnVoltarPasso4").onclick = () => mostrarPasso(3);
-
-    function alternarNome() {
+    // passo 1 - identificacao
+    el("btnPasso1").onclick = () => {
         const identificado =
-            document.querySelector('input[name="anonimo"][value="false"]');
+            qs('input[name="anonimo"]:checked').value === "false";
 
-        const campoNome = document.getElementById("campoNome");
-        const inputNome = document.getElementById("nomeSolicitante");
+        const nome = el("nomeSolicitante").value.trim();
 
-        const ativo = identificado.checked;
+        if (identificado && !validar(nome, "Informe seu nome.")) return;
+
+        mostrarPasso(2);
+    };
+
+    // passo 2 - detalhes
+    el("btnPasso2").addEventListener("click", () => {
+        const descricao = el("descricao").value.trim();
+        const categoria = el("categoria").value;
+
+        if (!validar(descricao, "Informe a descrição.")) return;
+        if (!validar(categoria, "Selecione uma categoria.")) return;
+
+        mostrarPasso(3);
+    });
+
+    // passo 3 - localizacao
+    el("btnPasso3").addEventListener("click", () => {
+        const endereco = el("endereco").value.trim();
+        const bairro = el("bairro").value.trim();
+
+        if (!validar(endereco, "Informe o endereço.")) return;
+        if (!validar(bairro, "Informe o bairro.")) return;
+
+        mostrarPasso(4);
+    });
+
+    // voltar step
+    el("btnVoltarPasso2").onclick = () => mostrarPasso(1);
+    el("btnVoltarPasso3").onclick = () => mostrarPasso(2);
+    el("btnVoltarPasso4").onclick = () => mostrarPasso(3);
+
+    // identificacao anonimo
+    function alternarNome() {
+        const ativo =
+            qs('input[name="anonimo"]:checked').value === "false";
+
+        const campoNome = el("campoNome");
+        const inputNome = el("nomeSolicitante");
 
         campoNome.classList.toggle("oculto", !ativo);
         inputNome.disabled = !ativo;
@@ -409,92 +469,62 @@
 
     alternarNome();
 
+    // dados do formulario
     function obterDadosFormulario() {
         return {
-            anonimo: document.querySelector('input[name="anonimo"]:checked').value,
-            nome: document.getElementById("nomeSolicitante").value,
-            categoria: document.getElementById("categoria").value,
-            prioridade: document.querySelector('input[name="prioridade"]:checked').value,
-            descricao: document.getElementById("descricao").value,
-            endereco: document.getElementById("endereco").value,
-            bairro: document.getElementById("bairro").value,
-            referencia: document.getElementById("referencia").value
+            anonimo: qs('input[name="anonimo"]:checked').value,
+            nome: el("nomeSolicitante").value,
+            categoria: el("categoria").value,
+            prioridade: qs('input[name="prioridade"]:checked').value,
+            descricao: el("descricao").value,
+            endereco: el("endereco").value,
+            bairro: el("bairro").value,
+            referencia: el("referencia").value
         };
     }
 
     function montarLocalizacao() {
-        const endereco = document.getElementById("endereco").value;
-        const bairro = document.getElementById("bairro").value;
-        const referencia = document.getElementById("referencia").value;
+        const endereco = el("endereco").value;
+        const bairro = el("bairro").value;
+        const referencia = el("referencia").value;
 
         return [endereco, bairro, referencia]
-            .filter(v => v && v.trim() !== "").join(" - ");
+            .filter(v => v && v.trim() !== "")
+            .join(" - ");
     }
 
+    // resumo
     function preencherResumo() {
         const d = obterDadosFormulario();
 
-        document.getElementById("resumoModo").innerText =
+        el("resumoModo").innerText =
             d.anonimo === "true" ? "Modo: Anônimo" : "Modo: Identificado";
 
-        document.getElementById("resumoNome").innerText =
+        el("resumoNome").innerText =
             d.anonimo === "false" ? "Nome: " + d.nome : "";
 
-        document.getElementById("resumoCategoria").innerText =
-            "Categoria: " + d.categoria;
+        el("resumoCategoria").innerText =
+            "Categoria: " + categorias[d.categoria];
 
-        document.getElementById("resumoPrioridade").innerText =
-            "Prioridade: " + d.prioridade;
+        el("resumoPrioridade").innerText =
+            "Prioridade: " + prioridades[d.prioridade];
 
-        document.getElementById("resumoDescricao").innerText =
+        el("resumoDescricao").innerText =
             "Descrição: " + d.descricao;
 
-        document.getElementById("resumoEndereco").innerText =
+        el("resumoEndereco").innerText =
             montarLocalizacao();
     }
 
-    document.getElementById("formSolicitacao").addEventListener("submit", (event) => {
-        const aceitou =
-            document.getElementById("termos").checked;
+    // submit validacao final
+    el("formSolicitacao").addEventListener("submit", (event) => {
+        const aceitou = el("termos").checked;
+
         if (!aceitou) {
             event.preventDefault();
-            alert(
-                "Você precisa confirmar que as informações são verdadeiras."
-            );
+            alert("Você precisa confirmar que as informações são verdadeiras.");
         }
     });
-
-    document.getElementById("btnPasso2").onclick = () => {
-        const descricao = document.getElementById("descricao").value.trim();
-        const categoria = document.getElementById("categoria").value;
-
-        if (!descricao) {
-            alert("Informe a descrição.");
-            return;
-        }
-        if (!categoria) {
-            alert("Selecione uma categoria.");
-            return;
-        }
-
-        mostrarPasso(3);
-    };
-
-    document.getElementById("btnPasso3").onclick = () => {
-        const endereco = document.getElementById("endereco").value.trim();
-        const bairro = document.getElementById("bairro").value.trim();
-
-        if (!endereco) {
-            alert("Informe o endereço.");
-            return;
-        }
-        if (!bairro) {
-            alert("Informe o bairro.");
-            return;
-        }
-
-        mostrarPasso(4);
-    };
 
 </script>
 
