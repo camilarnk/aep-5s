@@ -43,14 +43,8 @@ public class SolicitacaoController {
             Model model
     ) {
 
-        String localizacao = endereco + " - " + bairro;
-
-        if (referencia != null && !referencia.isBlank()) {
-            localizacao += " - " + referencia;
-        }
-
         Solicitacao solicitacao = service.criarSolicitacao(
-                descricao, localizacao, categoria,
+                descricao, endereco, bairro, referencia, categoria,
                 prioridade, anonimo, nomeSolicitante
         );
 
