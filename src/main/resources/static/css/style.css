@@ -652,6 +652,18 @@ hr {
     margin-bottom: 10px;
 }
 
+.grupo-resumo {
+    margin-bottom: 24px;
+}
+
+.grupo-resumo:last-child {
+    margin-bottom: 0;
+}
+
+.grupo-resumo p {
+    margin-bottom: 8px;
+}
+
 .historico-card {
     max-height: 350px;
 

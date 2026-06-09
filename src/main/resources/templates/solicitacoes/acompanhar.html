@@ -86,64 +86,73 @@
             <hr>
 
             <div class="resultado-grid">
+
                 <div class="resumo-card">
                     <h3>Resumo da Solicitação</h3>
 
-                    <p>
-                        <strong>Categoria:</strong>
-                        <span
-                            th:text="${solicitacao.categoria.getDescricao}">
-                        </span>
-                    </p>
+                    <div class="grupo-resumo">
+                        <p>
+                            <strong>Categoria:</strong>
+                            <span
+                                th:text="${solicitacao.categoria.getDescricao}">
+                            </span>
+                        </p>
 
-                    <p>
-                        <strong>Prioridade:</strong>
-                        <span
-                            th:text="${solicitacao.prioridade.getDescricao}">
-                        </span>
-                    </p>
+                        <p>
+                            <strong>Prioridade:</strong>
+                            <span
+                                th:text="${solicitacao.prioridade.getDescricao}">
+                            </span>
+                        </p>
+                    </div>
 
-                    <p>
-                        <strong>Data:</strong>
-                        <span
-                            th:text="${#temporals.format(solicitacao.dataCriacao,'dd/MM/yyyy')}">
-                        </span>
-                    </p>
+                    <div class="grupo-resumo">
+                        <p>
+                            <strong>Data:</strong>
+                            <span
+                                th:text="${#temporals.format(solicitacao.dataCriacao,'dd/MM/yyyy')}">
+                            </span>
+                        </p>
 
-                    <p>
-                        <strong>Prazo:</strong>
-                        <span
-                            th:text="${#temporals.format(solicitacao.prazo,'dd/MM/yyyy')}">
-                        </span>
-                    </p>
+                        <p>
+                            <strong>Prazo:</strong>
+                            <span
+                                th:text="${#temporals.format(solicitacao.prazo,'dd/MM/yyyy')}">
+                            </span>
+                        </p>
+                    </div>
 
-                    <p>
-                        <strong>Modo:</strong>
-                        <span
-                            th:text="${solicitacao.anonimo ? 'Anônimo' : 'Identificado'}">
-                        </span>
-                    </p>
+                    <div class="grupo-resumo">
+                        <p>
+                            <strong>Modo:</strong>
+                            <span
+                                th:text="${solicitacao.anonimo ? 'Anônimo' : 'Identificado'}">
+                            </span>
+                        </p>
 
-                    <p th:if="${!solicitacao.anonimo}">
-                        <strong>Solicitante:</strong>
-                        <span
-                            th:text="${solicitacao.nomeSolicitante}">
-                        </span>
-                    </p>
+                        <p th:if="${!solicitacao.anonimo}">
+                            <strong>Solicitante:</strong>
+                            <span
+                                th:text="${solicitacao.nomeSolicitante}">
+                            </span>
+                        </p>
+                    </div>
 
-                    <p>
-                        <strong>Localização:</strong>
-                        <span
-                            th:text="${solicitacao.localizacao}">
-                        </span>
-                    </p>
+                    <div class="grupo-resumo">
+                        <p>
+                            <strong>Localização:</strong>
+                            <span
+                                th:text="${solicitacao.localizacao}">
+                            </span>
+                        </p>
 
-                    <p>
-                        <strong>Descrição:</strong>
-                        <span
-                            th:text="${solicitacao.descricao}">
-                        </span>
-                    </p>
+                        <p>
+                            <strong>Descrição:</strong>
+                            <span
+                                th:text="${solicitacao.descricao}">
+                            </span>
+                        </p>
+                    </div>
 
                 </div>
 
