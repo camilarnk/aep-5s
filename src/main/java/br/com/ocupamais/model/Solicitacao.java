@@ -6,13 +6,14 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "tb_solicitacao")
 public class Solicitacao {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(unique = true, nullable = false)
     private String protocolo;
 
     private String descricao;
@@ -51,6 +52,11 @@ public class Solicitacao {
         this.status = Status.ABERTO;
         this.anonimo = anonimo;
         this.nomeSolicitante = anonimo ? "Anonimo" : nomeSolicitante;
+
+        this.protocolo = UUID.randomUUID()
+                .toString()
+                .replace("-", "").substring(0, 8)
+                .toUpperCase();
 
         switch (prioridade) {
             case BAIXA -> prazo = dataCriacao.plusDays(14);
