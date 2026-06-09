@@ -37,9 +37,14 @@ Este projeto está alinhado com a **ODS 16 – Paz, Justiça e Instituições Ef
 ## ⚙️ Tecnologias
 
 - Java
+- Spring Boot
+- Spring MVC
+- Spring Data JPA
+- Thymeleaf
+- H2 Database
 - Maven
-- CLI (Interface via terminal)
-- Persistência em arquivo (Serializable)
+- HTML
+- CSS
 
 ---
 
@@ -47,29 +52,32 @@ Este projeto está alinhado com a **ODS 16 – Paz, Justiça e Instituições Ef
 
 O sistema segue separação de responsabilidades:
 
-- **model** → entidades do domínio (Solicitacao, Status, Categoria, etc.)
-- **service** → regras de negócio (validações, fluxo de status, SLA)
-- **repository** → persistência em arquivo
-- **controller** → intermediação entre interface e regras
-- **view** → interface via terminal (CLI)
+- **model** → entidades e enums do domínio
+- **repository** → acesso aos dados com Spring Data JPA
+- **service** → regras de negócio
+- **controller** → controllers MVC
+- **templates** → telas Thymeleaf
+- **static** → CSS
 
 ---
 
 ## 🚀 Funcionalidades
 
 ### 👤 Cidadão
-- Criar solicitação (anônima ou identificada)
-- Buscar por protocolo
-- Visualizar status e histórico
+- Criar solicitação em formulário web
+- Solicitação anônima ou identificada
+- Consulta por protocolo
+- Visualização de histórico
+- Acompanhamento visual do progresso
 
 ### 🏢 Gestor
-- Listar solicitações
-- Filtrar por:
-    - categoria
-    - prioridade
-    - localização
-- Atualizar status com comentário obrigatório
-- Registrar justificativa em caso de atraso
+- Painel administrativo
+- Listagem de solicitações
+- Filtros por categoria, prioridade e localização
+- Visualização detalhada de solicitações
+- Atualização de status
+- Registro de comentários no histórico
+- Acompanhamento do progresso da solicitação
 
 ---
 
@@ -79,6 +87,14 @@ O sistema segue separação de responsabilidades:
 
 
 O sistema valida automaticamente a transição entre estados.
+
+---
+
+## 📄 Protocolo
+
+Cada solicitação recebe automaticamente um protocolo único.
+
+O protocolo permite que o cidadão acompanhe o andamento da solicitação sem necessidade de autenticação.
 
 ---
 
@@ -100,9 +116,9 @@ Caso o prazo seja ultrapassado:
 
 ## 💾 Persistência
 
-Os dados são armazenados em arquivo:
+Os dados são persistidos utilizando o banco de dados H2 através do Spring Data JPA.
 
-`data/solicitacoes.dat`
+Durante o desenvolvimento, o banco pode ser acessado pelo console H2 para consulta e inspeção dos dados.
 
 ---
 
@@ -110,15 +126,18 @@ Os dados são armazenados em arquivo:
 
 Após clonar o repositório, abrir o arquivo:
 
-`src/main/java/br/com/ocupamais/Main.java`
+`src/main/java/br/com/ocupamais/OcupamaisApplication.java`
 
 e executar pela IDE.  
 
 Ou ainda, executar manualmente com:
 ```
-mvn compile
-mvn exec:java
+mvn spring-boot:run
 ```
+
+A aplicação ficará disponível em:  
+
+`http://localhost:8080`
 
 ---
 
@@ -126,8 +145,8 @@ mvn exec:java
 - Uso de SLA baseado em prioridade para organizar atendimento
 - Separação em camadas
 - Uso de enum para evitar erros de entrada
-- CLI focado em simplicidade e acessibilidade
-- Persistência em arquivo para facilitar testes
+- Interface web utilizando Spring MVC e Thymeleaf
+- Persistência utilizando Spring Data JPA e H2 Database
 
 ---
 
