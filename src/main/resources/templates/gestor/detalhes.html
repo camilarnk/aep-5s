@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Detalhes da Solicitação - OcupaMais</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<header th:replace="~{fragments/navbar-gestor :: navbarGestor}"></header>
+
+<main class="container">
+
+    <section class="card-painel">
+
+        <h1>
+            Protocolo
+            <span th:text="${solicitacao.protocolo}">
+                #2026-002711
+            </span>
+        </h1>
+
+        <div th:if="${sucesso}" class="mensagem-sucesso">
+            <h3>✓ Atualização realizada</h3>
+            <p th:text="${sucesso}"></p>
+        </div>
+
+        <hr>
+
+        <div class="atualizacao-grid">
+
+            <div class="info-card">
+
+                <h3>Status</h3>
+
+                <p>
+                    <strong>Status Atual:</strong>
+                    <span th:text="${solicitacao.status.getDescricao}">
+                        EM_TRIAGEM
+                    </span>
+                </p>
+
+                <p>
+                    <strong>Prioridade:</strong>
+                    <span th:text="${solicitacao.prioridade.getDescricao}">
+                        ALTA
+                    </span>
+                </p>
+
+                <p>
+                    <strong>Prazo:</strong>
+                    <span th:text="${#temporals.format(solicitacao.prazo, 'dd/MM/yyyy')}">
+                        04/06/2026
+                    </span>
+                </p>
+
+            </div>
+
+            <div class="info-card">
+
+                <h3>Identificação</h3>
+
+                <p>
+                    <strong>Modo:</strong>
+
+                    <span th:text="${solicitacao.anonimo} ? 'Anônimo' : 'Identificado'">
+                        Identificado
+                    </span>
+                </p>
+
+                <p th:if="${!solicitacao.anonimo}">
+                    <strong>Nome:</strong>
+
+                    <span th:text="${solicitacao.nomeSolicitante}">
+                        João Silva
+                    </span>
+                </p>
+
+            </div>
+
+            <div class="info-card">
+                <h3>Localização</h3>
+
+                <p th:text="${solicitacao.localizacao}">
+                    Rua das Flores, 123 - Centro
+                </p>
+            </div>
+
+            <div class="info-card">
+                <h3>Descrição</h3>
+
+                <p th:text="${solicitacao.descricao}">
+                    Há diversos buracos na avenida prejudicando o trânsito.
+                </p>
+            </div>
+
+        </div>
+
+        <div class="area-detalhes">
+
+            <h2>Andamento da Solicitação</h2>
+
+            <div class="barra-status">
+                <div class="barra-preenchida"
+                     th:style="|width:${progresso}%|">
+                </div>
+            </div>
+
+            <div class="legenda-status">
+                <span>Aberto</span>
+                <span>Triagem</span>
+                <span>Execução</span>
+                <span>Resolvido</span>
+                <span>Encerrado</span>
+            </div>
+
+        </div>
+
+        <div class="historico-container">
+
+            <h2>Histórico de Atualizações</h2>
+
+            <div class="historico-lista">
+
+                <div class="historico-item" th:each="historico : ${solicitacao.historico}">
+
+                    <strong th:text="${#temporals.format(historico.data,'dd/MM/yyyy')}"></strong>
+
+                    <p>
+                        <strong>Status:</strong>
+                        <span th:text="${historico.status.descricao}"></span>
+                    </p>
+
+                    <p th:text="${historico.comentario}"></p>
+
+                    <p th:if="${historico.justificativa != null and !historico.justificativa.isBlank()}">
+                        <strong>Justificativa:</strong>
+                        <span th:text="${historico.justificativa}"></span>
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="botoes-status">
+            <a th:href="@{/gestor/solicitacoes}"
+               class="botao-link">
+
+                Voltar para Solicitações
+            </a>
+
+            <a th:if="${solicitacao.status.name() != 'ENCERRADO'}"
+               th:href="@{/gestor/atualizar(protocolo=${solicitacao.protocolo})}"
+               class="botao-salvar">
+
+                Atualizar Status desta Solicitação
+            </a>
+
+            <div th:if="${solicitacao.status.name() == 'ENCERRADO'}"
+                 class="mensagem-sucesso">
+
+                ✓ Esta solicitação já foi encerrada.
+            </div>
+        </div>
+
+    </section>
+
+</main>
+
+</body>
+
+</html>

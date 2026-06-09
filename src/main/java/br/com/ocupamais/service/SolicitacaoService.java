@@ -17,7 +17,8 @@ public class SolicitacaoService {
         this.repository = repository;
     }
 
-    public Solicitacao criarSolicitacao(String descricao, String localizacao,
+    public Solicitacao criarSolicitacao(String descricao, String endereco,
+                                        String bairro, String referencia,
                                         Categoria categoria, Prioridade prioridade,
                                         boolean anonimo, String nomeSolicitante) {
 
@@ -25,12 +26,22 @@ public class SolicitacaoService {
             throw new IllegalArgumentException("Descrição obrigatória");
         }
 
-        if(localizacao == null || localizacao.isBlank()) {
-            throw new IllegalArgumentException("Localização obrigatória");
+        if(endereco == null || endereco.isBlank()) {
+            throw new IllegalArgumentException("Endereço obrigatório");
+        }
+
+        if(bairro == null || bairro.isBlank()) {
+            throw new IllegalArgumentException("Bairro obrigatório");
         }
 
         if (!anonimo && (nomeSolicitante == null || nomeSolicitante.isBlank())) {
             throw new IllegalArgumentException("Nome obrigatório para solicitações identificadas");
+        }
+
+        String localizacao = endereco + " - " + bairro;
+
+        if (referencia != null && !referencia.isBlank()) {
+            localizacao += " - " + referencia;
         }
 
         Solicitacao novaSolicitacao = new Solicitacao(
@@ -41,34 +52,30 @@ public class SolicitacaoService {
         return novaSolicitacao;
     }
 
-    public List<Solicitacao> listarSolicitacoes() {
-        return repository.findAll().stream()
-                .sorted(Comparator.comparing(Solicitacao::getPrioridade))
-                .toList();
-    }
 
-    public List<Solicitacao> listarSolicitacoesAbertas() {
-        return repository.findAll().stream().
-                filter(s -> s.getStatus() != Status.ENCERRADO)
-                .toList();
-    }
-
-    public List<Solicitacao> filtrarPorCategoria(Categoria categoria) {
+    public List<Solicitacao> buscarComFiltros(String categoria,
+                                              String prioridade,
+                                              String localizacao) {
         return repository.findAll().stream()
-                .filter(s -> s.getCategoria() == categoria)
-                .toList();
-    }
+                .filter(s ->
+                        categoria == null
+                                || categoria.isBlank()
+                                || categoria.equals("TODAS")
+                                || s.getCategoria().name().equals(categoria))
 
-    public List<Solicitacao> filtrarPorPrioridade(Prioridade prioridade) {
-        return repository.findAll().stream()
-                .filter(s -> s.getPrioridade() == prioridade)
-                .toList();
-    }
+                .filter(s ->
+                        prioridade == null
+                                || prioridade.isBlank()
+                                || prioridade.equals("TODAS")
+                                || s.getPrioridade().name().equals(prioridade))
 
-    public List<Solicitacao> filtrarPorLocalizacao(String localizacao) {
-        return repository.findAll().stream()
-                .filter(s -> s.getLocalizacao().toLowerCase()
-                        .contains(localizacao.toLowerCase()))
+                .filter(s ->
+                        localizacao == null
+                                || localizacao.isBlank()
+                                || s.getLocalizacao()
+                                .toLowerCase()
+                                .contains(localizacao.toLowerCase()))
+                .sorted(Comparator.comparing(Solicitacao::getPrioridade).reversed())
                 .toList();
     }
 
@@ -114,13 +121,7 @@ public class SolicitacaoService {
     }
 
     private boolean fluxoValido(Status atual, Status novo) {
-        return switch(atual) {
-            case ABERTO -> novo == Status.TRIAGEM;
-            case TRIAGEM -> novo == Status.EM_EXECUCAO;
-            case EM_EXECUCAO -> novo == Status.RESOLVIDO;
-            case RESOLVIDO -> novo == Status.ENCERRADO;
-            case ENCERRADO -> false;
-        };
+        return atual.proximo() == novo;
     }
 
 }

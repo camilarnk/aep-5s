@@ -1,28 +1,35 @@
 package br.com.ocupamais.model;
 
 public enum Status {
-    ABERTO(1),
-    TRIAGEM(2),
-    EM_EXECUCAO(3),
-    RESOLVIDO(4),
-    ENCERRADO(5);
+    ABERTO("Aberto", 20),
+    TRIAGEM("Triagem", 40),
+    EM_EXECUCAO("Em Execução", 60),
+    RESOLVIDO("Resolvido", 80),
+    ENCERRADO("Encerrado", 100);
 
-    private int id;
+    private final String descricao;
+    private final int progresso;
 
-    Status(int id) {
-        this.id = id;
+    Status(String descricao, int progresso) {
+        this.descricao = descricao;
+        this.progresso = progresso;
     }
 
-    public int getId() {
-        return id;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public static Status buscarPeloId(int id) {
-        for(Status status : values()) {
-            if(status.getId() == id) {
-                return status;
-            }
-        }
-        throw new IllegalArgumentException("ID de Status inválido: " + id);
+    public int getProgresso() {
+        return progresso;
+    }
+
+    public Status proximo() {
+        return switch (this) {
+            case ABERTO -> TRIAGEM;
+            case TRIAGEM -> EM_EXECUCAO;
+            case EM_EXECUCAO -> RESOLVIDO;
+            case RESOLVIDO -> ENCERRADO;
+            case ENCERRADO -> null;
+        };
     }
 }

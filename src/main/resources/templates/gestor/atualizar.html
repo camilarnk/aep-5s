@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Atualizar Status - OcupaMais</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<header th:replace="~{fragments/navbar-gestor :: navbarGestor}"></header>
+
+<main class="container">
+
+    <section class="card-painel">
+
+        <div th:if="${solicitacao == null}">
+
+            <h1>Atualizar Status</h1>
+
+            <p class="subtitulo">
+                Atualize o andamento utilizando o número do protocolo.
+            </p>
+
+            <hr>
+
+            <form th:action="@{/gestor/atualizar}" method="get">
+                <label for="protocolo">
+                    Protocolo
+                </label>
+
+                <input type="text" id="protocolo" class="input-grande" name="protocolo"
+                       placeholder="Informe um protocolo para atualizar uma solicitação.">
+
+                <div class="acoes-filtro">
+                    <button type="submit">
+                        🔍 Buscar
+                    </button>
+                </div>
+            </form>
+
+            <div th:if="${erro != null}" class="mensagem-erro">
+                <h3>Protocolo não encontrado</h3>
+
+                <p th:text="${erro}">
+                    Nenhuma solicitação encontrada.
+                </p>
+            </div>
+
+            <hr>
+
+            <div class="info-box">
+                <span class="icone-info">ⓘ</span>
+                Utilize esta tela quando já souber o protocolo da solicitação.
+            </div>
+
+            <div class="fluxo-ajuda">
+                <h3>Como funciona?</h3>
+
+                <div class="fluxo-container">
+                    <div class="fluxo-coluna">
+                        <div class="fluxo-item" data-passo="1">Informe o protocolo.</div>
+                        <div class="fluxo-item" data-passo="2">Localize a solicitação.</div>
+                    </div>
+
+                    <div class="fluxo-coluna">
+                        <div class="fluxo-item" data-passo="3">Confira o andamento.</div>
+                        <div class="fluxo-item" data-passo="4">Escolha o novo status.</div>
+                    </div>
+
+                    <div class="fluxo-coluna">
+                        <div class="fluxo-item" data-passo="5">Adicione um comentário.</div>
+                        <div class="fluxo-item" data-passo="6">Salve a alteração.</div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="acoes-duplas">
+                <a th:href="@{/gestor/solicitacoes}" class="botao-link">
+                    Voltar para Solicitações
+                </a>
+            </div>
+
+        </div>
+
+        <div th:if="${solicitacao != null}">
+
+            <h1>
+                Protocolo
+                <span th:text="${solicitacao.protocolo}"></span>
+            </h1>
+
+            <hr>
+
+            <div class="atualizacao-grid">
+
+                <div class="info-card">
+                    <h3>Status</h3>
+
+                    <p>
+                        <strong>Status Atual:</strong>
+                        <span th:text="${solicitacao.status.getDescricao}"></span>
+                    </p>
+
+                    <p>
+                        <strong>Prioridade:</strong>
+                        <span th:text="${solicitacao.prioridade.getDescricao}"></span>
+                    </p>
+
+                    <p>
+                        <strong>Prazo:</strong>
+                        <span th:text="${#temporals.format(solicitacao.prazo, 'dd/MM/yyyy')}"></span>
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Identificação</h3>
+
+                    <p>
+                        <strong>Modo:</strong>
+                        <span th:text="${solicitacao.anonimo} ? 'Anônimo' : 'Identificado'"></span>
+                    </p>
+
+                    <p th:if="${!solicitacao.anonimo}">
+                        <strong>Nome:</strong>
+                        <span th:text="${solicitacao.nomeSolicitante}"></span>
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Localização</h3>
+                    <p th:text="${solicitacao.localizacao}"></p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Descrição</h3>
+                    <p th:text="${solicitacao.descricao}"></p>
+                </div>
+
+            </div>
+
+            <div class="area-status">
+
+                <h2>Atualizar Status da Solicitação</h2>
+
+                <div th:if="${erro}" class="mensagem-erro">
+                    <h3>Erro</h3>
+                    <p th:text="${erro}"></p>
+                </div>
+
+                <form th:action="@{/gestor/atualizar-status}" method="post">
+
+                    <input type="hidden" name="protocolo" th:value="${solicitacao.protocolo}">
+
+                    <div th:if="${proximoStatus != null}">
+
+                        <label>Novo Status</label>
+
+                        <select name="novoStatus">
+                            <option
+                                    th:value="${proximoStatus}"
+                                    th:text="${proximoStatusDescricao}">
+                            </option>
+                        </select>
+
+                    </div>
+
+                    <div th:if="${proximoStatus == null}" class="mensagem-sucesso">
+                        Esta solicitação já está encerrada.
+                    </div>
+
+                    <div class="barra-status">
+                        <div class="barra-preenchida"
+                             th:style="|width:${progresso}%|">
+                        </div>
+                    </div>
+
+                    <div class="legenda-status">
+                        <span>Aberto</span>
+                        <span>Triagem</span>
+                        <span>Execução</span>
+                        <span>Resolvido</span>
+                        <span>Encerrado</span>
+                    </div>
+
+                    <div th:if="${proximoStatus != null}">
+
+                        <label>
+                            Comentário
+                        </label>
+
+                        <textarea name="comentario"
+                                  required
+                                  placeholder="Digite informações sobre a mudança de status..."></textarea>
+
+                        <div class="botoes-status">
+                            <a th:href="@{/gestor/atualizar}" class="botao-link">
+                                Buscar Novamente
+                            </a>
+
+                            <button type="submit" class="botao-salvar">
+                                Salvar Alteração
+                            </button>
+                        </div>
+
+                    </div>
+
+                    <div th:if="${proximoStatus == null}" class="botoes-status">
+                        <a th:href="@{/gestor/atualizar}" class="botao-link">
+                            Buscar Novamente
+                        </a>
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+</body>
+
+</html>

@@ -25,6 +25,11 @@ public class SolicitacaoController {
         return "solicitacoes/nova-solicitacao";
     }
 
+    @GetMapping("/acompanhar")
+    public String acompanharSolicitacao() {
+        return "solicitacoes/acompanhar";
+    }
+
     @PostMapping
     public String salvarSolicitacao(
             @RequestParam String descricao,
@@ -38,20 +43,29 @@ public class SolicitacaoController {
             Model model
     ) {
 
-        String localizacao = endereco + " - " + bairro;
-
-        if (referencia != null && !referencia.isBlank()) {
-            localizacao += " - " + referencia;
-        }
-
         Solicitacao solicitacao = service.criarSolicitacao(
-                descricao, localizacao, categoria,
+                descricao, endereco, bairro, referencia, categoria,
                 prioridade, anonimo, nomeSolicitante
         );
 
         model.addAttribute("protocolo", solicitacao.getProtocolo());
 
         return "solicitacoes/sucesso";
+    }
+
+    @PostMapping("/acompanhar")
+    public String buscarSolicitacao(@RequestParam String protocolo, Model model) {
+        Solicitacao solicitacao = service.buscarPorProtocolo(protocolo);
+
+        if (solicitacao == null) {
+            model.addAttribute("erro",
+                    "Nenhuma solicitação encontrada para esse protocolo.");
+            return "solicitacoes/acompanhar";
+        }
+
+        model.addAttribute("solicitacao", solicitacao);
+
+        return "solicitacoes/acompanhar";
     }
 
 }

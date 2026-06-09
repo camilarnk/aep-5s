@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Painel do Gestor - OcupaMais</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<header th:replace="~{fragments/navbar-gestor :: navbarGestor}"></header>
+
+<main class="container">
+
+    <section class="card-painel">
+
+        <h1>Painel do Gestor</h1>
+
+        <hr>
+
+        <div class="painel-bloco">
+
+            <div class="painel-titulo">
+                🔄 Status das Solicitações
+            </div>
+
+            <div class="cards-status">
+
+                <div class="status-item">
+                    <span class="numero">
+                        18
+                    </span>
+
+                    <span class="texto">
+                        Abertas
+                    </span>
+
+                    <div class="linha-status linha-amarela"></div>
+                </div>
+
+                <div class="status-item">
+                    <span class="numero">
+                        7
+                    </span>
+
+                    <span class="texto">
+                        Em Triagem
+                    </span>
+
+                    <div class="linha-status linha-laranja"></div>
+                </div>
+
+                <div class="status-item">
+                    <span class="numero">
+                        4
+                    </span>
+
+                    <span class="texto">
+                        Em Execução
+                    </span>
+
+                    <div class="linha-status linha-azul"></div>
+                </div>
+
+                <div class="status-item">
+                    <span class="numero">
+                        26
+                    </span>
+
+                    <span class="texto">
+                        Resolvidas
+                    </span>
+
+                    <div class="linha-status linha-verde"></div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="painel-bloco">
+
+            <div class="painel-titulo">
+                ⚠️ Solicitações que Exigem Atenção
+            </div>
+
+            <div class="lista-alertas">
+                <div class="alerta-item">
+                    <strong>#2026-002705</strong><br>
+                    Iluminação Pública • Alta • Atrasada
+                </div>
+
+                <div class="alerta-item">
+                    <strong>#2026-002711</strong><br>
+                    Buraco em Via • Alta • Em Triagem
+                </div>
+
+                <div class="alerta-item">
+                    <strong>#2026-002803</strong><br>
+                    Saúde Pública • Alta • Atrasada
+                </div>
+
+                <div class="alerta-item">
+                    <strong>#2026-002845</strong><br>
+                    Limpeza Urbana • Média • Atrasada
+                </div>
+
+                <div class="alerta-item">
+                    <strong>#2026-002912</strong><br>
+                    Segurança • Alta • Atrasada
+                </div>
+
+                <div class="alerta-item">
+                    <strong>#2026-002950</strong><br>
+                    Educação • Média • Em Triagem
+                </div>
+
+                <div class="alerta-item">
+                    <strong>#2026-003001</strong><br>
+                    Iluminação Pública • Alta • Atrasada
+                </div>
+
+                <div class="alerta-item">
+                    <strong>#2026-003045</strong><br>
+                    Buraco em Via • Alta • Em Triagem
+                </div>
+            </div>
+
+        </div>
+
+        <div class="info-box">
+            <span class="icone-info">📢</span>
+            Existem 5 solicitações de prioridade alta aguardando ação.
+        </div>
+
+        <div class="acoes-centro">
+            <a th:href="@{/gestor/solicitacoes}"
+               class="botao-painel">
+                Visualizar Solicitações
+            </a>
+        </div>
+
+    </section>
+
+</main>
+
+</body>
+</html>

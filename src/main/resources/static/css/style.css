@@ -47,6 +47,17 @@ body {
     padding: 40px 20px;
 }
 
+.subtitulo {
+    color: #555;
+    margin-bottom: 24px;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #ddd;
+    margin: 20px 0;
+}
+
 .card-formulario {
     width: 800px;
 
@@ -63,16 +74,85 @@ body {
     margin-bottom: 8px;
 }
 
-.subtitulo {
+/* ========================== */
+/*           HOME             */
+/* ========================== */
+
+.card-home {
+    width: 800px;
+
+    background: white;
+
+    border: 1px solid #ccc;
+    border-radius: 8px;
+
+    padding: 40px;
+}
+
+.card-home h1 {
+    font-size: 3rem;
+    margin-bottom: 16px;
+}
+
+.subtitulo-home {
+    font-size: 1.1rem;
     color: #555;
+}
+
+.acoes-home {
+    display: flex;
+
+    gap: 16px;
+
+    margin-top: 24px;
     margin-bottom: 24px;
 }
 
-hr {
-    border: none;
-    border-top: 1px solid #ddd;
-    margin: 20px 0;
+.botao-home {
+    flex: 1;
+
+    padding: 12px 20px;
+
+    border: 1px solid #999;
+    border-radius: 6px;
+
+    text-decoration: none;
+    color: #222;
+
+    background: white;
 }
+
+.botao-home:hover {
+    background: #f7f7f7;
+}
+
+.passos-home {
+    margin-top: 24px;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 24px;
+}
+
+.passo-home {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.icone-home {
+    width: 40px;
+
+    font-size: 1.8rem;
+
+    display: flex;
+    justify-content: center;
+}
+
+/* ========================== */
+/* PASSO 1 - NOVA SOLICITAÇÃO */
+/* ========================== */
 
 .etapa {
     display: block;
@@ -153,124 +233,9 @@ hr {
     display: none;
 }
 
-.progress-wrapper {
-    width: 70%;
-    margin: 30px auto 0 auto;
-}
-
-.progress-line {
-    height: 8px;
-    background: #e0e0e0;
-    border-radius: 999px;
-    overflow: hidden;
-}
-
-.progress-fill {
-    height: 100%;
-    background: #555;
-    border-radius: 999px;
-    width: 0%;
-    transition: width 0.3s ease;
-}
-
-.progress-container {
-    display: flex;
-    justify-content: center;
-    gap: 50px;
-
-    margin-top: 8px;
-}
-
-.progress-step {
-    font-size: 0.85rem;
-    color: #777;
-    transition: all 0.2s ease;
-}
-
-.progress-step.ativo {
-    font-weight: 600;
-    color: #222;
-}
-
-.progress-step.concluido {
-    color: #444;
-}
-
-.card-home {
-    width: 800px;
-
-    background: white;
-
-    border: 1px solid #ccc;
-    border-radius: 8px;
-
-    padding: 40px;
-}
-
-.card-home h1 {
-    font-size: 3rem;
-    margin-bottom: 16px;
-}
-
-.subtitulo-home {
-    font-size: 1.1rem;
-    color: #555;
-}
-
-.acoes-home {
-    display: flex;
-
-    gap: 16px;
-
-    margin-top: 24px;
-    margin-bottom: 24px;
-}
-
-.botao-home {
-
-    flex: 1;
-
-    padding: 12px 20px;
-
-    border: 1px solid #999;
-    border-radius: 6px;
-
-    text-decoration: none;
-    color: #222;
-
-    background: white;
-}
-
-.botao-home:hover {
-    background: #f7f7f7;
-}
-
-.passos-home {
-    margin-top: 24px;
-
-    display: flex;
-    flex-direction: column;
-
-    gap: 24px;
-}
-
-.passo-home {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-}
-
-.icone-home {
-    width: 40px;
-
-    font-size: 1.8rem;
-
-    display: flex;
-    justify-content: center;
-}
-
-
+/* ========================== */
 /* PASSO 2 - NOVA SOLICITAÇÃO */
+/* ========================== */
 
 #passo2 label {
     display: block;
@@ -354,7 +319,9 @@ hr {
     cursor: pointer;
 }
 
+/* ========================== */
 /* PASSO 3 - NOVA SOLICITAÇÃO */
+/* ========================== */
 
 .campo-bloco {
     display: flex;
@@ -411,7 +378,9 @@ hr {
     cursor: pointer;
 }
 
-/* PASSO 4 - CRIAR SOLICITAÇÃO */
+/* ========================== */
+/* PASSO 4 - NOVA SOLICITAÇÃO */
+/* ========================== */
 
 .resumo-grid {
     display: flex;
@@ -462,7 +431,56 @@ hr {
     cursor: pointer;
 }
 
-/* TELA DE SUCESSO */
+/* ========================== */
+/* STEPPER - NOVA SOLICITAÇÃO */
+/* ========================== */
+
+.progress-wrapper {
+    width: 70%;
+    margin: 30px auto 0 auto;
+}
+
+.progress-line {
+    height: 8px;
+    background: #bfdbb8;
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: #6cab5c;
+    border-radius: 999px;
+    width: 0%;
+    transition: width 0.3s ease;
+}
+
+.progress-container {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+
+    margin-top: 8px;
+}
+
+.progress-step {
+    font-size: 0.85rem;
+    color: #777;
+    transition: all 0.2s ease;
+}
+
+.progress-step.ativo {
+    font-weight: 600;
+    color: #222;
+}
+
+.progress-step.concluido {
+    color: #444;
+}
+
+/* ========================== */
+/*       TELA DE SUCESSO      */
+/* ========================== */
 
 .card-sucesso {
     width: 650px;
@@ -512,4 +530,848 @@ hr {
     width: 220px;
 
     text-align: center;
+}
+
+/* ========================== */
+/*   ACOMPANHAR SOLICITAÇÃO   */
+/* ========================== */
+
+.acompanhar-form {
+    margin-top: 20px;
+}
+
+.acompanhar-form h2 {
+    margin-bottom: 12px;
+}
+
+.acompanhar-form input {
+    flex: 1;
+
+    padding: 12px;
+
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+.acompanhar-form button {
+    padding: 12px 20px;
+
+    border: 1px solid #999;
+    border-radius: 6px;
+
+    background: white;
+    cursor: pointer;
+}
+
+.linha-busca {
+    display: flex;
+    gap: 12px;
+}
+
+.mensagem-erro {
+    margin-top: 30px;
+
+    padding: 20px;
+
+    border: 1px solid #f0b4b4;
+    border-radius: 6px;
+
+    background: #fff7f7;
+}
+
+.resultado-container {
+    margin-top: 25px;
+}
+
+.resultado-topo {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    margin-bottom: 25px;
+}
+
+.status-container {
+    margin-bottom: 25px;
+    padding: 0 20px;
+}
+
+.status-line {
+    height: 8px;
+
+    background: #bfdbb8;
+
+    border-radius: 999px;
+
+    overflow: hidden;
+}
+
+.status-fill {
+    height: 100%;
+    background: #6cab5c;
+}
+
+.status-steps {
+    margin-top: 10px;
+
+    display: flex;
+
+    font-size: 0.85rem;
+}
+
+.status-steps span {
+    flex: 1;
+    text-align: center;
+}
+
+.resultado-grid {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 24px;
+}
+
+.resumo-card,
+.historico-card {
+    border: 1px solid #ddd;
+
+    border-radius: 6px;
+
+    padding: 20px;
+
+    background: #fafafa;
+}
+
+.resumo-card h3,
+.historico-card h3 {
+    margin-bottom: 16px;
+}
+
+.resumo-card p {
+    margin-bottom: 10px;
+}
+
+.historico-card {
+    max-height: 350px;
+
+    overflow-y: auto;
+}
+
+.historico-item {
+    margin-bottom: 18px;
+}
+
+.como-funciona {
+    margin-top: 20px;
+}
+
+.como-funciona h2 {
+    margin-bottom: 24px;
+}
+
+.passos-acompanhar {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+}
+
+.passo-acompanhar {
+    flex: 1;
+    min-width: 200px;
+
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+
+    padding-left: 16px;
+    border-left: 2px solid #777;
+}
+
+.numero-passo {
+    min-width: 28px;
+    height: 28px;
+
+    border: 1px solid #777;
+    border-radius: 4px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-weight: bold;
+}
+
+/* ========================== */
+/*        LOGIN GESTOR        */
+/* ========================== */
+
+.card-login {
+    width: 900px;
+    min-height: 520px;
+
+    background: white;
+
+    border: 1px solid #ccc;
+    border-radius: 8px;
+
+    display: flex;
+
+    overflow: hidden;
+}
+
+.login-esquerda {
+    flex: 1;
+    padding: 40px;
+}
+
+.login-esquerda h1 {
+    font-size: 2.4rem;
+    margin-bottom: 20px;
+}
+
+.login-esquerda h2 {
+    margin-top: 25px;
+    margin-bottom: 8px;
+}
+
+.login-esquerda p {
+    color: #555;
+
+    margin-bottom: 24px;
+}
+
+.login-esquerda form {
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+}
+
+.login-esquerda input {
+    padding: 12px;
+
+    border: 1px solid #ccc;
+    border-radius: 6px;
+
+    margin-bottom: 10px;
+}
+
+.login-esquerda button {
+    margin-top: 15px;
+    padding: 12px;
+    border: 1px solid #999;
+    border-radius: 6px;
+
+    background: white;
+
+    cursor: pointer;
+}
+
+.login-esquerda button:hover {
+    background: #f5f5f5;
+}
+
+.login-direita {
+    width: 45%;
+
+    background: linear-gradient(
+            180deg,
+            #5f7f62,
+            #7c9a7d
+    );
+
+    color: white;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    padding: 40px;
+}
+
+.logo-gestor {
+    font-size: 4rem;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.logo-gestor span {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.credencial-demo {
+    margin-top: 25px;
+    padding: 12px;
+    border-radius: 6px;
+
+    background: #f7f7f7;
+    color: #555;
+}
+
+/* ========================== */
+/*       PAINEL GESTOR        */
+/* ========================== */
+
+.card-painel {
+    width: 900px;
+
+    background: white;
+
+    border: 1px solid #ccc;
+    border-radius: 8px;
+
+    padding: 32px;
+}
+
+.card-painel h1 {
+    font-size: 2.8rem;
+    margin-bottom: 10px;
+}
+
+.painel-bloco {
+    margin-top: 24px;
+}
+
+.painel-titulo {
+    background: #333;
+    color: white;
+
+    padding: 12px 16px;
+
+    font-weight: bold;
+
+    border-radius: 6px 6px 0 0;
+}
+
+.cards-status {
+    display: flex;
+
+    border: 1px solid #ddd;
+    border-top: none;
+
+    padding: 24px;
+}
+
+.status-item {
+    flex: 1;
+    text-align: center;
+}
+
+.numero {
+    display: block;
+
+    font-size: 2rem;
+    font-weight: bold;
+
+    margin-bottom: 8px;
+}
+
+.texto {
+    display: block;
+    margin-bottom: 12px;
+}
+
+.linha-status {
+    width: 70%;
+    height: 6px;
+
+    margin: 0 auto;
+
+    border-radius: 999px;
+}
+
+.linha-verde {
+    background: #2ecc71;
+}
+
+.linha-amarela {
+    background: #f1c40f;
+}
+
+.linha-laranja {
+    background: #e67e22;
+}
+
+.linha-azul {
+    background: #3498db;
+}
+
+.lista-alertas {
+    border: 1px solid #ddd;
+    border-top: none;
+
+    height: 200px;
+
+    overflow-y: auto;
+
+    padding: 16px;
+}
+
+.alerta-item {
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.alerta-item:last-child {
+    border-bottom: none;
+}
+
+.acoes-centro {
+    margin-top: 30px;
+
+    display: flex;
+    justify-content: center;
+}
+
+.botao-painel {
+    text-decoration: none;
+
+    color: #222;
+
+    padding: 12px 24px;
+
+    border: 1px solid #999;
+    border-radius: 6px;
+
+    background: white;
+}
+
+.botao-painel:hover {
+    background: #f5f5f5;
+}
+
+/* ========================= */
+/*  VISUALIZAR SOLICITAÇÕES  */
+/* ========================= */
+
+.filtros-grid {
+    display: flex;
+    gap: 24px;
+    margin-top: 20px;
+}
+
+.campo-filtro.categoria,
+.campo-filtro.prioridade {
+    width: 180px;
+}
+
+.campo-filtro.localizacao {
+    flex: 1;
+}
+
+.campo-filtro {
+    display: flex;
+    flex-direction: column;
+}
+
+.campo-filtro label {
+    margin-bottom: 8px;
+}
+
+.campo-filtro select,
+.campo-filtro input {
+    padding: 10px;
+
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+.acoes-filtro {
+    margin-top: 16px;
+
+    display: flex;
+    justify-content: flex-end;
+}
+
+.acoes-filtro button {
+    padding: 10px 18px;
+
+    border: 1px solid #999;
+    border-radius: 6px;
+
+    background: white;
+
+    cursor: pointer;
+}
+
+.resultado-filtro {
+    margin-top: 20px;
+
+    border: 1px solid #ddd;
+
+    height: 250px;
+
+    overflow-y: auto;
+
+    padding: 20px;
+}
+
+.resultado-filtro h3 {
+    margin-bottom: 20px;
+}
+
+.cards-solicitacoes {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 20px;
+}
+
+.card-solicitacao {
+    width: auto;
+
+    border: 1px solid #ccc;
+    border-radius: 6px;
+
+    padding: 14px;
+
+    text-align: center;
+}
+
+.card-solicitacao strong {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.card-solicitacao p {
+    margin-bottom: 6px;
+}
+
+.card-solicitacao a {
+    display: inline-block;
+    margin-top: 10px;
+    text-decoration: underline;
+    color: #333;
+    font-weight: 500;
+}
+
+/* ========================= */
+/*      ATUALIZAR STATUS     */
+/* ========================= */
+
+.input-grande {
+    width: 100%;
+
+    padding: 12px;
+
+    margin-top: 8px;
+
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+.fluxo-ajuda {
+    margin-top: 24px;
+    font-family: inherit;
+}
+
+.fluxo-ajuda h3 {
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.fluxo-container {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+}
+
+.fluxo-coluna {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding-left: 12px;
+    border-left: 2px solid #777;
+    flex: 1;
+    min-width: 200px;
+}
+
+.fluxo-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.95rem;
+    color: #222;
+}
+
+.fluxo-item::before {
+    content: attr(data-passo);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 22px;
+    height: 22px;
+
+    border: 2px solid #333;
+    border-radius: 4px;
+
+    font-weight: bold;
+    font-size: 0.85rem;
+    color: #333;
+
+    flex-shrink: 0;
+}
+
+.status-flow {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+
+    margin-top: 12px;
+
+    font-weight: bold;
+}
+
+.mensagem-sucesso {
+    padding: 10px 18px;
+
+    padding: 16px;
+
+    border: 1px solid #27ae60;
+    border-radius: 6px;
+
+    background: #eafaf1;
+}
+
+.mensagem-sucesso h3 {
+    color: #27ae60;
+
+    margin-bottom: 8px;
+}
+
+.mensagem-erro {
+    margin-top: 24px;
+
+    padding: 16px;
+
+    border: 1px solid #e74c3c;
+
+    border-radius: 6px;
+
+    background: #fdecea;
+}
+
+.mensagem-erro h3 {
+    color: #c0392b;
+
+    margin-bottom: 8px;
+}
+
+.atualizacao-grid {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 16px;
+
+    margin-top: 20px;
+}
+
+.info-card {
+    border: 1px solid #ccc;
+    border-radius: 6px;
+
+    padding: 16px;
+
+    background: #fafafa;
+}
+
+.info-card h3 {
+    margin-bottom: 12px;
+}
+
+.area-status {
+    margin-top: 30px;
+}
+
+.area-status h2 {
+    margin-bottom: 20px;
+}
+
+.area-status label {
+    display: block;
+
+    margin-bottom: 8px;
+    margin-top: 16px;
+}
+
+.area-status select {
+    width: 100%;
+    padding: 10px;
+
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+.area-status textarea {
+    width: 100%;
+    min-height: 100px;
+    padding: 12px;
+
+    border: 1px solid #ccc;
+    border-radius: 6px;
+
+    resize: vertical;
+}
+
+.barra-status {
+    width: 100%;
+    height: 8px;
+
+    background: #ddd;
+
+    margin-top: 20px;
+    border-radius: 999px;
+}
+
+.barra-preenchida {
+    width: 50%;
+    height: 100%;
+
+    background: #f1c40f;
+
+    border-radius: 999px;
+}
+
+.legenda-status {
+    display: flex;
+    justify-content: space-between;
+
+    margin-top: 8px;
+
+    font-size: 0.85rem;
+}
+
+.botoes-status {
+    margin-top: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.botao-link:hover {
+    background: #f5f5f5;
+}
+
+.botao-link {
+    text-decoration: none;
+
+    padding: 10px 18px;
+
+    border: 1px solid #999;
+    border-radius: 6px;
+
+    color: #222;
+    background: white;
+}
+
+.botao-salvar {
+    display: inline-block;
+
+    padding: 10px 18px;
+
+    border: 1px solid #2e7d32;
+    border-radius: 6px;
+
+    background: #679454;
+    color: white;
+
+    text-decoration: none;
+
+    font-weight: bold;
+    font-size: 1rem;
+    font-family: inherit;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+a.botao-salvar,
+button.botao-salvar {
+    display: inline-block;
+
+    padding: 10px 18px;
+
+    border: 1px solid #4d703f;
+    border-radius: 6px;
+
+    background: #4d703f;
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 1rem;
+    font-family: inherit;
+
+    cursor: pointer;
+}
+
+.botao-salvar:hover {
+    background: #3d5733;
+}
+
+/* ========================= */
+/*    DETALHES SOLICITAÇÃO   */
+/* ========================= */
+
+.area-detalhes {
+    margin-top: 32px;
+}
+
+.area-detalhes h2 {
+    margin-bottom: 16px;
+}
+
+.historico-container {
+    margin-top: 32px;
+}
+
+.historico-container h2 {
+    margin-bottom: 16px;
+}
+
+.historico-lista {
+    max-height: 220px;
+
+    overflow-y: auto;
+
+    border: 1px solid #ccc;
+    border-radius: 6px;
+
+    background: #fafafa;
+
+    padding: 12px;
+}
+
+.historico-item {
+    padding-bottom: 12px;
+    margin-bottom: 12px;
+
+    border-bottom: 1px solid #ddd;
+}
+
+.historico-item:last-child {
+    margin-bottom: 0;
+    border-bottom: none;
+}
+
+.historico-item strong {
+    display: inline;
+
+    margin-bottom: 4px;
 }

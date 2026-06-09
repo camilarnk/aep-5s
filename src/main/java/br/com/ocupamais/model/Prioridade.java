@@ -1,32 +1,19 @@
 package br.com.ocupamais.model;
 
 public enum Prioridade {
-    BAIXA(1),
-    MEDIA(2),
-    ALTA(3);
+    BAIXA("Baixa"),
+    MEDIA("Média"),
+    ALTA("Alta");
 
-    private int id;
+    private final String descricao;
 
-    Prioridade(int id) {
-        this.id = id;
+    Prioridade(String descricao) {
+        this.descricao = descricao;
     }
 
-    public int getId() {
-        return id;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public static Prioridade buscarPeloId(int id) {
-        for (Prioridade prioridade : values()) {
-            if (prioridade.getId() == id) {
-                return prioridade;
-            }
-        }
-        throw new IllegalArgumentException("ID inválido");
-    }
 
-    public static void exibirOpcoes() {
-        for (Prioridade prioridade : values()) {
-            System.out.println(prioridade.getId() + " - " + prioridade);
-        }
-    }
 }
