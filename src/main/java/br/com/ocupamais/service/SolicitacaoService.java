@@ -17,7 +17,8 @@ public class SolicitacaoService {
         this.repository = repository;
     }
 
-    public Solicitacao criarSolicitacao(String descricao, String localizacao,
+    public Solicitacao criarSolicitacao(String descricao, String endereco,
+                                        String bairro, String referencia,
                                         Categoria categoria, Prioridade prioridade,
                                         boolean anonimo, String nomeSolicitante) {
 
@@ -25,12 +26,22 @@ public class SolicitacaoService {
             throw new IllegalArgumentException("Descrição obrigatória");
         }
 
-        if(localizacao == null || localizacao.isBlank()) {
-            throw new IllegalArgumentException("Localização obrigatória");
+        if(endereco == null || endereco.isBlank()) {
+            throw new IllegalArgumentException("Endereço obrigatório");
+        }
+
+        if(bairro == null || bairro.isBlank()) {
+            throw new IllegalArgumentException("Bairro obrigatório");
         }
 
         if (!anonimo && (nomeSolicitante == null || nomeSolicitante.isBlank())) {
             throw new IllegalArgumentException("Nome obrigatório para solicitações identificadas");
+        }
+
+        String localizacao = endereco + " - " + bairro;
+
+        if (referencia != null && !referencia.isBlank()) {
+            localizacao += " - " + referencia;
         }
 
         Solicitacao novaSolicitacao = new Solicitacao(
@@ -41,11 +52,6 @@ public class SolicitacaoService {
         return novaSolicitacao;
     }
 
-    public List<Solicitacao> listarSolicitacoes() {
-        return repository.findAll().stream()
-                .sorted(Comparator.comparing(Solicitacao::getPrioridade))
-                .toList();
-    }
 
     public List<Solicitacao> buscarComFiltros(String categoria,
                                               String prioridade,
