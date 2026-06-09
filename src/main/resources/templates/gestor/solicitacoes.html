@@ -77,39 +77,6 @@
 
             <h3>Solicitações</h3>
 
-            <div th:if="${solicitacoes.isEmpty()}" class="cards-solicitacoes">
-
-                <div class="card-solicitacao">
-                    <strong>#2026-002711</strong>
-
-                    <p>Buraco em Via</p>
-                    <p>Alta • Em Triagem</p>
-                    <p>Rua das Flores</p>
-
-                    <a th:href="@{/gestor/solicitacoes/2026-002711}">
-                        Ver detalhes
-                    </a>
-                </div>
-
-                <div class="card-solicitacao">
-                    <strong>#2026-006544</strong>
-
-                    <p>Buraco em Via</p>
-                    <p>Média • Aberto</p>
-                    <p>Jardim Verde</p>
-                    <a href="#">Ver detalhes</a>
-                </div>
-
-                <div class="card-solicitacao">
-                    <strong>#2026-041332</strong>
-
-                    <p>Buraco em Via</p>
-                    <p>Alta • Em Execução</p>
-                    <p>Avenida Brasil</p>
-                    <a href="#">Ver detalhes</a>
-                </div>
-            </div>
-
             <div th:if="${!solicitacoes.isEmpty()}" class="cards-solicitacoes">
 
                 <div th:each="solicitacao : ${solicitacoes}" class="card-solicitacao">
