@@ -62,19 +62,14 @@
                 </p>
                 <p>
                     <strong>Status Atual:</strong>
-                    <span th:text="${solicitacao.status}"></span>
+                    <span th:text="${solicitacao.status.getDescricao}"></span>
                 </p>
             </div>
 
             <div class="status-container">
                 <div class="status-line">
                     <div class="status-fill"
-                         th:style="
-                         ${solicitacao.status.name() == 'ABERTO'} ? 'width:20%' :
-                         (${solicitacao.status.name() == 'TRIAGEM'} ? 'width:40%' :
-                         (${solicitacao.status.name() == 'EM_EXECUCAO'} ? 'width:60%' :
-                         (${solicitacao.status.name() == 'RESOLVIDO'} ? 'width:80%' :
-                         'width:100%')))">
+                         th:style="|width:${solicitacao.status.progresso}%|">
                     </div>
                 </div>
 
@@ -97,14 +92,14 @@
                     <p>
                         <strong>Categoria:</strong>
                         <span
-                            th:text="${solicitacao.categoria}">
+                            th:text="${solicitacao.categoria.getDescricao}">
                         </span>
                     </p>
 
                     <p>
                         <strong>Prioridade:</strong>
                         <span
-                            th:text="${solicitacao.prioridade}">
+                            th:text="${solicitacao.prioridade.getDescricao}">
                         </span>
                     </p>
 
@@ -156,13 +151,26 @@
 
                     <h3>Histórico de Atualizações</h3>
 
-                    <div th:each="item : ${solicitacao.historico}" class="historico-item">
-                        <strong
-                            th:text="${#temporals.format(item.data,'dd/MM/yyyy')}">
-                        </strong>
-                        <p
-                            th:text="${item.comentario}">
-                        </p>
+                    <div class="historico-lista">
+
+                        <div class="historico-item" th:each="historico : ${solicitacao.historico}">
+
+                            <strong th:text="${#temporals.format(historico.data,'dd/MM/yyyy')}"></strong>
+
+                            <p>
+                                <strong>Status:</strong>
+                                <span th:text="${historico.status.descricao}"></span>
+                            </p>
+
+                            <p th:text="${historico.comentario}"></p>
+
+                            <p th:if="${historico.justificativa != null and !historico.justificativa.isBlank()}">
+                                <strong>Justificativa:</strong>
+                                <span th:text="${historico.justificativa}"></span>
+                            </p>
+
+                        </div>
+
                     </div>
 
                 </div>
