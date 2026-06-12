@@ -61,6 +61,20 @@ O sistema segue separação de responsabilidades:
 
 ---
 
+## 🌿 Estrutura de Branches
+
+O projeto mantém diferentes branches para registrar sua evolução durante o desenvolvimento:
+
+| Branch | Descrição                                                                                                                                              |
+| ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `main` | Versão atual do sistema, desenvolvida com Spring Boot.                                       |
+| `v1`   | Primeira versão do projeto, criada como implementação inicial para validação da proposta em CLI.                     |
+| `v2`   | Branch utilizada durante a refatoração do sistema. Suas alterações foram incorporadas à branch `main`, que representa a versão final atual. |
+
+A separação das branches foi mantida para fins de documentação e acompanhamento da evolução do projeto.
+
+---
+
 ## 🚀 Funcionalidades
 
 ### 👤 Cidadão
